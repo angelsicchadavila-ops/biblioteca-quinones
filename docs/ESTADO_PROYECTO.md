@@ -3,8 +3,8 @@
 ## Identificación
 - Proyecto: Sistema Web de Gestión Bibliotecaria con Control QR
 - Documento Maestro: v1.0
-- Estado general: Preparación inicial completada localmente
-- Semana actual: Aún no iniciada
+- Estado general: Semana 1 completada
+- Semana actual: Semana 1 — Análisis de Requerimientos y Diseño Arquitectónico
 - Última actualización: 09 de septiembre de 2026
 
 ## Fuente de verdad
@@ -27,17 +27,17 @@
 - Ninguna acción pendiente para la preparación inicial.
 
 ## Última fase completada
-Ninguna semana de desarrollo ha sido completada todavía.
+### Semana 1 — Análisis de Requerimientos y Diseño Arquitectónico
+- Reglas de negocio RN-01 a RN-18 revisadas y validadas sin cambios estructurales.
+- Casos de uso CU-01 a CU-10 detallados con flujos, alternativas y trazabilidad.
+- Criterios CA-01 a CA-14 consolidados en la matriz de trazabilidad.
+- Matriz de permisos para Público, `admin` y `asistente` completada.
+- DER definitivo contrastado con el capítulo 8 y el Anexo A del Documento Maestro.
+- Cuatro wireframes iniciales completados y verificados visualmente.
+- Evidencia de cierre guardada en `docs/evidencias/semana_01/SEMANA_01_EVIDENCIA.md`.
 
 ## Próxima fase
-### Semana 1 — Análisis de Requerimientos y Diseño Arquitectónico
-Objetivos principales:
-- revisar y validar reglas de negocio;
-- elaborar casos de uso;
-- consolidar criterios de aceptación;
-- preparar DER definitivo;
-- preparar wireframes iniciales;
-- generar evidencias de análisis y diseño.
+Revisión y aprobación del usuario. No iniciar la Semana 2 hasta recibir aprobación expresa.
 
 ## Decisiones vigentes
 - Backend: Python + Flask.
@@ -57,12 +57,14 @@ Objetivos principales:
 - Se preserva historial mediante desactivación en lugar de borrado físico desde la interfaz.
 
 ## Pendientes abiertos
-- No existen decisiones estructurales ni tareas de preparación abiertas que impidan iniciar la Semana 1 cuando sea solicitada.
+- No existen pendientes técnicos ni decisiones estructurales de la Semana 1.
+- Queda pendiente la revisión y aprobación del usuario antes de iniciar la Semana 2.
+- El campo `Responsable` del Documento Maestro conserva el marcador `[Nombre del estudiante]`; es un dato administrativo no bloqueante que deberá completarse cuando el usuario proporcione el nombre.
 
 ## Historial semanal
 | Semana | Estado | Fecha | Evidencia principal | Commit |
 |---|---|---|---|---|
-| 01 | Pendiente | — | — | — |
+| 01 | Completa | 09/09/2026 | `docs/evidencias/semana_01/SEMANA_01_EVIDENCIA.md` | `docs: completar análisis y diseño de semana 1` |
 | 02 | Pendiente | — | — | — |
 | 03 | Pendiente | — | — | — |
 | 04 | Pendiente | — | — | — |

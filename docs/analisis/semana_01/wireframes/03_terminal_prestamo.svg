@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+  <title id="title">Wireframe de terminal QR y registro de préstamo</title>
+  <desc id="desc">Vista móvil del escáner con ingreso manual y vista de escritorio del formulario de préstamo.</desc>
+  <style>
+    text { font-family: Arial, sans-serif; fill: #20252b; }
+    .label { font-size: 15px; }
+    .small { font-size: 13px; fill: #56616d; }
+    .heading { font-size: 24px; font-weight: 700; }
+    .subheading { font-size: 18px; font-weight: 700; }
+    .frame { fill: #ffffff; stroke: #293746; stroke-width: 2; }
+    .soft { fill: #f4f6f8; stroke: #98a3ad; stroke-width: 1.5; }
+    .accent { fill: #dbe9f6; stroke: #315d84; stroke-width: 1.5; }
+    .button { fill: #315d84; }
+    .button-text { fill: #ffffff; font-size: 14px; font-weight: 700; }
+    .success { fill: #e4f3e7; stroke: #4b8056; stroke-width: 1.5; }
+  </style>
+  <rect width="1440" height="900" fill="#edf0f3"/>
+  <text x="55" y="50" class="heading">Terminal QR y registro de préstamo</text>
+  <text x="55" y="76" class="small">Wireframe inicial — cámara e ingreso manual equivalentes</text>
+
+  <g transform="translate(70 105)">
+    <rect class="frame" width="390" height="740" rx="26"/>
+    <rect x="135" y="14" width="120" height="8" rx="4" fill="#68747f"/>
+    <text x="28" y="66" class="subheading">Terminal de escaneo</text>
+    <text x="28" y="92" class="small">Usuario: Ana Ruiz · asistente</text>
+    <rect x="28" y="120" width="334" height="300" rx="6" fill="#303a43"/>
+    <rect x="79" y="166" width="232" height="208" fill="none" stroke="#ffffff" stroke-width="3" stroke-dasharray="12 8"/>
+    <text x="116" y="286" style="fill:#ffffff;font-size:16px">Apunte al código QR</text>
+    <text x="28" y="458" class="label">O ingrese el código</text>
+    <rect class="soft" x="28" y="474" width="334" height="48" rx="4"/>
+    <text x="44" y="504" class="small">LIB-012-EJ01</text>
+    <rect class="button" x="28" y="538" width="334" height="48" rx="4"/>
+    <text x="146" y="568" class="button-text">Consultar</text>
+    <rect x="28" y="610" width="334" height="76" rx="4" fill="#fff1c9" stroke="#9b791d"/>
+    <text x="44" y="639" class="label" style="font-weight:700">Sin permiso de cámara</text>
+    <text x="44" y="664" class="small">Habilite el permiso o use el código manual.</text>
+    <text x="155" y="716" class="small">Cerrar sesión</text>
+  </g>
+
+  <g transform="translate(500 105)">
+    <rect class="frame" width="870" height="740" rx="8"/>
+    <rect x="0" y="0" width="870" height="68" rx="8" fill="#dfe4e8"/>
+    <text x="28" y="42" class="subheading">Nuevo préstamo</text>
+    <text x="700" y="42" class="small">Paso 2 de 2</text>
+    <rect class="success" x="28" y="92" width="814" height="82" rx="5"/>
+    <text x="48" y="124" class="subheading">Ejemplar disponible</text>
+    <text x="48" y="151" class="small">LIB-012-EJ01 · Don Quijote de la Mancha · Operativo</text>
+
+    <text x="28" y="220" class="subheading">1. Seleccionar lector</text>
+    <rect class="soft" x="28" y="240" width="560" height="46" rx="4"/>
+    <text x="44" y="269" class="small">Buscar por nombres o apellidos</text>
+    <rect class="accent" x="28" y="302" width="560" height="64" rx="4"/>
+    <text x="44" y="329" class="label" style="font-weight:700">Luis Alberto Pérez</text>
+    <text x="44" y="352" class="small">Último registro: Secundaria · 2.º B</text>
+    <rect x="612" y="240" width="230" height="46" rx="4" fill="#ffffff" stroke="#315d84" stroke-width="1.5"/>
+    <text x="646" y="269" class="label">Crear nuevo lector</text>
+
+    <text x="28" y="416" class="subheading">2. Datos del préstamo</text>
+    <text x="28" y="451" class="small">Nivel</text>
+    <rect class="soft" x="28" y="463" width="250" height="44" rx="4"/>
+    <text x="44" y="490" class="label">Secundaria             ▾</text>
+    <text x="302" y="451" class="small">Grado y sección</text>
+    <rect class="soft" x="302" y="463" width="250" height="44" rx="4"/>
+    <text x="318" y="490" class="label">2.º B</text>
+    <text x="576" y="451" class="small">Plazo</text>
+    <rect class="soft" x="576" y="463" width="266" height="44" rx="4"/>
+    <text x="592" y="490" class="label">7 días                 ▾</text>
+
+    <rect class="soft" x="28" y="548" width="814" height="70" rx="4"/>
+    <text x="44" y="576" class="label" style="font-weight:700">Validaciones previas</text>
+    <text x="44" y="601" class="small">Lector activo · 1 préstamo activo · Sin mora · Fecha válida</text>
+    <rect x="470" y="654" width="172" height="48" rx="4" fill="#ffffff" stroke="#315d84" stroke-width="1.5"/>
+    <text x="528" y="684" class="label">Cancelar</text>
+    <rect class="button" x="660" y="654" width="182" height="48" rx="4"/>
+    <text x="688" y="684" class="button-text">Confirmar préstamo</text>
+  </g>
+</svg>

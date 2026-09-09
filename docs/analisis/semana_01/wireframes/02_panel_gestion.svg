@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+  <title id="title">Wireframe de panel administrativo y gestión de catálogo</title>
+  <desc id="desc">Panel exclusivo del administrador con accesos de gestión y una vista de libros y ejemplares.</desc>
+  <style>
+    text { font-family: Arial, sans-serif; fill: #20252b; }
+    .label { font-size: 15px; }
+    .small { font-size: 13px; fill: #56616d; }
+    .heading { font-size: 24px; font-weight: 700; }
+    .subheading { font-size: 18px; font-weight: 700; }
+    .frame { fill: #ffffff; stroke: #293746; stroke-width: 2; }
+    .soft { fill: #f4f6f8; stroke: #98a3ad; stroke-width: 1.5; }
+    .accent { fill: #dbe9f6; stroke: #315d84; stroke-width: 1.5; }
+    .button { fill: #315d84; }
+    .button-text { fill: #ffffff; font-size: 14px; font-weight: 700; }
+    .navtext { fill: #ffffff; font-size: 15px; }
+  </style>
+  <rect width="1440" height="900" fill="#edf0f3"/>
+  <text x="50" y="50" class="heading">Panel administrativo y gestión</text>
+  <text x="50" y="76" class="small">Wireframe inicial — acceso exclusivo de admin</text>
+
+  <g transform="translate(50 105)">
+    <rect class="frame" width="1340" height="740" rx="8"/>
+    <rect x="0" y="0" width="230" height="740" rx="8" fill="#293746"/>
+    <text x="28" y="54" class="navtext" style="font-size:19px;font-weight:700">Biblioteca Quiñones</text>
+    <line x1="20" y1="78" x2="210" y2="78" stroke="#71808e"/>
+    <rect x="16" y="102" width="198" height="44" rx="4" fill="#315d84"/>
+    <text x="32" y="130" class="navtext">Resumen</text>
+    <text x="32" y="184" class="navtext">Libros y ejemplares</text>
+    <text x="32" y="230" class="navtext">Materias</text>
+    <text x="32" y="276" class="navtext">Usuarios</text>
+    <text x="32" y="322" class="navtext">Préstamos</text>
+    <text x="32" y="368" class="navtext">Reportes</text>
+    <text x="32" y="414" class="navtext">Terminal QR</text>
+    <line x1="20" y1="655" x2="210" y2="655" stroke="#71808e"/>
+    <text x="32" y="694" class="navtext">Cerrar sesión</text>
+
+    <g transform="translate(230 0)">
+      <rect width="1110" height="76" fill="#ffffff"/>
+      <text x="32" y="46" class="heading">Administración</text>
+      <text x="876" y="33" class="small">María López</text>
+      <text x="876" y="54" class="small">Rol: admin</text>
+      <line x1="0" y1="76" x2="1110" y2="76" stroke="#b7c0c8"/>
+
+      <text x="32" y="124" class="subheading">Acciones de gestión</text>
+      <g transform="translate(32 146)">
+        <rect class="accent" width="236" height="92" rx="5"/>
+        <text x="20" y="35" class="subheading">Libros y ejemplares</text>
+        <text x="20" y="64" class="small">Crear, editar, activar y QR</text>
+      </g>
+      <g transform="translate(288 146)">
+        <rect class="soft" width="236" height="92" rx="5"/>
+        <text x="20" y="35" class="subheading">Materias</text>
+        <text x="20" y="64" class="small">Lista controlada</text>
+      </g>
+      <g transform="translate(544 146)">
+        <rect class="soft" width="236" height="92" rx="5"/>
+        <text x="20" y="35" class="subheading">Usuarios</text>
+        <text x="20" y="64" class="small">admin y asistente</text>
+      </g>
+      <g transform="translate(800 146)">
+        <rect class="soft" width="236" height="92" rx="5"/>
+        <text x="20" y="35" class="subheading">Reportes</text>
+        <text x="20" y="64" class="small">RPT-01 a RPT-04</text>
+      </g>
+
+      <line x1="32" y1="276" x2="1040" y2="276" stroke="#b7c0c8"/>
+      <text x="32" y="322" class="heading">Libros y ejemplares</text>
+      <rect class="soft" x="32" y="344" width="430" height="44" rx="4"/>
+      <text x="48" y="372" class="small">Buscar título o autor</text>
+      <rect class="button" x="874" y="344" width="164" height="44" rx="4"/>
+      <text x="903" y="372" class="button-text">Nuevo libro</text>
+
+      <g transform="translate(32 420)">
+        <rect class="soft" width="1006" height="212" rx="4"/>
+        <rect width="1006" height="46" fill="#dfe4e8"/>
+        <text x="18" y="29" class="label" style="font-weight:700">Título / autor</text>
+        <text x="360" y="29" class="label" style="font-weight:700">Materia</text>
+        <text x="535" y="29" class="label" style="font-weight:700">Nivel</text>
+        <text x="670" y="29" class="label" style="font-weight:700">Ejemplares</text>
+        <text x="844" y="29" class="label" style="font-weight:700">Acciones</text>
+        <line x1="0" y1="102" x2="1006" y2="102" stroke="#b7c0c8"/>
+        <line x1="0" y1="158" x2="1006" y2="158" stroke="#b7c0c8"/>
+        <text x="18" y="72" class="label">Don Quijote / Cervantes</text><text x="360" y="72" class="label">Literatura</text><text x="535" y="72" class="label">Secundaria</text><text x="704" y="72" class="label">3</text><text x="844" y="72" class="label">Editar · Ver QR</text>
+        <text x="18" y="128" class="label">Ciencia para todos / Torres</text><text x="360" y="128" class="label">Ciencia</text><text x="535" y="128" class="label">Primaria</text><text x="704" y="128" class="label">2</text><text x="844" y="128" class="label">Editar · Ver QR</text>
+        <text x="18" y="184" class="label">Historia del Perú / Ramos</text><text x="360" y="184" class="label">Historia</text><text x="535" y="184" class="label">Ambos</text><text x="704" y="184" class="label">1</text><text x="844" y="184" class="label">Editar · Desactivar</text>
+      </g>
+      <text x="32" y="680" class="small">La desactivación preserva historial. Los códigos QR se administran por ejemplar.</text>
+    </g>
+  </g>
+</svg>
