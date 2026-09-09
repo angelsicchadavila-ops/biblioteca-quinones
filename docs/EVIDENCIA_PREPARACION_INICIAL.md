@@ -5,7 +5,7 @@
 - Proyecto: Sistema Web de Gestión Bibliotecaria con Control QR
 - Fecha de verificación: 09 de septiembre de 2026
 - Alcance: preparación inicial previa a la Semana 1
-- Resultado: preparación local completada; publicación en GitHub pendiente
+- Resultado: preparación inicial completada y publicada en GitHub
 
 ## Estructura validada
 
@@ -33,17 +33,19 @@ Se revisaron el Documento Maestro v1.0 y el modelo lógico. La estructura base, 
 - Repositorio local: inicializado durante esta preparación
 - Rama principal: `main`
 - Identidad Git disponible en la configuración del usuario: sí
-- Commit inicial local: realizado al finalizar la preparación
+- Commit inicial local: `c643a90`
 - Mensaje del commit: `chore: preparar estructura inicial del proyecto`
 
 ## Estado de GitHub
 
-- Remote `origin`: no configurado
+- Remote `origin`: `https://github.com/angelsicchadavila-ops/biblioteca-quinones.git`
+- Remotes adicionales: ninguno
 - GitHub CLI (`gh`): no instalado
-- Autenticación de GitHub: no verificable desde CLI en este momento
-- Push: no realizado, porque no existe un repositorio remoto configurado
+- Autenticación de GitHub: completada mediante Git Credential Manager sin exponer credenciales
+- Push inicial: realizado correctamente
+- Rama publicada: `main`, configurada para seguir `origin/main`
 
-No se creó ni publicó un repositorio remoto sin autorización.
+Antes del primer push se verificó que no existiera un remote anterior, que no hubiera reglas globales de redirección de URL y que el repositorio remoto indicado estuviera accesible y vacío.
 
 ## Revisión de seguridad
 
@@ -59,8 +61,8 @@ La búsqueda de patrones sensibles no detectó credenciales reales en los archiv
 
 ## Acción manual pendiente
 
-Crear un repositorio vacío en GitHub, sin README, licencia ni `.gitignore`, y compartir su URL HTTPS. Con esa URL se podrá configurar `origin`, verificar la autenticación y realizar el primer `push`.
+No queda ninguna acción manual pendiente para completar la preparación inicial.
 
 ## Confirmación final
 
-El proyecto queda preparado localmente para iniciar la Semana 1 cuando sea solicitada expresamente. La falta del remote de GitHub impide únicamente publicar el historial local; no altera la documentación ni inicia el desarrollo semanal.
+El proyecto queda preparado localmente y publicado en GitHub para iniciar la Semana 1 cuando sea solicitada expresamente. Esta preparación no inició ninguna actividad semanal.

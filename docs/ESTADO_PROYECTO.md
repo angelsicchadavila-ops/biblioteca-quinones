@@ -20,10 +20,11 @@
 - `.gitignore` revisado para excluir variables de entorno, secretos, entornos virtuales, cachés y temporales.
 - Commit inicial local creado para la documentación y la estructura base.
 - Evidencia de preparación inicial registrada.
+- Remote `origin` configurado con `https://github.com/angelsicchadavila-ops/biblioteca-quinones.git`.
+- Rama `main` publicada en GitHub y configurada para seguir `origin/main`.
 
 ## Preparación pendiente
-- Crear un repositorio vacío en GitHub y compartir su URL HTTPS para configurar `origin` y realizar el primer `push`.
-- Verificar la autenticación con GitHub al momento de publicar. GitHub CLI (`gh`) no está instalado actualmente.
+- Ninguna acción pendiente para la preparación inicial.
 
 ## Última fase completada
 Ninguna semana de desarrollo ha sido completada todavía.
@@ -56,8 +57,7 @@ Objetivos principales:
 - Se preserva historial mediante desactivación en lugar de borrado físico desde la interfaz.
 
 ## Pendientes abiertos
-- Publicación pendiente: todavía no existe un remote `origin` ni se ha realizado `push` a GitHub.
-- No existen decisiones estructurales abiertas que impidan iniciar la Semana 1 cuando sea solicitada.
+- No existen decisiones estructurales ni tareas de preparación abiertas que impidan iniciar la Semana 1 cuando sea solicitada.
 
 ## Historial semanal
 | Semana | Estado | Fecha | Evidencia principal | Commit |
