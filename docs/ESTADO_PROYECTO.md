@@ -3,9 +3,9 @@
 ## Identificación
 - Proyecto: Sistema Web de Gestión Bibliotecaria con Control QR
 - Documento Maestro: v1.0
-- Estado general: Semana 3 en curso
-- Semana actual: Semana 3 — Flask, autenticación y deployment técnico temprano
-- Última actualización: 09 de septiembre de 2026
+- Estado general: Semana 3 completada; pendiente de revisión del usuario
+- Semana actual: Semana 3 — Flask, autenticación y deployment técnico temprano (completada)
+- Última actualización: 10 de septiembre de 2026
 
 ## Fuente de verdad
 - `docs/Documento_Maestro_Biblioteca_v1.0.docx`
@@ -70,20 +70,22 @@
 ## Pendientes abiertos
 - No existen pendientes técnicos ni decisiones estructurales de la Semana 1.
 - No existen pendientes técnicos ni decisiones estructurales de la Semana 2.
-- La implementación y las pruebas locales de la Semana 3 están completas.
-- Falta configurar y validar el deployment técnico en Render, incluido HTTPS y acceso desde un dispositivo móvil real.
+- La implementación, las pruebas locales y el deployment técnico en Render de la Semana 3 están completos.
+- Render ejecutó correctamente `gunicorn app:app` y publicó `https://biblioteca-quinones.onrender.com` desde el commit `5096cf4`.
+- Las pruebas remotas HTTPS de autenticación, sesiones y permisos finalizaron correctamente.
+- El acceso desde un dispositivo móvil real fue validado y se guardó `06_render_https_movil.png`.
 - El campo `Responsable` del Documento Maestro conserva el marcador `[Nombre del estudiante]`; es un dato administrativo no bloqueante que deberá completarse cuando el usuario proporcione el nombre.
 
 ## Fase actual
 
-Completar el deployment técnico de la Semana 3 en Render y guardar las evidencias de escritorio y móvil. No iniciar la Semana 4 sin revisión y aprobación expresa del usuario.
+Semana 3 completada. Esperar la revisión y aprobación expresa del usuario antes de iniciar la Semana 4.
 
 ## Historial semanal
 | Semana | Estado | Fecha | Evidencia principal | Commit |
 |---|---|---|---|---|
 | 01 | Completa | 09/09/2026 | `docs/evidencias/semana_01/SEMANA_01_EVIDENCIA.md` | `docs: completar análisis y diseño de semana 1` |
 | 02 | Completa | 09/09/2026 | `docs/evidencias/semana_02/SEMANA_02_EVIDENCIA.md` | `db: completar base de datos de semana 2` |
-| 03 | En curso | 09/09/2026 | `docs/evidencias/semana_03/SEMANA_03_EVIDENCIA.md` | Pendiente |
+| 03 | Completa | 10/09/2026 | `docs/evidencias/semana_03/SEMANA_03_EVIDENCIA.md` | `5096cf4` (implementación) + `docs: cerrar semana 3 y registrar deployment` |
 | 04 | Pendiente | — | — | — |
 | 05 | Pendiente | — | — | — |
 | 06 | Pendiente | — | — | — |

@@ -5,7 +5,7 @@
 - Proyecto: Sistema Web de Gestión Bibliotecaria con Control QR.
 - Semana: 03 — Flask, autenticación y deployment técnico temprano.
 - Fecha de inicio: 09 de septiembre de 2026.
-- Estado: En curso; implementación y pruebas locales completadas, deployment en Render pendiente.
+- Estado: Completada; pendiente únicamente de revisión y aprobación del usuario.
 
 ## Arquitectura Flask creada
 
@@ -32,17 +32,36 @@ No se modificó el esquema PostgreSQL ni se desarrollaron catálogo, QR, présta
 
 La verificación previa de Neon obtuvo 7 de 7 comprobaciones. La suite completa obtuvo 19 de 19 pruebas correctas. El detalle está en `RESULTADOS_PRUEBAS.md`.
 
-## Deployment y evidencias visuales pendientes
+## Deployment técnico en Render
 
-El deployment requiere vincular el repositorio de GitHub con una cuenta de Render y configurar `DATABASE_URL` como variable privada. `SECRET_KEY` queda configurada para generación automática por Render.
+- Servicio: `biblioteca-quinones`.
+- Plan: Free, 0.1 CPU y 512 MB RAM.
+- Región: Oregon (US West).
+- Fuente: rama `main` del repositorio GitHub.
+- Commit desplegado: `5096cf4` (`feat: implementar base Flask y autenticacion`).
+- Build: `pip install -r requirements.txt`.
+- Inicio: `gunicorn app:app`.
+- Variables privadas configuradas: `DATABASE_URL`, `SECRET_KEY` y `SESSION_COOKIE_SECURE=true`.
+- Resultado del primer deployment: `Deploy succeeded | Live`.
+- URL pública: https://biblioteca-quinones.onrender.com
+- Validación del health check `/`: HTTP 200.
+- HTTPS: correcto en navegador de escritorio y en pruebas HTTP automatizadas.
 
-Cuando el servicio esté publicado se deben guardar estas capturas en `docs/evidencias/semana_03/capturas/`:
+Render registró el arranque de Gunicorn, la escucha en el puerto asignado y respuestas HTTP 200 sin exponer secretos. La aplicación desplegada autenticó correctamente contra las cuentas existentes en Neon, lo que comprueba la conexión funcional con la base de datos de Semana 2.
 
-1. `01_login_render.png`: URL HTTPS visible y formulario de login completo, sin credenciales escritas.
-2. `02_admin_render.png`: panel administrativo con el texto `Rol verificado: admin`; no mostrar contraseña.
-3. `03_asistente_render.png`: terminal de escaneo con el texto `Rol verificado: asistente`; no mostrar contraseña.
-4. `04_bloqueo_asistente_admin.png`: página de acceso denegado al abrir `/admin` como asistente.
-5. `05_render_https_pc.png`: página de inicio en escritorio con el candado o URL `https://` visible.
-6. `06_render_https_movil.png`: la misma URL abierta en un teléfono real, con la página completa y sin datos sensibles.
+## Evidencias visuales
 
-La URL pública y los resultados definitivos de HTTPS y móvil se registrarán después de completar la configuración externa.
+Capturas guardadas en `docs/evidencias/semana_03/capturas/`:
+
+1. `01_login_render.png`: formulario de login de la instancia pública, sin credenciales escritas.
+2. `02_admin_render.png`: panel con `Rol verificado: admin`.
+3. `03_asistente_render.png`: terminal con `Rol verificado: asistente`.
+4. `04_bloqueo_asistente_admin.png`: respuesta de acceso denegado al intentar abrir `/admin` como asistente.
+5. `05_render_https_pc.png`: página pública desplegada, validada mediante la URL HTTPS registrada en este documento.
+6. `06_render_https_movil.png`: login abierto desde un teléfono Android real; se observa el dominio público, el indicador de conexión segura y el formulario completo sin credenciales.
+
+## Cierre de la semana
+
+Los criterios técnicos de la Semana 3 quedaron cubiertos: aplicación Flask operativa, conexión a Neon, autenticación por hash, sesiones, logout, rutas protegidas, autorización por rol, ejecución con Gunicorn, deployment público por HTTPS y acceso desde escritorio y móvil real.
+
+No se inició ninguna funcionalidad de la Semana 4.

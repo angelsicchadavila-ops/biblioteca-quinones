@@ -30,4 +30,6 @@ Las pruebas funcionales usan las cuentas ya creadas en Neon y leen sus contrase�
 
 El archivo `render.yaml` define el servicio web, la instalación desde `requirements.txt` y el inicio con `gunicorn app:app`. Render solicita `DATABASE_URL` como valor privado y genera `SECRET_KEY` automáticamente.
 
+Instancia técnica de la Semana 3: https://biblioteca-quinones.onrender.com
+
 No se debe copiar `.env` a GitHub ni a Render.

@@ -20,7 +20,7 @@ Comando ejecutado:
 .venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
-Resultado final: 19 de 19 pruebas correctas en 21.628 segundos. La suite reúne 11 pruebas funcionales de Semana 3 y las 8 pruebas estáticas de Semana 2.
+Resultado final: 19 de 19 pruebas correctas. La verificación de cierre del 10 de septiembre de 2026 tardó 17.199 segundos. La suite reúne 11 pruebas funcionales de Semana 3 y las 8 pruebas estáticas de Semana 2.
 
 | Caso de Semana 3 | Resultado |
 |---|---|
@@ -50,8 +50,35 @@ Resultado final: 19 de 19 pruebas correctas en 21.628 segundos. La suite reúne 
 
 Gunicorn se incluye y se configura para Render. Su ejecución directa no se considera una prueba local válida en Windows porque depende del módulo POSIX `fcntl`; la prueba efectiva del comando `gunicorn app:app` debe realizarse durante el deployment Linux en Render.
 
-## Pruebas pendientes del deployment
+## Deployment y pruebas remotas HTTPS
 
-- Respuesta HTTPS en Render.
-- Login y navegación desde navegador de escritorio sobre la URL pública.
-- Acceso desde un dispositivo móvil real.
+El primer deployment de Render finalizó correctamente el 10 de septiembre de 2026. Gunicorn 23.0.0 arrancó con `gunicorn app:app`, el health check recibió HTTP 200 y el servicio quedó disponible en:
+
+https://biblioteca-quinones.onrender.com
+
+Se ejecutó una segunda batería contra la URL pública utilizando sesiones HTTPS y las cuentas de prueba existentes, sin imprimir credenciales:
+
+| Caso remoto | Resultado |
+|---|---|
+| `GET /` | HTTP 200 |
+| `GET /login` | HTTP 200 |
+| `/admin` sin sesión | Redirección efectiva a `/login` |
+| `/escaneo` sin sesión | Redirección efectiva a `/login` |
+| Login inválido | HTTP 401 |
+| Login válido de `admin` | Acceso a `/admin` |
+| `admin` en `/admin` y `/escaneo` | HTTP 200 en ambas rutas |
+| Logout de `admin` | Sesión invalidada y retorno a `/login` |
+| Login válido de `asistente` | Acceso a `/escaneo` |
+| `asistente` en `/admin` | HTTP 403 |
+
+Resultado: todos los controles remotos comprobados fueron correctos. El login efectivo de ambos roles demuestra que la instancia Render se conecta a Neon y verifica los hashes almacenados.
+
+## Validación móvil real
+
+- Dispositivo: teléfono Android real.
+- Navegador móvil: acceso correcto al dominio público de Render.
+- Conexión segura: indicador de seguridad visible en la barra del navegador.
+- Vista comprobada: `/login` completa, legible, adaptada al ancho de pantalla y sin desbordes visibles.
+- Evidencia: `capturas/06_render_https_movil.png`.
+
+Resultado: correcto. Las 13 comprobaciones mínimas solicitadas para la Semana 3 quedaron satisfechas.
