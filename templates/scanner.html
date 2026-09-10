@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Escaneo · Biblioteca Quiñones{% endblock %}
+{% block content %}
+<section class="bg-white border rounded-3 p-4 shadow-sm">
+  <p class="text-primary fw-semibold mb-2">Rol verificado: {{ g.usuario.rol }}</p>
+  <h1 class="h3">Terminal de escaneo</h1>
+  <p class="text-secondary mb-0">
+    El acceso al terminal funciona. La lectura QR, el ingreso manual y las operaciones de préstamo y devolución se implementarán en las semanas 5 y 6.
+  </p>
+</section>
+{% endblock %}

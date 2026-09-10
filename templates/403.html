@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Acceso denegado · Biblioteca Quiñones{% endblock %}
+{% block content %}
+<section class="bg-white border rounded-3 p-4 shadow-sm">
+  <h1 class="h3">Acceso denegado</h1>
+  <p class="text-secondary">Tu cuenta no tiene permiso para abrir esta página.</p>
+  <a class="btn btn-primary" href="{{ url_for('escaneo') if g.usuario else url_for('login') }}">Volver</a>
+</section>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Inicio · Biblioteca Quiñones{% endblock %}
+{% block content %}
+<section class="bg-white border rounded-3 p-4 p-md-5 shadow-sm">
+  <p class="text-primary fw-semibold mb-2">Sistema Web de Gestión Bibliotecaria</p>
+  <h1 class="h2">Acceso técnico de la Semana 3</h1>
+  <p class="text-secondary mb-4">
+    Esta versión valida la conexión con Neon, la autenticación del personal y el control de acceso por rol.
+    El catálogo público se implementará en la Semana 4.
+  </p>
+  {% if g.usuario %}
+    <p>Sesión activa como <strong>{{ g.usuario.rol }}</strong>.</p>
+    <a class="btn btn-primary" href="{{ url_for('escaneo') }}">Ir al área de escaneo</a>
+  {% else %}
+    <a class="btn btn-primary" href="{{ url_for('login') }}">Iniciar sesión del personal</a>
+  {% endif %}
+</section>
+{% endblock %}

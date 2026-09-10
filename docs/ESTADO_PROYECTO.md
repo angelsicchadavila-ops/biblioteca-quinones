@@ -3,8 +3,8 @@
 ## Identificación
 - Proyecto: Sistema Web de Gestión Bibliotecaria con Control QR
 - Documento Maestro: v1.0
-- Estado general: Semana 2 completada
-- Semana actual: Semana 2 — Base de datos PostgreSQL en Neon, pendiente de revisión del usuario
+- Estado general: Semana 3 en curso
+- Semana actual: Semana 3 — Flask, autenticación y deployment técnico temprano
 - Última actualización: 09 de septiembre de 2026
 
 ## Fuente de verdad
@@ -70,19 +70,20 @@
 ## Pendientes abiertos
 - No existen pendientes técnicos ni decisiones estructurales de la Semana 1.
 - No existen pendientes técnicos ni decisiones estructurales de la Semana 2.
-- La Semana 3 no debe iniciarse hasta que el usuario revise y apruebe expresamente la Semana 2.
+- La implementación y las pruebas locales de la Semana 3 están completas.
+- Falta configurar y validar el deployment técnico en Render, incluido HTTPS y acceso desde un dispositivo móvil real.
 - El campo `Responsable` del Documento Maestro conserva el marcador `[Nombre del estudiante]`; es un dato administrativo no bloqueante que deberá completarse cuando el usuario proporcione el nombre.
 
-## Próxima fase
+## Fase actual
 
-Revisión y aprobación de la Semana 2 por parte del usuario. No iniciar la Semana 3 sin autorización expresa.
+Completar el deployment técnico de la Semana 3 en Render y guardar las evidencias de escritorio y móvil. No iniciar la Semana 4 sin revisión y aprobación expresa del usuario.
 
 ## Historial semanal
 | Semana | Estado | Fecha | Evidencia principal | Commit |
 |---|---|---|---|---|
 | 01 | Completa | 09/09/2026 | `docs/evidencias/semana_01/SEMANA_01_EVIDENCIA.md` | `docs: completar análisis y diseño de semana 1` |
 | 02 | Completa | 09/09/2026 | `docs/evidencias/semana_02/SEMANA_02_EVIDENCIA.md` | `db: completar base de datos de semana 2` |
-| 03 | Pendiente | — | — | — |
+| 03 | En curso | 09/09/2026 | `docs/evidencias/semana_03/SEMANA_03_EVIDENCIA.md` | Pendiente |
 | 04 | Pendiente | — | — | — |
 | 05 | Pendiente | — | — | — |
 | 06 | Pendiente | — | — | — |

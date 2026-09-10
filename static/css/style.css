@@ -1,0 +1,19 @@
+body {
+  min-height: 100vh;
+}
+
+.navbar .btn,
+.navbar form {
+  white-space: nowrap;
+}
+
+@media (max-width: 575.98px) {
+  .navbar .container {
+    align-items: flex-start;
+  }
+
+  .navbar .d-flex {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+}
