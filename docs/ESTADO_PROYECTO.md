@@ -3,8 +3,8 @@
 ## Identificación
 - Proyecto: Sistema Web de Gestión Bibliotecaria con Control QR
 - Documento Maestro: v1.0
-- Estado general: Semana 1 completada
-- Semana actual: Semana 1 — Análisis de Requerimientos y Diseño Arquitectónico
+- Estado general: Semana 2 completada
+- Semana actual: Semana 2 — Base de datos PostgreSQL en Neon, pendiente de revisión del usuario
 - Última actualización: 09 de septiembre de 2026
 
 ## Fuente de verdad
@@ -36,8 +36,19 @@
 - Cuatro wireframes iniciales completados y verificados visualmente.
 - Evidencia de cierre guardada en `docs/evidencias/semana_01/SEMANA_01_EVIDENCIA.md`.
 
-## Próxima fase
-Revisión y aprobación del usuario. No iniciar la Semana 2 hasta recibir aprobación expresa.
+## Semana 2 completada
+### Base de datos PostgreSQL en Neon
+- Esquema relacional de las seis entidades preparado en `sql/schema.sql`.
+- Restricciones, índices y triggers de integridad preparados conforme al DER definitivo.
+- Seeder de materias y creación segura de cuentas de prueba preparados.
+- Scripts Psycopg 3 de inicialización, verificación e integridad preparados.
+- Ocho pruebas estáticas ejecutadas correctamente.
+- Entorno virtual local preparado con Psycopg 3, python-dotenv y Werkzeug.
+- Proyecto Neon configurado y esquema inicializado en la rama `production`.
+- Verificación final del esquema: 7 de 7 comprobaciones correctas.
+- Pruebas reales de integridad: 11 de 11 casos correctos, incluida concurrencia con dos conexiones.
+- Captura de la vista `Tables` incorporada y verificada sin credenciales visibles.
+- Evidencias técnicas completadas en `docs/evidencias/semana_02/`.
 
 ## Decisiones vigentes
 - Backend: Python + Flask.
@@ -58,14 +69,19 @@ Revisión y aprobación del usuario. No iniciar la Semana 2 hasta recibir aproba
 
 ## Pendientes abiertos
 - No existen pendientes técnicos ni decisiones estructurales de la Semana 1.
-- Queda pendiente la revisión y aprobación del usuario antes de iniciar la Semana 2.
+- No existen pendientes técnicos ni decisiones estructurales de la Semana 2.
+- La Semana 3 no debe iniciarse hasta que el usuario revise y apruebe expresamente la Semana 2.
 - El campo `Responsable` del Documento Maestro conserva el marcador `[Nombre del estudiante]`; es un dato administrativo no bloqueante que deberá completarse cuando el usuario proporcione el nombre.
+
+## Próxima fase
+
+Revisión y aprobación de la Semana 2 por parte del usuario. No iniciar la Semana 3 sin autorización expresa.
 
 ## Historial semanal
 | Semana | Estado | Fecha | Evidencia principal | Commit |
 |---|---|---|---|---|
 | 01 | Completa | 09/09/2026 | `docs/evidencias/semana_01/SEMANA_01_EVIDENCIA.md` | `docs: completar análisis y diseño de semana 1` |
-| 02 | Pendiente | — | — | — |
+| 02 | Completa | 09/09/2026 | `docs/evidencias/semana_02/SEMANA_02_EVIDENCIA.md` | `db: completar base de datos de semana 2` |
 | 03 | Pendiente | — | — | — |
 | 04 | Pendiente | — | — | — |
 | 05 | Pendiente | — | — | — |
