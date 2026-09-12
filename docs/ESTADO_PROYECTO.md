@@ -3,8 +3,8 @@
 ## Identificación
 - Proyecto: Sistema Web de Gestión Bibliotecaria con Control QR
 - Documento Maestro: v1.0
-- Estado general: Semana 5 en ejecución; implementación y pruebas técnicas locales completas
-- Semana actual: Semana 5 — QR, PDF y escáner móvil (pendiente de deployment y prueba real desde teléfono)
+- Estado general: Semana 5 en ejecución; implementación, pruebas y deployment HTTPS completos
+- Semana actual: Semana 5 — QR, PDF y escáner móvil (pendiente de prueba real desde teléfono y evidencias visuales)
 - Última actualización: 12 de septiembre de 2026
 
 ## Fuente de verdad
@@ -100,6 +100,9 @@
 - Suite completa: 30 de 30 pruebas correctas.
 - PDF real generado y verificado como A4; interfaz comprobada a 390 x 844 px.
 - Conjunto temporal controlado en Neon: libro ID 11 y ejemplares `LIB-011-EJ01` a `LIB-011-EJ03`; 0 lectores y 0 préstamos.
+- Commit técnico `1c2f46f` publicado correctamente en `origin/main`.
+- Render no reaccionó al push pese a conservar Auto-Deploy en `On Commit`; la contingencia `Deploy latest commit` dejó `1c2f46f` en estado `Live`.
+- Aplicación verificada por HTTPS; catálogo operativo y terminal protegido frente a acceso anónimo.
 - Evidencias técnicas disponibles en `docs/evidencias/semana_05/`.
 
 ## Pendientes abiertos
@@ -109,13 +112,13 @@
 - La implementación, las pruebas, las evidencias y el deployment de la Semana 4 están completos.
 - No existen pendientes bloqueantes dentro del alcance de la Semana 4.
 - Observación no bloqueante: el Auto-Deploy de Render está configurado como `On Commit`, pero el webhook no reaccionó al push de Semana 4; el deployment se completó correctamente mediante `Deploy latest commit`.
-- Semana 5: pendiente realizar commit/push, observar Auto-Deploy, verificar HTTPS y completar la prueba real de cámara y lectura QR desde teléfono.
+- Semana 5: pendiente completar la prueba real de cámara y lectura QR desde teléfono y guardar las capturas obligatorias.
 - Semana 5: el conjunto `TEMP-SEMANA-05` debe conservarse hasta la prueba móvil y eliminarse después de guardar las evidencias.
 - El campo `Responsable` del Documento Maestro conserva el marcador `[Nombre del estudiante]`; es un dato administrativo no bloqueante que deberá completarse cuando el usuario proporcione el nombre.
 
 ## Fase actual
 
-Semana 5 en ejecución. La parte técnica local está completa; no cerrarla ni iniciar Semana 6 hasta terminar deployment, prueba QR real en móvil, capturas y limpieza de datos temporales.
+Semana 5 en ejecución. La implementación, las pruebas y el deployment están completos; no cerrarla ni iniciar Semana 6 hasta terminar la prueba QR real en móvil, las capturas y la limpieza de datos temporales.
 
 ## Historial semanal
 | Semana | Estado | Fecha | Evidencia principal | Commit |
@@ -124,7 +127,7 @@ Semana 5 en ejecución. La parte técnica local está completa; no cerrarla ni i
 | 02 | Completa | 09/09/2026 | `docs/evidencias/semana_02/SEMANA_02_EVIDENCIA.md` | `db: completar base de datos de semana 2` |
 | 03 | Completa | 10/09/2026 | `docs/evidencias/semana_03/SEMANA_03_EVIDENCIA.md` | `5096cf4` (implementación) + `docs: cerrar semana 3 y registrar deployment` |
 | 04 | Completa; pendiente de aprobación del usuario | 12/09/2026 | `docs/evidencias/semana_04/SEMANA_04_EVIDENCIA.md` | `a190a88` + `c30945d` + cierre visual |
-| 05 | En ejecución | 12/09/2026 | `docs/evidencias/semana_05/SEMANA_05_EVIDENCIA.md` | Pendiente |
+| 05 | En ejecución | 12/09/2026 | `docs/evidencias/semana_05/SEMANA_05_EVIDENCIA.md` | `1c2f46f` (implementación) |
 | 06 | Pendiente | — | — | — |
 | 07 | Pendiente | — | — | — |
 | 08 | Pendiente | — | — | — |

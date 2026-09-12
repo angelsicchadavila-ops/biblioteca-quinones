@@ -5,7 +5,7 @@
 - Proyecto: Sistema Web de Gestión Bibliotecaria con Control QR.
 - Semana: 05 — QR, PDF y escáner móvil.
 - Fecha de inicio: 12 de septiembre de 2026.
-- Estado: implementación y pruebas técnicas locales completas; pendiente de deployment, prueba real desde teléfono, capturas obligatorias y limpieza del conjunto temporal.
+- Estado: implementación, pruebas técnicas y deployment HTTPS completos; pendiente de prueba real desde teléfono, capturas obligatorias y limpieza del conjunto temporal.
 - Documento oficial: `docs/Documento_Maestro_Biblioteca_v1.0.docx`.
 
 ## Resumen técnico
@@ -86,12 +86,18 @@ El detalle reproducible se encuentra en `RESULTADOS_PRUEBAS.md`.
 
 Pendientes antes de declarar cerrada la semana:
 
-1. Commit y push de la implementación.
-2. Confirmar que Render inicia el Auto-Deploy `On Commit` o documentar la contingencia.
-3. Verificar la versión publicada por HTTPS.
-4. Abrir `/escaneo` desde un teléfono y conceder permiso de cámara manualmente.
-5. Leer `QR_LIB-011-EJ01.png` mostrado en otra pantalla o impreso.
-6. Guardar las capturas obligatorias.
-7. Eliminar el conjunto `TEMP-SEMANA-05` después de la prueba y volver a verificar Neon.
+Completado:
+
+- Commit técnico `1c2f46f` y push correcto a `origin/main`.
+- Auto-Deploy comprobado en `On Commit` sin modificarlo; Render no reaccionó al push, por lo que se documentó la reincidencia.
+- Contingencia `Deploy latest commit` ejecutada: `Deploy succeeded | Live` en 44,7 segundos.
+- Aplicación verificada por HTTPS; el catálogo respondió y el acceso anónimo a `/escaneo` redirigió al login.
+
+Pendiente:
+
+1. Abrir `/escaneo` desde un teléfono y conceder permiso de cámara manualmente.
+2. Leer `QR_LIB-011-EJ01.png` mostrado en otra pantalla o impreso.
+3. Guardar las capturas obligatorias.
+4. Eliminar el conjunto `TEMP-SEMANA-05` después de la prueba y volver a verificar Neon.
 
 La Semana 5 no está cerrada mientras estos puntos permanezcan pendientes.

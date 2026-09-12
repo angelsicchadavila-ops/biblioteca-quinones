@@ -4,7 +4,7 @@
 
 - Fecha: 12 de septiembre de 2026.
 - Resultado automatizado final: 30 de 30 pruebas correctas en 163,202 segundos.
-- Estado: validación técnica local completa; quedan pendientes el deployment de esta versión y la prueba real de cámara y lectura QR desde un teléfono.
+- Estado: validación técnica y deployment HTTPS completos; quedan pendientes la prueba real de cámara y lectura QR desde un teléfono y sus capturas.
 - Base de datos: PostgreSQL en Neon, con conexión Psycopg 3 y zona horaria `America/Lima`.
 
 ## Suite automatizada
@@ -47,8 +47,8 @@ No quedaron fallos después de corregir una regresión de texto en el encabezado
 | 17 | Público/no autenticado | Correcto; terminal redirige y API responde JSON HTTP 401 |
 | 18 | Doble lectura rápida | Correcto; bloqueo de 3 segundos y exclusión mientras una consulta está en curso |
 | 19 | Responsive | Correcto en vista local real de 390 x 844 px, sin desbordamiento horizontal |
-| 20 | Deployment de Semana 5 | Pendiente de push y verificación en Render |
-| 21 | HTTPS de Semana 5 | Pendiente de verificar después del deployment |
+| 20 | Deployment de Semana 5 | Correcto; commit `1c2f46f`, build correcto y estado `Live` en 44,7 s |
+| 21 | HTTPS de Semana 5 | Correcto; catálogo HTTP 200 y `/escaneo` protegido redirige al login |
 | 22 | Cámara real desde teléfono | Pendiente de intervención del usuario |
 | 23 | Lectura de QR real desde teléfono | Pendiente de intervención del usuario |
 
@@ -126,6 +126,18 @@ Para la prueba móvil se conserva deliberadamente un conjunto controlado:
 La comprobación posterior confirmó exactamente 1 libro, 3 ejemplares, 0 lectores y 0 préstamos. El verificador histórico de Semana 2 informa 6/7 porque fue diseñado para una base sin catálogo; su único control no cumplido corresponde a estos datos temporales intencionales, no a residuos de la suite.
 
 El conjunto temporal se eliminará después de completar y documentar la prueba móvil.
+
+## Deployment y HTTPS
+
+- Commit técnico: `1c2f46f` (`feat: implementar QR PDF y escaner movil semana 5`).
+- Push: correcto a `origin/main`.
+- Auto-Deploy: configurado en `On Commit`, verificado sin modificar la opción.
+- Incidencia: Render no creó un deployment automático después del push, repitiendo el comportamiento observado en Semana 4.
+- Contingencia aplicada: `Deploy latest commit`, sin revelar ni usar el Deploy Hook.
+- Resultado: `Deploy succeeded | Live` en 44,7 segundos.
+- Dependencias nuevas instaladas correctamente en Render: `qrcode 8.2`, `reportlab 4.5.1` y `Pillow 12.3.0`.
+- URL verificada: `https://biblioteca-quinones.onrender.com/` respondió por HTTPS y mostró el catálogo temporal correcto.
+- Protección verificada: el acceso anónimo a `/escaneo` redirigió a `/login`.
 
 ## Controles complementarios
 
