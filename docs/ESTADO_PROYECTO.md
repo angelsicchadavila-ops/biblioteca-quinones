@@ -3,9 +3,9 @@
 ## Identificación
 - Proyecto: Sistema Web de Gestión Bibliotecaria con Control QR
 - Documento Maestro: v1.0
-- Estado general: Semana 3 completada; pendiente de revisión del usuario
-- Semana actual: Semana 3 — Flask, autenticación y deployment técnico temprano (completada)
-- Última actualización: 10 de septiembre de 2026
+- Estado general: Semana 4 completada técnicamente; pendiente de capturas manuales y revisión del usuario
+- Semana actual: Semana 4 — Catálogo, materias y ejemplares (completada técnicamente)
+- Última actualización: 12 de septiembre de 2026
 
 ## Fuente de verdad
 - `docs/Documento_Maestro_Biblioteca_v1.0.docx`
@@ -67,18 +67,36 @@
 - La disponibilidad se deriva del préstamo activo y del estado físico/activo del ejemplar.
 - Se preserva historial mediante desactivación en lugar de borrado físico desde la interfaz.
 
+## Semana 4 completada técnicamente
+
+### Catálogo, materias y ejemplares
+
+- Gestión administrativa de materias con normalización, validación, edición y activación lógica.
+- Gestión administrativa de libros con autor, materia, nivel e ISBN/editorial opcional.
+- Gestión individual y por lotes de ejemplares físicos.
+- Códigos automáticos y estables con formato `LIB-XXX-EJYY`.
+- Disponibilidad derivada sin agregar campos al esquema.
+- Catálogo público con búsqueda por título/autor y filtros combinables por materia y nivel.
+- Inventario diferenciado en disponibles, prestados, dañados e inactivos.
+- Rutas administrativas protegidas para `admin`; el `asistente` recibe HTTP 403.
+- Suite completa: 20 de 20 pruebas correctas.
+- Neon verificado: 7 de 7 controles y sin datos temporales residuales.
+- Deployment del commit `a190a88` completado en Render con estado `Deploy succeeded | Live`.
+- URL pública verificada por HTTPS con HTTP 200.
+- Evidencias técnicas guardadas en `docs/evidencias/semana_04/`.
+
 ## Pendientes abiertos
 - No existen pendientes técnicos ni decisiones estructurales de la Semana 1.
 - No existen pendientes técnicos ni decisiones estructurales de la Semana 2.
 - La implementación, las pruebas locales y el deployment técnico en Render de la Semana 3 están completos.
-- Render ejecutó correctamente `gunicorn app:app` y publicó `https://biblioteca-quinones.onrender.com` desde el commit `5096cf4`.
-- Las pruebas remotas HTTPS de autenticación, sesiones y permisos finalizaron correctamente.
-- El acceso desde un dispositivo móvil real fue validado y se guardó `06_render_https_movil.png`.
+- La implementación, las pruebas y el deployment de la Semana 4 están completos.
+- Las capturas de Semana 4 deben guardarse manualmente siguiendo `docs/evidencias/semana_04/capturas/INSTRUCCIONES_CAPTURAS.md`.
+- El Auto-Deploy de Render está configurado como `On Commit`, pero el webhook no reaccionó al push de Semana 4; el deployment se completó correctamente mediante `Deploy latest commit`.
 - El campo `Responsable` del Documento Maestro conserva el marcador `[Nombre del estudiante]`; es un dato administrativo no bloqueante que deberá completarse cuando el usuario proporcione el nombre.
 
 ## Fase actual
 
-Semana 3 completada. Esperar la revisión y aprobación expresa del usuario antes de iniciar la Semana 4.
+Semana 4 completada técnicamente. El usuario debe guardar las capturas enumeradas en `docs/evidencias/semana_04/capturas/INSTRUCCIONES_CAPTURAS.md`, revisar el resultado y aprobar expresamente la semana. No iniciar la Semana 5 antes de esa aprobación.
 
 ## Historial semanal
 | Semana | Estado | Fecha | Evidencia principal | Commit |
@@ -86,7 +104,7 @@ Semana 3 completada. Esperar la revisión y aprobación expresa del usuario ante
 | 01 | Completa | 09/09/2026 | `docs/evidencias/semana_01/SEMANA_01_EVIDENCIA.md` | `docs: completar análisis y diseño de semana 1` |
 | 02 | Completa | 09/09/2026 | `docs/evidencias/semana_02/SEMANA_02_EVIDENCIA.md` | `db: completar base de datos de semana 2` |
 | 03 | Completa | 10/09/2026 | `docs/evidencias/semana_03/SEMANA_03_EVIDENCIA.md` | `5096cf4` (implementación) + `docs: cerrar semana 3 y registrar deployment` |
-| 04 | Pendiente | — | — | — |
+| 04 | Completa técnicamente; capturas manuales pendientes | 12/09/2026 | `docs/evidencias/semana_04/SEMANA_04_EVIDENCIA.md` | `a190a88` + commit documental de cierre |
 | 05 | Pendiente | — | — | — |
 | 06 | Pendiente | — | — | — |
 | 07 | Pendiente | — | — | — |
