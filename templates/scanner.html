@@ -1,11 +1,62 @@
 {% extends "base.html" %}
-{% block title %}Escaneo · Biblioteca Quiñones{% endblock %}
+{% block title %}Escaneo de ejemplares · Biblioteca Quiñones{% endblock %}
 {% block content %}
-<section class="bg-white border rounded-3 p-4 shadow-sm">
-  <p class="text-primary fw-semibold mb-2">Rol verificado: {{ g.usuario.rol }}</p>
-  <h1 class="h3">Terminal de escaneo</h1>
-  <p class="text-secondary mb-0">
-    El acceso al terminal funciona. La lectura QR, el ingreso manual y las operaciones de préstamo y devolución se implementarán en las semanas 5 y 6.
-  </p>
-</section>
+<div class="terminal-escaneo mx-auto">
+  <div class="mb-4">
+    <p class="text-primary fw-semibold mb-1">Rol verificado: {{ g.usuario.rol }}</p>
+    <h1 class="h3 mb-2">Identificar ejemplar</h1>
+    <p class="text-secondary mb-0">Escanea la etiqueta QR o escribe el código impreso. Esta pantalla solo identifica el ejemplar; no registra préstamos ni devoluciones.</p>
+  </div>
+
+  <div id="mensaje-escaneo" class="alert alert-info" role="status" aria-live="polite">
+    La cámara permanece apagada hasta que pulses “Iniciar cámara”.
+  </div>
+
+  <div class="row g-4">
+    <div class="col-12 col-lg-7">
+      <section class="bg-white border rounded-3 p-3 p-sm-4 shadow-sm h-100">
+        <h2 class="h5">Cámara</h2>
+        <p class="text-secondary small">Usaremos preferentemente la cámara trasera. Si no está disponible o niegas el permiso, utiliza el ingreso manual.</p>
+        <div id="qr-reader" class="lector-qr mb-3" aria-label="Vista de la cámara para escanear QR"></div>
+        <div class="d-grid d-sm-flex gap-2">
+          <button id="iniciar-camara" class="btn btn-primary btn-lg flex-fill" type="button">Iniciar cámara</button>
+          <button id="detener-camara" class="btn btn-outline-secondary btn-lg flex-fill" type="button" disabled>Detener cámara</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="col-12 col-lg-5">
+      <section class="bg-white border rounded-3 p-3 p-sm-4 shadow-sm mb-4">
+        <h2 class="h5">Ingreso manual</h2>
+        <form id="form-codigo-manual" novalidate>
+          <label class="form-label" for="codigo-manual">Código del ejemplar</label>
+          <input class="form-control form-control-lg text-uppercase" id="codigo-manual" name="codigo" type="text" maxlength="50" placeholder="LIB-001-EJ01" autocomplete="off" required>
+          <button class="btn btn-dark btn-lg w-100 mt-3" type="submit">Buscar ejemplar</button>
+        </form>
+      </section>
+
+      <section id="ficha-ejemplar" class="bg-white border rounded-3 p-3 p-sm-4 shadow-sm d-none" aria-live="polite">
+        <div class="d-flex justify-content-between align-items-start gap-2 mb-3">
+          <div>
+            <p class="text-secondary small mb-1">Ejemplar identificado</p>
+            <h2 id="ficha-titulo" class="h5 mb-0"></h2>
+          </div>
+          <span id="ficha-estado" class="badge fs-6"></span>
+        </div>
+        <dl class="ficha-datos mb-0">
+          <div><dt>Código</dt><dd id="ficha-codigo"></dd></div>
+          <div><dt>Autor</dt><dd id="ficha-autor"></dd></div>
+          <div><dt>Materia</dt><dd id="ficha-materia"></dd></div>
+          <div><dt>Nivel</dt><dd id="ficha-nivel"></dd></div>
+          <div><dt>Condición física</dt><dd id="ficha-condicion"></dd></div>
+        </dl>
+        <p class="small text-secondary mt-3 mb-0">La identificación no modifica el inventario ni el historial.</p>
+      </section>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script src="{{ url_for('static', filename='js/qr_scanner.js') }}"></script>
 {% endblock %}

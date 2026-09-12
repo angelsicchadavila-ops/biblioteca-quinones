@@ -66,6 +66,49 @@ body {
   font-weight: 700;
 }
 
+.terminal-escaneo {
+  max-width: 68rem;
+}
+
+.lector-qr {
+  min-height: 18rem;
+  overflow: hidden;
+  background: #111827;
+  border-radius: 0.75rem;
+}
+
+.lector-qr:empty::before {
+  content: "La vista de cámara aparecerá aquí";
+  display: grid;
+  min-height: 18rem;
+  place-items: center;
+  padding: 1rem;
+  color: #cbd5e1;
+  text-align: center;
+}
+
+.lector-qr video,
+.lector-qr canvas {
+  max-width: 100%;
+}
+
+.ficha-datos div {
+  display: grid;
+  grid-template-columns: minmax(6.5rem, 0.8fr) 1.2fr;
+  gap: 0.75rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.ficha-datos dt,
+.ficha-datos dd {
+  margin: 0;
+}
+
+.ficha-datos dd {
+  overflow-wrap: anywhere;
+}
+
 @media (max-width: 575.98px) {
   .navbar .container {
     align-items: flex-start;
@@ -78,5 +121,15 @@ body {
 
   .inventario-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lector-qr,
+  .lector-qr:empty::before {
+    min-height: 15rem;
+  }
+
+  .ficha-datos div {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
   }
 }

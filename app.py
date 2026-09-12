@@ -15,9 +15,11 @@ from flask import (
     abort,
     flash,
     g,
+    jsonify,
     redirect,
     render_template,
     request,
+    send_file,
     session,
     url_for,
 )
@@ -33,6 +35,13 @@ from utils.catalogo import (
     normalizar_texto,
 )
 from utils.db import iniciar_bd, obtener_bd
+from utils.escaneo import (
+    codigo_valido,
+    consultar_ejemplar_por_codigo,
+    normalizar_codigo,
+)
+from utils.pdf_exporter import generar_pdf_etiquetas
+from utils.qr_generator import generar_qr_png
 
 
 RAIZ_PROYECTO = Path(__file__).resolve().parent
@@ -115,6 +124,23 @@ def crear_app(configuracion_pruebas: dict | None = None) -> Flask:
             return protegida
 
         return decorador
+
+    def api_login_requerido(vista: Callable[P, R]) -> Callable[P, R]:
+        """Responde JSON 401 cuando una API interna no tiene sesión válida."""
+
+        @wraps(vista)
+        def protegida(*args: P.args, **kwargs: P.kwargs):
+            if g.usuario is None:
+                return jsonify(
+                    ok=False,
+                    error={
+                        "codigo": "autenticacion_requerida",
+                        "mensaje": "Inicia sesión para usar el terminal de escaneo.",
+                    },
+                ), 401
+            return vista(*args, **kwargs)
+
+        return protegida
 
     def generar_token_csrf() -> str:
         token = session.get("csrf_token")
@@ -550,10 +576,110 @@ def crear_app(configuracion_pruebas: dict | None = None) -> Flask:
         flash(f"Ejemplar {accion} correctamente.", "success")
         return redirect(url_for("ejemplares_admin", libro_id=fila["libro_id"]))
 
+    def obtener_etiquetas(ids: list[int]) -> list[dict]:
+        filas = obtener_bd().execute(
+            """
+            SELECT e.id, e.codigo_qr, l.titulo
+              FROM ejemplares e
+              JOIN libros l ON l.id = e.libro_id
+             WHERE e.id = ANY(%s)
+            """,
+            (ids,),
+        ).fetchall()
+        por_id = {fila["id"]: fila for fila in filas}
+        return [por_id[ejemplar_id] for ejemplar_id in ids if ejemplar_id in por_id]
+
+    @app.get("/admin/ejemplares/<int:ejemplar_id>/qr.png")
+    @rol_requerido("admin")
+    def qr_ejemplar(ejemplar_id: int):
+        etiquetas = obtener_etiquetas([ejemplar_id])
+        if not etiquetas:
+            abort(404)
+        ejemplar = etiquetas[0]
+        return send_file(
+            generar_qr_png(ejemplar["codigo_qr"]),
+            mimetype="image/png",
+            download_name=f"qr-{ejemplar['codigo_qr']}.png",
+            max_age=0,
+        )
+
+    @app.get("/admin/ejemplares/<int:ejemplar_id>/etiqueta.pdf")
+    @rol_requerido("admin")
+    def etiqueta_ejemplar_pdf(ejemplar_id: int):
+        etiquetas = obtener_etiquetas([ejemplar_id])
+        if not etiquetas:
+            abort(404)
+        ejemplar = etiquetas[0]
+        return send_file(
+            generar_pdf_etiquetas(etiquetas),
+            mimetype="application/pdf",
+            as_attachment=True,
+            download_name=f"etiqueta-{ejemplar['codigo_qr']}.pdf",
+        )
+
+    @app.post("/admin/etiquetas-qr.pdf")
+    @rol_requerido("admin")
+    def etiquetas_qr_pdf():
+        valores = request.form.getlist("ejemplar_id")
+        libro_id = request.form.get("libro_id", "").strip()
+        ids = list(dict.fromkeys(int(valor) for valor in valores if valor.isdigit()))
+        if not ids:
+            flash("Selecciona al menos un ejemplar para generar el PDF.", "warning")
+            if libro_id.isdigit():
+                return redirect(url_for("ejemplares_admin", libro_id=int(libro_id)))
+            return redirect(url_for("libros_admin"))
+        etiquetas = obtener_etiquetas(ids)
+        if len(etiquetas) != len(ids):
+            abort(404)
+        return send_file(
+            generar_pdf_etiquetas(etiquetas),
+            mimetype="application/pdf",
+            as_attachment=True,
+            download_name="etiquetas-qr.pdf",
+        )
+
     @app.get("/escaneo")
     @login_requerido
     def escaneo():
         return render_template("scanner.html")
+
+    @app.get("/api/ejemplar/<path:codigo_qr>")
+    @api_login_requerido
+    def api_ejemplar(codigo_qr: str):
+        codigo = normalizar_codigo(codigo_qr)
+        if not codigo_valido(codigo):
+            return jsonify(
+                ok=False,
+                error={
+                    "codigo": "codigo_invalido",
+                    "mensaje": "El código del ejemplar no tiene un formato válido.",
+                },
+            ), 400
+
+        ejemplar = consultar_ejemplar_por_codigo(obtener_bd(), codigo)
+        if ejemplar is None:
+            return jsonify(
+                ok=False,
+                error={
+                    "codigo": "codigo_no_registrado",
+                    "mensaje": "Código no registrado.",
+                },
+            ), 404
+
+        return jsonify(
+            ok=True,
+            ejemplar={
+                "codigo_qr": ejemplar["codigo_qr"],
+                "titulo": ejemplar["titulo"],
+                "autor": ejemplar["autor"],
+                "materia": ejemplar["materia"],
+                "nivel": ejemplar["nivel"],
+                "estado_fisico": ejemplar["estado_fisico"],
+                "activo": ejemplar["activo"],
+                "libro_activo": ejemplar["libro_activo"],
+                "disponibilidad": ejemplar["disponibilidad"],
+            },
+        )
 
     @app.errorhandler(403)
     def acceso_denegado(_error):

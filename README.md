@@ -1,6 +1,6 @@
 # Sistema Web de Gestión Bibliotecaria con Control QR
 
-Aplicación académica de la Biblioteca Quiñones. La versión actual corresponde a la Semana 4 e incorpora el catálogo público, los filtros por materia y nivel, y la administración de materias, libros y ejemplares físicos sobre PostgreSQL en Neon.
+Aplicación académica de la Biblioteca Quiñones. La versión actual corresponde al desarrollo técnico de la Semana 5 e incorpora identificación QR, etiquetas PDF A4 y un terminal móvil de escaneo, además del catálogo y la administración construidos en semanas anteriores.
 
 ## Funciones disponibles
 
@@ -10,6 +10,10 @@ Aplicación académica de la Biblioteca Quiñones. La versión actual correspond
 - Gestión administrativa de materias en `/admin/materias`.
 - Gestión administrativa de libros y ejemplares en `/admin/libros`.
 - Generación automática de códigos de ejemplar con el formato `LIB-XXX-EJYY`.
+- Generación y reimpresión administrativa de QR estables sin archivos temporales.
+- PDF A4 con una cuadrícula de 21 etiquetas por página mediante ReportLab.
+- Terminal autenticado en `/escaneo`, con cámara trasera preferida e ingreso manual equivalente.
+- API interna `GET /api/ejemplar/<codigo_qr>` para identificar ejemplares sin modificar inventario ni historial.
 - Activación y desactivación lógica para conservar el historial.
 - Autenticación y permisos diferenciados para `admin` y `asistente`.
 

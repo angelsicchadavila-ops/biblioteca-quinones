@@ -3,8 +3,8 @@
 ## Identificación
 - Proyecto: Sistema Web de Gestión Bibliotecaria con Control QR
 - Documento Maestro: v1.0
-- Estado general: Semana 4 completa; pendiente de revisión y aprobación expresa del usuario
-- Semana actual: Semana 4 — Catálogo, materias y ejemplares (completa)
+- Estado general: Semana 5 en ejecución; implementación y pruebas técnicas locales completas
+- Semana actual: Semana 5 — QR, PDF y escáner móvil (pendiente de deployment y prueba real desde teléfono)
 - Última actualización: 12 de septiembre de 2026
 
 ## Fuente de verdad
@@ -86,6 +86,22 @@
 - Evidencias técnicas guardadas en `docs/evidencias/semana_04/`.
 - Seis capturas obligatorias guardadas con los nombres previstos, revisadas visualmente y sin secretos visibles.
 
+## Semana 5 en ejecución
+
+### QR PDF y escáner móvil
+
+- Generación QR en memoria con `qrcode`, contenido idéntico al código estable del ejemplar y sin archivos temporales de servidor.
+- Reimpresión administrativa individual sin crear registros ni modificar `codigo_qr`, estado físico o historial.
+- PDF ReportLab en A4 con cuadrícula de 3 x 7 y capacidad de 21 etiquetas por página.
+- Selección administrativa de uno o varios ejemplares para generar PDF.
+- Endpoint autenticado `GET /api/ejemplar/<codigo_qr>` con respuestas JSON 200, 400, 401 y 404.
+- Terminal `/escaneo` con `html5-qrcode`, cámara trasera preferida, inicio bajo acción del usuario, detención/reinicio, ingreso manual y bloqueo de doble lectura.
+- Ficha de identificación para estados Disponible, Prestado, Dañado e Inactivo, sin acciones de Semana 6.
+- Suite completa: 30 de 30 pruebas correctas.
+- PDF real generado y verificado como A4; interfaz comprobada a 390 x 844 px.
+- Conjunto temporal controlado en Neon: libro ID 11 y ejemplares `LIB-011-EJ01` a `LIB-011-EJ03`; 0 lectores y 0 préstamos.
+- Evidencias técnicas disponibles en `docs/evidencias/semana_05/`.
+
 ## Pendientes abiertos
 - No existen pendientes técnicos ni decisiones estructurales de la Semana 1.
 - No existen pendientes técnicos ni decisiones estructurales de la Semana 2.
@@ -93,11 +109,13 @@
 - La implementación, las pruebas, las evidencias y el deployment de la Semana 4 están completos.
 - No existen pendientes bloqueantes dentro del alcance de la Semana 4.
 - Observación no bloqueante: el Auto-Deploy de Render está configurado como `On Commit`, pero el webhook no reaccionó al push de Semana 4; el deployment se completó correctamente mediante `Deploy latest commit`.
+- Semana 5: pendiente realizar commit/push, observar Auto-Deploy, verificar HTTPS y completar la prueba real de cámara y lectura QR desde teléfono.
+- Semana 5: el conjunto `TEMP-SEMANA-05` debe conservarse hasta la prueba móvil y eliminarse después de guardar las evidencias.
 - El campo `Responsable` del Documento Maestro conserva el marcador `[Nombre del estudiante]`; es un dato administrativo no bloqueante que deberá completarse cuando el usuario proporcione el nombre.
 
 ## Fase actual
 
-Semana 4 completa y lista para revisión. Solo resta la aprobación expresa del usuario. No iniciar la Semana 5 antes de esa aprobación.
+Semana 5 en ejecución. La parte técnica local está completa; no cerrarla ni iniciar Semana 6 hasta terminar deployment, prueba QR real en móvil, capturas y limpieza de datos temporales.
 
 ## Historial semanal
 | Semana | Estado | Fecha | Evidencia principal | Commit |
@@ -106,7 +124,7 @@ Semana 4 completa y lista para revisión. Solo resta la aprobación expresa del 
 | 02 | Completa | 09/09/2026 | `docs/evidencias/semana_02/SEMANA_02_EVIDENCIA.md` | `db: completar base de datos de semana 2` |
 | 03 | Completa | 10/09/2026 | `docs/evidencias/semana_03/SEMANA_03_EVIDENCIA.md` | `5096cf4` (implementación) + `docs: cerrar semana 3 y registrar deployment` |
 | 04 | Completa; pendiente de aprobación del usuario | 12/09/2026 | `docs/evidencias/semana_04/SEMANA_04_EVIDENCIA.md` | `a190a88` + `c30945d` + cierre visual |
-| 05 | Pendiente | — | — | — |
+| 05 | En ejecución | 12/09/2026 | `docs/evidencias/semana_05/SEMANA_05_EVIDENCIA.md` | Pendiente |
 | 06 | Pendiente | — | — | — |
 | 07 | Pendiente | — | — | — |
 | 08 | Pendiente | — | — | — |
