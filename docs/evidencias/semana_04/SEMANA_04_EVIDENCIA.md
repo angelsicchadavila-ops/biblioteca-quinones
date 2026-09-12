@@ -5,7 +5,7 @@
 - Proyecto: Sistema Web de Gestión Bibliotecaria con Control QR.
 - Semana: 04 — Catálogo, materias y ejemplares.
 - Fecha de cierre técnico: 12 de septiembre de 2026.
-- Estado: Implementación, pruebas y deployment completados; capturas manuales pendientes de guardar.
+- Estado: Semana 4 completa; pendiente únicamente de revisión y aprobación expresa del usuario.
 - Documento oficial: `docs/Documento_Maestro_Biblioteca_v1.0.docx`.
 
 ## Resumen técnico
@@ -58,7 +58,7 @@ La disponibilidad se deriva en cada consulta con esta prioridad:
 - Combinación simultánea de texto, materia y nivel.
 - Exposición exclusiva de títulos activos asociados a materias activas.
 - Conteos de inventario sin nombres de lectores, historial ni información interna del préstamo.
-- Interfaz Bootstrap 5 revisada en escritorio; la captura móvil debe guardarse manualmente.
+- Interfaz Bootstrap 5 verificada en escritorio y móvil.
 
 ## Control de acceso
 
@@ -83,6 +83,7 @@ El detalle está en `docs/evidencias/semana_04/RESULTADOS_PRUEBAS.md`.
 
 - Repositorio y rama: `angelsicchadavila-ops/biblioteca-quinones`, `main`.
 - Commit de implementación: `a190a88` (`feat: implementar catalogo y ejemplares`).
+- Commit documental y de verificación final: `c30945d` (`docs: cerrar semana 4 y registrar deployment`).
 - Auto-Deploy configurado: `On Commit`.
 - Incidencia observada: el webhook no inició el deployment después del push.
 - Acción aplicada: `Manual Deploy` → `Deploy latest commit`, sin cambiar configuración ni secretos.
@@ -116,14 +117,23 @@ También se comprobaron RN-01, RN-02, RN-09, RN-10, RN-11, RN-13 y RN-16.
 - `tests/test_catalogo_semana4.py`.
 - `README.md`.
 
-## Evidencia visual pendiente
+## Evidencia visual verificada
 
-La interfaz pública y el estado `Live` de Render fueron inspeccionados visualmente durante la ejecución. La herramienta de navegador no puede guardar sus capturas directamente dentro del repositorio, por lo que las imágenes enumeradas en `capturas/INSTRUCCIONES_CAPTURAS.md` requieren intervención manual del usuario.
+Las seis capturas obligatorias fueron guardadas en `docs/evidencias/semana_04/capturas/` y revisadas el 12 de septiembre de 2026. Los nombres coinciden con `capturas/INSTRUCCIONES_CAPTURAS.md`, las imágenes son legibles y no muestran contraseñas, cadenas de conexión, tokens, variables de entorno ni otros secretos.
 
-No se deben escribir credenciales antes de tomar las capturas ni incluir el archivo `.env`.
+| Archivo | Evidencia | Dimensiones |
+|---|---|---:|
+| `01_catalogo_publico_pc.png` | Catálogo público en escritorio, búsqueda y filtros | 1897 × 960 |
+| `02_materias_admin.png` | Gestión administrativa de materias | 1917 × 902 |
+| `03_nuevo_libro_admin.png` | Formulario administrativo de registro de libro | 1912 × 860 |
+| `04_catalogo_publico_movil.png` | Catálogo público responsive en móvil | 720 × 1600 |
+| `05_render_deploy_semana04.png` | Deployment de `a190a88` con estado `Deploy succeeded` | 1916 × 962 |
+| `06_bloqueo_asistente_catalogo.png` | Acceso denegado al asistente en `/admin/libros` | 1917 × 552 |
 
-## Alcance y pendientes
+## Alcance y cierre
 
 - No se modificó el Documento Maestro ni `docs/REGISTRO_CAMBIOS.md` porque no hubo cambios estructurales.
 - No se avanzó a QR, PDF, escaneo, préstamos/devoluciones completos ni reportes.
-- Queda pendiente guardar las capturas manuales y revisar por qué el webhook de Render no inició el Auto-Deploy, aunque el servicio final está actualizado y operativo.
+- No quedan pendientes funcionales, de pruebas, evidencias ni deployment dentro del alcance de la Semana 4.
+- Como observación operativa no bloqueante, el webhook de Render no inició automáticamente el deployment después del push; el servicio final fue actualizado mediante `Deploy latest commit` y quedó operativo por HTTPS.
+- La Semana 5 no debe iniciarse hasta recibir la aprobación expresa del usuario.

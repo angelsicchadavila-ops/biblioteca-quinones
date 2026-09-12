@@ -3,8 +3,8 @@
 ## Identificación
 - Proyecto: Sistema Web de Gestión Bibliotecaria con Control QR
 - Documento Maestro: v1.0
-- Estado general: Semana 4 completada técnicamente; pendiente de capturas manuales y revisión del usuario
-- Semana actual: Semana 4 — Catálogo, materias y ejemplares (completada técnicamente)
+- Estado general: Semana 4 completa; pendiente de revisión y aprobación expresa del usuario
+- Semana actual: Semana 4 — Catálogo, materias y ejemplares (completa)
 - Última actualización: 12 de septiembre de 2026
 
 ## Fuente de verdad
@@ -67,7 +67,7 @@
 - La disponibilidad se deriva del préstamo activo y del estado físico/activo del ejemplar.
 - Se preserva historial mediante desactivación en lugar de borrado físico desde la interfaz.
 
-## Semana 4 completada técnicamente
+## Semana 4 completada
 
 ### Catálogo, materias y ejemplares
 
@@ -84,19 +84,20 @@
 - Deployment del commit `a190a88` completado en Render con estado `Deploy succeeded | Live`.
 - URL pública verificada por HTTPS con HTTP 200.
 - Evidencias técnicas guardadas en `docs/evidencias/semana_04/`.
+- Seis capturas obligatorias guardadas con los nombres previstos, revisadas visualmente y sin secretos visibles.
 
 ## Pendientes abiertos
 - No existen pendientes técnicos ni decisiones estructurales de la Semana 1.
 - No existen pendientes técnicos ni decisiones estructurales de la Semana 2.
 - La implementación, las pruebas locales y el deployment técnico en Render de la Semana 3 están completos.
-- La implementación, las pruebas y el deployment de la Semana 4 están completos.
-- Las capturas de Semana 4 deben guardarse manualmente siguiendo `docs/evidencias/semana_04/capturas/INSTRUCCIONES_CAPTURAS.md`.
-- El Auto-Deploy de Render está configurado como `On Commit`, pero el webhook no reaccionó al push de Semana 4; el deployment se completó correctamente mediante `Deploy latest commit`.
+- La implementación, las pruebas, las evidencias y el deployment de la Semana 4 están completos.
+- No existen pendientes bloqueantes dentro del alcance de la Semana 4.
+- Observación no bloqueante: el Auto-Deploy de Render está configurado como `On Commit`, pero el webhook no reaccionó al push de Semana 4; el deployment se completó correctamente mediante `Deploy latest commit`.
 - El campo `Responsable` del Documento Maestro conserva el marcador `[Nombre del estudiante]`; es un dato administrativo no bloqueante que deberá completarse cuando el usuario proporcione el nombre.
 
 ## Fase actual
 
-Semana 4 completada técnicamente. El usuario debe guardar las capturas enumeradas en `docs/evidencias/semana_04/capturas/INSTRUCCIONES_CAPTURAS.md`, revisar el resultado y aprobar expresamente la semana. No iniciar la Semana 5 antes de esa aprobación.
+Semana 4 completa y lista para revisión. Solo resta la aprobación expresa del usuario. No iniciar la Semana 5 antes de esa aprobación.
 
 ## Historial semanal
 | Semana | Estado | Fecha | Evidencia principal | Commit |
@@ -104,7 +105,7 @@ Semana 4 completada técnicamente. El usuario debe guardar las capturas enumerad
 | 01 | Completa | 09/09/2026 | `docs/evidencias/semana_01/SEMANA_01_EVIDENCIA.md` | `docs: completar análisis y diseño de semana 1` |
 | 02 | Completa | 09/09/2026 | `docs/evidencias/semana_02/SEMANA_02_EVIDENCIA.md` | `db: completar base de datos de semana 2` |
 | 03 | Completa | 10/09/2026 | `docs/evidencias/semana_03/SEMANA_03_EVIDENCIA.md` | `5096cf4` (implementación) + `docs: cerrar semana 3 y registrar deployment` |
-| 04 | Completa técnicamente; capturas manuales pendientes | 12/09/2026 | `docs/evidencias/semana_04/SEMANA_04_EVIDENCIA.md` | `a190a88` + commit documental de cierre |
+| 04 | Completa; pendiente de aprobación del usuario | 12/09/2026 | `docs/evidencias/semana_04/SEMANA_04_EVIDENCIA.md` | `a190a88` + `c30945d` + cierre visual |
 | 05 | Pendiente | — | — | — |
 | 06 | Pendiente | — | — | — |
 | 07 | Pendiente | — | — | — |
