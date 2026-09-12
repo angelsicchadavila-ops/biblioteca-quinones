@@ -1,18 +1,82 @@
 {% extends "base.html" %}
-{% block title %}Inicio · Biblioteca Quiñones{% endblock %}
+{% block title %}Catálogo · Biblioteca Quiñones{% endblock %}
 {% block content %}
-<section class="bg-white border rounded-3 p-4 p-md-5 shadow-sm">
-  <p class="text-primary fw-semibold mb-2">Sistema Web de Gestión Bibliotecaria</p>
-  <h1 class="h2">Acceso técnico de la Semana 3</h1>
-  <p class="text-secondary mb-4">
-    Esta versión valida la conexión con Neon, la autenticación del personal y el control de acceso por rol.
-    El catálogo público se implementará en la Semana 4.
-  </p>
-  {% if g.usuario %}
-    <p>Sesión activa como <strong>{{ g.usuario.rol }}</strong>.</p>
-    <a class="btn btn-primary" href="{{ url_for('escaneo') }}">Ir al área de escaneo</a>
-  {% else %}
-    <a class="btn btn-primary" href="{{ url_for('login') }}">Iniciar sesión del personal</a>
-  {% endif %}
+<section class="catalogo-encabezado rounded-3 p-4 p-md-5 mb-4 shadow-sm">
+  <p class="text-uppercase small fw-semibold mb-2">Colegio Privado José Abelardo Quiñones</p>
+  <h1 class="display-6 fw-semibold">Catálogo bibliográfico</h1>
+  <p class="lead mb-0">Busca por título o autor y consulta el inventario disponible.</p>
 </section>
+
+<section class="bg-white border rounded-3 p-3 p-md-4 mb-4 shadow-sm" aria-labelledby="titulo-busqueda">
+  <h2 class="h5 mb-3" id="titulo-busqueda">Buscar y filtrar</h2>
+  <form method="get" class="row g-3 align-items-end">
+    <div class="col-12 col-lg-5">
+      <label class="form-label" for="q">Título o autor</label>
+      <input class="form-control" id="q" name="q" maxlength="200" value="{{ filtros.q }}" placeholder="Ej. El principito o Antoine de Saint-Exupéry">
+    </div>
+    <div class="col-12 col-sm-6 col-lg-3">
+      <label class="form-label" for="materia">Materia</label>
+      <select class="form-select" id="materia" name="materia">
+        <option value="">Todas las materias</option>
+        {% for materia in materias %}
+          <option value="{{ materia.id }}" {% if filtros.materia == materia.id %}selected{% endif %}>{{ materia.nombre }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-2">
+      <label class="form-label" for="nivel">Nivel</label>
+      <select class="form-select" id="nivel" name="nivel">
+        <option value="">Todos</option>
+        {% for nivel in ('Primaria', 'Secundaria', 'Ambos') %}
+          <option value="{{ nivel }}" {% if filtros.nivel == nivel %}selected{% endif %}>{{ nivel }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-12 col-lg-2 d-grid gap-2">
+      <button class="btn btn-primary" type="submit">Buscar</button>
+      {% if filtros.q or filtros.materia or filtros.nivel %}
+        <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('inicio') }}">Limpiar</a>
+      {% endif %}
+    </div>
+  </form>
+</section>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2 class="h4 mb-0">Resultados</h2>
+  <span class="text-secondary">{{ libros|length }} título(s)</span>
+</div>
+
+{% if libros %}
+  <div class="row g-3">
+    {% for libro in libros %}
+      <div class="col-12 col-lg-6">
+        <article class="card h-100 shadow-sm border-0 catalogo-tarjeta">
+          <div class="card-body p-4">
+            <div class="d-flex flex-wrap gap-2 mb-3">
+              <span class="badge text-bg-primary">{{ libro.materia }}</span>
+              <span class="badge text-bg-light border text-dark">{{ libro.nivel }}</span>
+            </div>
+            <h3 class="h5 card-title">{{ libro.titulo }}</h3>
+            <p class="text-secondary mb-2">{{ libro.autor }}</p>
+            {% if libro.isbn_editorial %}
+              <p class="small text-secondary mb-3">{{ libro.isbn_editorial }}</p>
+            {% endif %}
+            <div class="inventario-grid border-top pt-3 mt-3">
+              <div><strong>{{ libro.total_ejemplares }}</strong><span>Total</span></div>
+              <div class="text-success"><strong>{{ libro.disponibles }}</strong><span>Disponibles</span></div>
+              <div class="text-warning-emphasis"><strong>{{ libro.prestados }}</strong><span>Prestados</span></div>
+              <div class="text-danger"><strong>{{ libro.danados }}</strong><span>Dañados</span></div>
+              <div class="text-secondary"><strong>{{ libro.inactivos }}</strong><span>Inactivos</span></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <section class="bg-white border rounded-3 p-5 text-center shadow-sm">
+    <h3 class="h5">No se encontraron títulos</h3>
+    <p class="text-secondary mb-0">Prueba con otros términos o limpia los filtros.</p>
+  </section>
+{% endif %}
 {% endblock %}

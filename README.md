@@ -1,6 +1,17 @@
 # Sistema Web de Gestión Bibliotecaria con Control QR
 
-Aplicación académica de la Biblioteca Quiñones. La versión actual corresponde a la Semana 3 y valida la base Flask, la conexión con PostgreSQL en Neon, la autenticación del personal y los permisos de los roles `admin` y `asistente`.
+Aplicación académica de la Biblioteca Quiñones. La versión actual corresponde a la Semana 4 e incorpora el catálogo público, los filtros por materia y nivel, y la administración de materias, libros y ejemplares físicos sobre PostgreSQL en Neon.
+
+## Funciones disponibles
+
+- Catálogo público en `/`, sin autenticación, con búsqueda por título o autor.
+- Filtros combinables por materia y nivel académico.
+- Conteos derivados de ejemplares disponibles, prestados, dañados e inactivos.
+- Gestión administrativa de materias en `/admin/materias`.
+- Gestión administrativa de libros y ejemplares en `/admin/libros`.
+- Generación automática de códigos de ejemplar con el formato `LIB-XXX-EJYY`.
+- Activación y desactivación lógica para conservar el historial.
+- Autenticación y permisos diferenciados para `admin` y `asistente`.
 
 ## Requisitos
 
@@ -24,12 +35,12 @@ La aplicación queda disponible en `http://127.0.0.1:5000`.
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
-Las pruebas funcionales usan las cuentas ya creadas en Neon y leen sus contraseñas desde variables locales. No muestran ni guardan esas credenciales.
+Las pruebas funcionales usan las cuentas ya creadas en Neon y leen sus contraseñas desde variables locales. Los datos temporales del catálogo reciben identificadores aleatorios y se eliminan al finalizar, incluso si una prueba falla. No se muestran ni guardan credenciales.
 
 ## Despliegue en Render
 
 El archivo `render.yaml` define el servicio web, la instalación desde `requirements.txt` y el inicio con `gunicorn app:app`. Render solicita `DATABASE_URL` como valor privado y genera `SECRET_KEY` automáticamente.
 
-Instancia técnica de la Semana 3: https://biblioteca-quinones.onrender.com
+Instancia pública: https://biblioteca-quinones.onrender.com
 
 No se debe copiar `.env` a GitHub ni a Render.

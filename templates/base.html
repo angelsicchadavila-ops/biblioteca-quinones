@@ -9,9 +9,9 @@
 </head>
 <body class="bg-light">
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container">
+    <div class="container flex-wrap gap-2">
       <a class="navbar-brand fw-semibold" href="{{ url_for('inicio') }}">Biblioteca Quiñones</a>
-      <div class="d-flex align-items-center gap-2">
+      <div class="d-flex align-items-center flex-wrap justify-content-end gap-2 ms-auto">
         {% if g.usuario %}
           <span class="text-white small d-none d-sm-inline">
             {{ g.usuario.nombre_completo }} · {{ g.usuario.rol }}
@@ -19,6 +19,7 @@
           {% if g.usuario.rol == 'admin' %}
             <a class="btn btn-sm btn-outline-light" href="{{ url_for('admin') }}">Administración</a>
           {% endif %}
+          <a class="btn btn-sm btn-outline-light" href="{{ url_for('inicio') }}">Catálogo</a>
           <a class="btn btn-sm btn-outline-light" href="{{ url_for('escaneo') }}">Escaneo</a>
           <form method="post" action="{{ url_for('logout') }}" class="m-0">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -39,5 +40,8 @@
     {% endwith %}
     {% block content %}{% endblock %}
   </main>
+  <footer class="container pb-4 text-center text-secondary small">
+    Sistema Web de Gestión Bibliotecaria · Catálogo actualizado en tiempo real
+  </footer>
 </body>
 </html>

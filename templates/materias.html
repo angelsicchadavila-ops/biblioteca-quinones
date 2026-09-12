@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Materias · Administración{% endblock %}
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+  <div>
+    <p class="text-primary fw-semibold mb-1">Administración del catálogo</p>
+    <h1 class="h3 mb-0">Materias</h1>
+  </div>
+  <a class="btn btn-outline-secondary" href="{{ url_for('admin') }}">Volver al panel</a>
+</div>
+
+<div class="row g-4">
+  <div class="col-12 col-lg-4">
+    <section class="bg-white border rounded-3 p-4 shadow-sm">
+      <h2 class="h5">Nueva materia</h2>
+      <form method="post" novalidate>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label class="form-label" for="nombre">Nombre</label>
+        <input class="form-control mb-3" id="nombre" name="nombre" maxlength="100" required>
+        <button class="btn btn-primary w-100" type="submit">Crear materia</button>
+      </form>
+    </section>
+  </div>
+  <div class="col-12 col-lg-8">
+    <section class="bg-white border rounded-3 shadow-sm overflow-hidden">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr><th>Materia</th><th>Libros</th><th>Estado</th><th class="text-end">Acciones</th></tr>
+          </thead>
+          <tbody>
+            {% for materia in materias %}
+              <tr>
+                <td class="fw-semibold">{{ materia.nombre }}</td>
+                <td>{{ materia.libros_activos }} activos / {{ materia.total_libros }} total</td>
+                <td><span class="badge {{ 'text-bg-success' if materia.activo else 'text-bg-secondary' }}">{{ 'Activa' if materia.activo else 'Inactiva' }}</span></td>
+                <td class="text-end acciones-tabla">
+                  <a class="btn btn-sm btn-outline-primary" href="{{ url_for('editar_materia', materia_id=materia.id) }}">Editar</a>
+                  <form method="post" action="{{ url_for('cambiar_estado_materia', materia_id=materia.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-sm {{ 'btn-outline-danger' if materia.activo else 'btn-outline-success' }}" type="submit">{{ 'Desactivar' if materia.activo else 'Reactivar' }}</button>
+                  </form>
+                </td>
+              </tr>
+            {% else %}
+              <tr><td colspan="4" class="text-center text-secondary py-4">No hay materias registradas.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock %}

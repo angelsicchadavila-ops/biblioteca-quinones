@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Nuevo libro' if es_nuevo else 'Editar libro' }} · Administración{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-8">
+    <section class="bg-white border rounded-3 p-4 p-md-5 shadow-sm">
+      <p class="text-primary fw-semibold mb-1">Administración del catálogo</p>
+      <h1 class="h3 mb-4">{{ 'Registrar libro' if es_nuevo else 'Editar libro' }}</h1>
+      {% if not materias %}
+        <div class="alert alert-warning">Debes crear o reactivar una materia antes de registrar libros.</div>
+      {% endif %}
+      <form method="post" class="row g-3" novalidate>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="col-12">
+          <label class="form-label" for="titulo">Título</label>
+          <input class="form-control" id="titulo" name="titulo" maxlength="200" value="{{ libro.titulo|default('') }}" required autofocus>
+        </div>
+        <div class="col-12 col-md-7">
+          <label class="form-label" for="autor">Autor</label>
+          <input class="form-control" id="autor" name="autor" maxlength="150" value="{{ libro.autor|default('') }}" required>
+        </div>
+        <div class="col-12 col-md-5">
+          <label class="form-label" for="nivel">Nivel académico</label>
+          <select class="form-select" id="nivel" name="nivel" required>
+            <option value="">Seleccionar</option>
+            {% for nivel in niveles %}
+              <option value="{{ nivel }}" {% if libro.nivel|default('') == nivel %}selected{% endif %}>{{ nivel }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="materia_id">Materia</label>
+          <select class="form-select" id="materia_id" name="materia_id" required>
+            <option value="">Seleccionar</option>
+            {% for materia in materias %}
+              <option value="{{ materia.id }}" {% if libro.materia_id|default('')|string == materia.id|string %}selected{% endif %}>{{ materia.nombre }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="isbn_editorial">ISBN o editorial <span class="text-secondary">(opcional)</span></label>
+          <input class="form-control" id="isbn_editorial" name="isbn_editorial" maxlength="100" value="{{ libro.isbn_editorial|default('', true) }}">
+        </div>
+        <div class="col-12 d-flex flex-wrap gap-2 mt-4">
+          <button class="btn btn-primary" type="submit" {% if not materias %}disabled{% endif %}>{{ 'Crear libro' if es_nuevo else 'Guardar cambios' }}</button>
+          <a class="btn btn-outline-secondary" href="{{ url_for('libros_admin') }}">Cancelar</a>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Libros · Administración{% endblock %}
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+  <div>
+    <p class="text-primary fw-semibold mb-1">Administración del catálogo</p>
+    <h1 class="h3 mb-0">Libros e inventario</h1>
+  </div>
+  <div class="d-flex gap-2">
+    <a class="btn btn-outline-secondary" href="{{ url_for('admin') }}">Volver al panel</a>
+    <a class="btn btn-primary" href="{{ url_for('crear_libro') }}">Nuevo libro</a>
+  </div>
+</div>
+
+<section class="bg-white border rounded-3 shadow-sm overflow-hidden">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0 tabla-libros">
+      <thead class="table-light">
+        <tr>
+          <th>Libro</th><th>Clasificación</th><th>Inventario</th><th>Estado</th><th class="text-end">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for libro in libros %}
+          <tr>
+            <td>
+              <span class="fw-semibold d-block">{{ libro.titulo }}</span>
+              <span class="small text-secondary">{{ libro.autor }}</span>
+              {% if libro.isbn_editorial %}<span class="small text-secondary d-block">{{ libro.isbn_editorial }}</span>{% endif %}
+            </td>
+            <td><span class="d-block">{{ libro.materia }}</span><span class="small text-secondary">{{ libro.nivel }}</span></td>
+            <td class="small">
+              <span class="d-block"><strong>{{ libro.total_ejemplares }}</strong> total · <strong class="text-success">{{ libro.disponibles }}</strong> disponibles</span>
+              <span class="text-secondary">{{ libro.prestados }} prestados · {{ libro.danados }} dañados · {{ libro.inactivos }} inactivos</span>
+            </td>
+            <td><span class="badge {{ 'text-bg-success' if libro.activo else 'text-bg-secondary' }}">{{ 'Activo' if libro.activo else 'Inactivo' }}</span></td>
+            <td class="text-end acciones-tabla">
+              <a class="btn btn-sm btn-outline-primary" href="{{ url_for('editar_libro', libro_id=libro.id) }}">Editar</a>
+              <a class="btn btn-sm btn-outline-dark" href="{{ url_for('ejemplares_admin', libro_id=libro.id) }}">Ejemplares</a>
+              <form method="post" action="{{ url_for('cambiar_estado_libro', libro_id=libro.id) }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button class="btn btn-sm {{ 'btn-outline-danger' if libro.activo else 'btn-outline-success' }}" type="submit">{{ 'Desactivar' if libro.activo else 'Reactivar' }}</button>
+              </form>
+            </td>
+          </tr>
+        {% else %}
+          <tr><td colspan="5" class="text-center text-secondary py-5">No hay libros registrados.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

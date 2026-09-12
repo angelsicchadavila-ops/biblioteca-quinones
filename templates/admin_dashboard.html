@@ -3,9 +3,37 @@
 {% block content %}
 <section class="bg-white border rounded-3 p-4 shadow-sm">
   <p class="text-primary fw-semibold mb-2">Rol verificado: admin</p>
-  <h1 class="h3">Panel administrativo</h1>
-  <p class="text-secondary mb-0">
-    El acceso administrativo funciona. La gestión de materias, libros, ejemplares y usuarios se implementará en las semanas correspondientes.
-  </p>
+  <h1 class="h3">Administración del catálogo</h1>
+  <p class="text-secondary">Gestiona la clasificación, los títulos y cada copia física sin eliminar su historial.</p>
+
+  <div class="row g-3 mt-1">
+    <div class="col-12 col-md-4">
+      <a class="card h-100 text-decoration-none modulo-admin" href="{{ url_for('materias_admin') }}">
+        <div class="card-body">
+          <span class="display-6 fw-semibold">{{ resumen.materias_activas }}</span>
+          <h2 class="h5 mt-2">Materias activas</h2>
+          <p class="text-secondary mb-0">Crear, editar, desactivar y reactivar materias.</p>
+        </div>
+      </a>
+    </div>
+    <div class="col-12 col-md-4">
+      <a class="card h-100 text-decoration-none modulo-admin" href="{{ url_for('libros_admin') }}">
+        <div class="card-body">
+          <span class="display-6 fw-semibold">{{ resumen.libros_activos }}</span>
+          <h2 class="h5 mt-2">Libros activos</h2>
+          <p class="text-secondary mb-0">Datos bibliográficos, nivel, materia e inventario.</p>
+        </div>
+      </a>
+    </div>
+    <div class="col-12 col-md-4">
+      <a class="card h-100 text-decoration-none modulo-admin" href="{{ url_for('libros_admin') }}">
+        <div class="card-body">
+          <span class="display-6 fw-semibold">{{ resumen.ejemplares_activos }}</span>
+          <h2 class="h5 mt-2">Ejemplares activos</h2>
+          <p class="text-secondary mb-0">Códigos, condición física y disponibilidad calculada.</p>
+        </div>
+      </a>
+    </div>
+  </div>
 </section>
 {% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Editar materia · Administración{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-12 col-md-8 col-lg-6">
+    <section class="bg-white border rounded-3 p-4 shadow-sm">
+      <p class="text-primary fw-semibold mb-1">Administración del catálogo</p>
+      <h1 class="h3 mb-3">Editar materia</h1>
+      <form method="post" novalidate>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label class="form-label" for="nombre">Nombre</label>
+        <input class="form-control mb-4" id="nombre" name="nombre" maxlength="100" value="{{ materia.nombre }}" required autofocus>
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary" type="submit">Guardar cambios</button>
+          <a class="btn btn-outline-secondary" href="{{ url_for('materias_admin') }}">Cancelar</a>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>
+{% endblock %}

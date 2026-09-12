@@ -1,4 +1,4 @@
-"""Aplicación Flask base de la Biblioteca Quiñones."""
+"""Aplicación Flask de la Biblioteca Quiñones."""
 
 from __future__ import annotations
 
@@ -23,6 +23,15 @@ from flask import (
 )
 from werkzeug.security import check_password_hash
 
+from utils.catalogo import (
+    ESTADOS_FISICOS,
+    NIVELES_LIBRO,
+    consultar_catalogo,
+    consultar_ejemplares,
+    consultar_libros_admin,
+    crear_ejemplares,
+    normalizar_texto,
+)
 from utils.db import iniciar_bd, obtener_bd
 
 
@@ -129,7 +138,32 @@ def crear_app(configuracion_pruebas: dict | None = None) -> Flask:
 
     @app.get("/")
     def inicio():
-        return render_template("index.html")
+        texto = normalizar_texto(request.args.get("q", ""))[:200]
+        nivel = request.args.get("nivel", "").strip()
+        if nivel not in NIVELES_LIBRO:
+            nivel = ""
+
+        materia_id = None
+        materia_solicitada = request.args.get("materia", "").strip()
+        if materia_solicitada.isdigit():
+            materia_id = int(materia_solicitada)
+
+        conexion = obtener_bd()
+        materias = conexion.execute(
+            """
+            SELECT id, nombre
+              FROM materias
+             WHERE activo
+             ORDER BY lower(nombre)
+            """
+        ).fetchall()
+        libros = consultar_catalogo(conexion, texto, materia_id, nivel)
+        return render_template(
+            "index.html",
+            libros=libros,
+            materias=materias,
+            filtros={"q": texto, "materia": materia_id, "nivel": nivel},
+        )
 
     @app.route("/login", methods=["GET", "POST"])
     def login():
@@ -178,7 +212,343 @@ def crear_app(configuracion_pruebas: dict | None = None) -> Flask:
     @app.get("/admin")
     @rol_requerido("admin")
     def admin():
-        return render_template("admin_dashboard.html")
+        conexion = obtener_bd()
+        resumen = conexion.execute(
+            """
+            SELECT
+                (SELECT count(*) FROM materias WHERE activo) AS materias_activas,
+                (SELECT count(*) FROM libros WHERE activo) AS libros_activos,
+                (SELECT count(*) FROM ejemplares WHERE activo) AS ejemplares_activos
+            """
+        ).fetchone()
+        return render_template("admin_dashboard.html", resumen=resumen)
+
+    @app.route("/admin/materias", methods=["GET", "POST"])
+    @rol_requerido("admin")
+    def materias_admin():
+        conexion = obtener_bd()
+        if request.method == "POST":
+            nombre = normalizar_texto(request.form.get("nombre", ""))
+            if not nombre:
+                flash("El nombre de la materia es obligatorio.", "danger")
+            elif len(nombre) > 100:
+                flash("El nombre no puede superar 100 caracteres.", "danger")
+            elif conexion.execute(
+                "SELECT 1 FROM materias WHERE lower(nombre) = lower(%s)", (nombre,)
+            ).fetchone():
+                flash("Ya existe una materia con ese nombre.", "danger")
+            else:
+                conexion.execute("INSERT INTO materias (nombre) VALUES (%s)", (nombre,))
+                flash("Materia creada correctamente.", "success")
+                return redirect(url_for("materias_admin"))
+
+        materias = conexion.execute(
+            """
+            SELECT m.id, m.nombre, m.activo,
+                   count(l.id) AS total_libros,
+                   count(l.id) FILTER (WHERE l.activo) AS libros_activos
+              FROM materias m
+              LEFT JOIN libros l ON l.materia_id = m.id
+             GROUP BY m.id
+             ORDER BY m.activo DESC, lower(m.nombre)
+            """
+        ).fetchall()
+        return render_template("materias.html", materias=materias)
+
+    @app.route("/admin/materias/<int:materia_id>/editar", methods=["GET", "POST"])
+    @rol_requerido("admin")
+    def editar_materia(materia_id: int):
+        conexion = obtener_bd()
+        materia = conexion.execute(
+            "SELECT id, nombre, activo FROM materias WHERE id = %s", (materia_id,)
+        ).fetchone()
+        if materia is None:
+            abort(404)
+
+        if request.method == "POST":
+            nombre = normalizar_texto(request.form.get("nombre", ""))
+            repetida = conexion.execute(
+                """
+                SELECT 1
+                  FROM materias
+                 WHERE lower(nombre) = lower(%s) AND id <> %s
+                """,
+                (nombre, materia_id),
+            ).fetchone()
+            if not nombre:
+                flash("El nombre de la materia es obligatorio.", "danger")
+            elif len(nombre) > 100:
+                flash("El nombre no puede superar 100 caracteres.", "danger")
+            elif repetida:
+                flash("Ya existe una materia con ese nombre.", "danger")
+            else:
+                conexion.execute(
+                    "UPDATE materias SET nombre = %s WHERE id = %s",
+                    (nombre, materia_id),
+                )
+                flash("Materia actualizada correctamente.", "success")
+                return redirect(url_for("materias_admin"))
+            materia = {**materia, "nombre": nombre}
+
+        return render_template("materia_form.html", materia=materia)
+
+    @app.post("/admin/materias/<int:materia_id>/estado")
+    @rol_requerido("admin")
+    def cambiar_estado_materia(materia_id: int):
+        conexion = obtener_bd()
+        materia = conexion.execute(
+            "SELECT id, nombre, activo FROM materias WHERE id = %s", (materia_id,)
+        ).fetchone()
+        if materia is None:
+            abort(404)
+
+        if materia["activo"]:
+            tiene_libros_activos = conexion.execute(
+                "SELECT 1 FROM libros WHERE materia_id = %s AND activo LIMIT 1",
+                (materia_id,),
+            ).fetchone()
+            if tiene_libros_activos:
+                flash(
+                    "No se puede desactivar la materia mientras tenga libros activos.",
+                    "danger",
+                )
+                return redirect(url_for("materias_admin"))
+
+        nuevo_estado = not materia["activo"]
+        conexion.execute(
+            "UPDATE materias SET activo = %s WHERE id = %s",
+            (nuevo_estado, materia_id),
+        )
+        accion = "reactivada" if nuevo_estado else "desactivada"
+        flash(f"Materia {accion} correctamente.", "success")
+        return redirect(url_for("materias_admin"))
+
+    @app.get("/admin/libros")
+    @rol_requerido("admin")
+    def libros_admin():
+        return render_template(
+            "libros.html", libros=consultar_libros_admin(obtener_bd())
+        )
+
+    def obtener_materias_activas():
+        return obtener_bd().execute(
+            "SELECT id, nombre FROM materias WHERE activo ORDER BY lower(nombre)"
+        ).fetchall()
+
+    def validar_libro_formulario() -> tuple[dict, list[str]]:
+        datos = {
+            "titulo": normalizar_texto(request.form.get("titulo", "")),
+            "autor": normalizar_texto(request.form.get("autor", "")),
+            "nivel": request.form.get("nivel", "").strip(),
+            "isbn_editorial": normalizar_texto(
+                request.form.get("isbn_editorial", "")
+            ),
+            "materia_id": request.form.get("materia_id", "").strip(),
+        }
+        errores: list[str] = []
+        if not datos["titulo"]:
+            errores.append("El título es obligatorio.")
+        elif len(datos["titulo"]) > 200:
+            errores.append("El título no puede superar 200 caracteres.")
+        if not datos["autor"]:
+            errores.append("El autor es obligatorio.")
+        elif len(datos["autor"]) > 150:
+            errores.append("El autor no puede superar 150 caracteres.")
+        if datos["nivel"] not in NIVELES_LIBRO:
+            errores.append("Selecciona un nivel académico válido.")
+        if len(datos["isbn_editorial"]) > 100:
+            errores.append("ISBN/editorial no puede superar 100 caracteres.")
+        if not datos["materia_id"].isdigit():
+            errores.append("Selecciona una materia válida.")
+        elif not obtener_bd().execute(
+            "SELECT 1 FROM materias WHERE id = %s AND activo",
+            (int(datos["materia_id"]),),
+        ).fetchone():
+            errores.append("La materia seleccionada no existe o está inactiva.")
+        return datos, errores
+
+    @app.route("/admin/libros/nuevo", methods=["GET", "POST"])
+    @rol_requerido("admin")
+    def crear_libro():
+        datos = {}
+        if request.method == "POST":
+            datos, errores = validar_libro_formulario()
+            if not errores:
+                fila = obtener_bd().execute(
+                    """
+                    INSERT INTO libros
+                        (titulo, autor, materia_id, nivel, isbn_editorial)
+                    VALUES (%s, %s, %s, %s, %s)
+                    RETURNING id
+                    """,
+                    (
+                        datos["titulo"],
+                        datos["autor"],
+                        int(datos["materia_id"]),
+                        datos["nivel"],
+                        datos["isbn_editorial"] or None,
+                    ),
+                ).fetchone()
+                flash("Libro creado correctamente. Ya puedes agregar ejemplares.", "success")
+                return redirect(url_for("ejemplares_admin", libro_id=fila["id"]))
+            for error in errores:
+                flash(error, "danger")
+        return render_template(
+            "libro_form.html",
+            libro=datos,
+            materias=obtener_materias_activas(),
+            niveles=NIVELES_LIBRO,
+            es_nuevo=True,
+        )
+
+    @app.route("/admin/libros/<int:libro_id>/editar", methods=["GET", "POST"])
+    @rol_requerido("admin")
+    def editar_libro(libro_id: int):
+        conexion = obtener_bd()
+        libro = conexion.execute(
+            """
+            SELECT id, titulo, autor, materia_id, nivel, isbn_editorial, activo
+              FROM libros
+             WHERE id = %s
+            """,
+            (libro_id,),
+        ).fetchone()
+        if libro is None:
+            abort(404)
+
+        if request.method == "POST":
+            datos, errores = validar_libro_formulario()
+            if not errores:
+                conexion.execute(
+                    """
+                    UPDATE libros
+                       SET titulo = %s, autor = %s, materia_id = %s,
+                           nivel = %s, isbn_editorial = %s
+                     WHERE id = %s
+                    """,
+                    (
+                        datos["titulo"],
+                        datos["autor"],
+                        int(datos["materia_id"]),
+                        datos["nivel"],
+                        datos["isbn_editorial"] or None,
+                        libro_id,
+                    ),
+                )
+                flash("Libro actualizado correctamente.", "success")
+                return redirect(url_for("libros_admin"))
+            for error in errores:
+                flash(error, "danger")
+            libro = {**libro, **datos}
+
+        return render_template(
+            "libro_form.html",
+            libro=libro,
+            materias=obtener_materias_activas(),
+            niveles=NIVELES_LIBRO,
+            es_nuevo=False,
+        )
+
+    @app.post("/admin/libros/<int:libro_id>/estado")
+    @rol_requerido("admin")
+    def cambiar_estado_libro(libro_id: int):
+        conexion = obtener_bd()
+        libro = conexion.execute(
+            """
+            SELECT l.id, l.activo, m.activo AS materia_activa
+              FROM libros l
+              JOIN materias m ON m.id = l.materia_id
+             WHERE l.id = %s
+            """,
+            (libro_id,),
+        ).fetchone()
+        if libro is None:
+            abort(404)
+        nuevo_estado = not libro["activo"]
+        if nuevo_estado and not libro["materia_activa"]:
+            flash("Reactiva primero la materia asociada al libro.", "danger")
+            return redirect(url_for("libros_admin"))
+        conexion.execute(
+            "UPDATE libros SET activo = %s WHERE id = %s",
+            (nuevo_estado, libro_id),
+        )
+        accion = "reactivado" if nuevo_estado else "desactivado"
+        flash(f"Libro {accion} correctamente.", "success")
+        return redirect(url_for("libros_admin"))
+
+    @app.route("/admin/libros/<int:libro_id>/ejemplares", methods=["GET", "POST"])
+    @rol_requerido("admin")
+    def ejemplares_admin(libro_id: int):
+        conexion = obtener_bd()
+        libro = conexion.execute(
+            """
+            SELECT l.id, l.titulo, l.autor, l.activo, m.nombre AS materia
+              FROM libros l
+              JOIN materias m ON m.id = l.materia_id
+             WHERE l.id = %s
+            """,
+            (libro_id,),
+        ).fetchone()
+        if libro is None:
+            abort(404)
+
+        if request.method == "POST":
+            valor = request.form.get("cantidad", "").strip()
+            if not valor.isdigit() or not 1 <= int(valor) <= 100:
+                flash("La cantidad debe ser un número entre 1 y 100.", "danger")
+            else:
+                codigos = crear_ejemplares(conexion, libro_id, int(valor))
+                flash(
+                    f"Se crearon {len(codigos)} ejemplar(es): "
+                    f"{codigos[0]} a {codigos[-1]}.",
+                    "success",
+                )
+                return redirect(url_for("ejemplares_admin", libro_id=libro_id))
+
+        return render_template(
+            "ejemplares.html",
+            libro=libro,
+            ejemplares=consultar_ejemplares(conexion, libro_id),
+            estados=ESTADOS_FISICOS,
+        )
+
+    @app.post("/admin/ejemplares/<int:ejemplar_id>/estado-fisico")
+    @rol_requerido("admin")
+    def cambiar_estado_fisico_ejemplar(ejemplar_id: int):
+        estado = request.form.get("estado_fisico", "").strip()
+        if estado not in ESTADOS_FISICOS:
+            abort(400)
+        fila = obtener_bd().execute(
+            """
+            UPDATE ejemplares
+               SET estado_fisico = %s
+             WHERE id = %s
+             RETURNING libro_id
+            """,
+            (estado, ejemplar_id),
+        ).fetchone()
+        if fila is None:
+            abort(404)
+        flash(f"Estado físico actualizado a {estado}.", "success")
+        return redirect(url_for("ejemplares_admin", libro_id=fila["libro_id"]))
+
+    @app.post("/admin/ejemplares/<int:ejemplar_id>/estado")
+    @rol_requerido("admin")
+    def cambiar_estado_ejemplar(ejemplar_id: int):
+        fila = obtener_bd().execute(
+            """
+            UPDATE ejemplares
+               SET activo = NOT activo
+             WHERE id = %s
+             RETURNING libro_id, activo
+            """,
+            (ejemplar_id,),
+        ).fetchone()
+        if fila is None:
+            abort(404)
+        accion = "reactivado" if fila["activo"] else "desactivado"
+        flash(f"Ejemplar {accion} correctamente.", "success")
+        return redirect(url_for("ejemplares_admin", libro_id=fila["libro_id"]))
 
     @app.get("/escaneo")
     @login_requerido
