@@ -5,7 +5,7 @@
 - Proyecto: Sistema Web de Gestión Bibliotecaria con Control QR.
 - Semana: 05 — QR, PDF y escáner móvil.
 - Fecha de inicio: 12 de septiembre de 2026.
-- Estado: implementación, pruebas técnicas y deployment HTTPS completos; pendiente de prueba real desde teléfono, capturas obligatorias y limpieza del conjunto temporal.
+- Estado: completa y lista para revisión y aprobación expresa del usuario.
 - Documento oficial: `docs/Documento_Maestro_Biblioteca_v1.0.docx`.
 
 ## Resumen técnico
@@ -67,11 +67,11 @@ El estado visible se deriva con prioridad para inactivo, dañado, prestado y dis
 
 ## Pruebas
 
-- Suite completa: 30 de 30 pruebas correctas.
+- Suite completa final: 30 de 30 pruebas correctas en 170,628 segundos, ejecutada después de limpiar los datos de prueba.
 - Pruebas nuevas de Semana 5: 10 de 10 correctas.
 - PDF: A4 confirmado con `pdfinfo` e inspección visual de la página renderizada.
 - Responsive e ingreso manual: comprobados en navegador real local a 390 x 844 px.
-- Neon: solo permanece el conjunto temporal controlado; 0 lectores y 0 préstamos.
+- Neon: 7 de 7 verificaciones correctas y sin datos temporales residuales.
 
 El detalle reproducible se encuentra en `RESULTADOS_PRUEBAS.md`.
 
@@ -80,24 +80,28 @@ El detalle reproducible se encuentra en `RESULTADOS_PRUEBAS.md`.
 - `QR_LIB-011-EJ01.png`: QR real del ejemplar operativo temporal.
 - `ETIQUETAS_QR_SEMANA_05.pdf`: PDF A4 real con los tres ejemplares temporales.
 - `RESULTADOS_PRUEBAS.md`: resultados, contrato API y control de datos.
-- `capturas/INSTRUCCIONES_CAPTURAS.md`: nombres y procedimiento para las capturas pendientes.
+- `capturas/01_modulo_admin_qr.png`: módulo administrativo de QR y PDF.
+- `capturas/02_pdf_etiquetas_a4.png`: PDF A4 abierto y legible.
+- `capturas/03_terminal_escaneo_movil.png`: terminal responsive en teléfono.
+- `capturas/04_ingreso_manual_correcto.png`: identificación manual correcta.
+- `capturas/05_codigo_no_registrado.png`: manejo de código inexistente.
+- `capturas/06_camara_activa_movil.png`: cámara real activa.
+- `capturas/07_qr_leido_correctamente.png`: lectura real de `LIB-011-EJ01`.
+- `capturas/08_render_deploy_semana05.png`: deployment `Live` del commit técnico.
+- `capturas/INSTRUCCIONES_CAPTURAS.md`: procedimiento utilizado para obtener las evidencias.
 
-## Deployment y prueba móvil
+Todas las capturas fueron revisadas individualmente y no exponen contraseñas, variables de entorno, tokens ni Deploy Hook.
 
-Pendientes antes de declarar cerrada la semana:
-
-Completado:
+## Deployment, prueba móvil y limpieza
 
 - Commit técnico `1c2f46f` y push correcto a `origin/main`.
 - Auto-Deploy comprobado en `On Commit` sin modificarlo; Render no reaccionó al push, por lo que se documentó la reincidencia.
 - Contingencia `Deploy latest commit` ejecutada: `Deploy succeeded | Live` en 44,7 segundos.
 - Aplicación verificada por HTTPS; el catálogo respondió y el acceso anónimo a `/escaneo` redirigió al login.
+- Prueba móvil real completada en Render HTTPS: cámara iniciada por acción del usuario y lectura correcta de `LIB-011-EJ01`.
+- Ingreso manual correcto y código inexistente documentados desde el teléfono.
+- Ocho capturas obligatorias revisadas y almacenadas en `capturas/`.
+- Conjunto `TEMP-SEMANA-05` eliminado de Neon después de conservar las evidencias.
+- Verificación posterior: suite 30/30 y base de datos 7/7.
 
-Pendiente:
-
-1. Abrir `/escaneo` desde un teléfono y conceder permiso de cámara manualmente.
-2. Leer `QR_LIB-011-EJ01.png` mostrado en otra pantalla o impreso.
-3. Guardar las capturas obligatorias.
-4. Eliminar el conjunto `TEMP-SEMANA-05` después de la prueba y volver a verificar Neon.
-
-La Semana 5 no está cerrada mientras estos puntos permanezcan pendientes.
+La Semana 5 está técnicamente completa. No se iniciará la Semana 6 hasta recibir la aprobación expresa del usuario.

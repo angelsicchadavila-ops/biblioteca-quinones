@@ -3,8 +3,8 @@
 ## Estado de la validación
 
 - Fecha: 12 de septiembre de 2026.
-- Resultado automatizado final: 30 de 30 pruebas correctas en 163,202 segundos.
-- Estado: validación técnica y deployment HTTPS completos; quedan pendientes la prueba real de cámara y lectura QR desde un teléfono y sus capturas.
+- Resultado automatizado final posterior a la limpieza: 30 de 30 pruebas correctas en 170,628 segundos.
+- Estado: validación técnica, deployment HTTPS, prueba móvil real, evidencias visuales y limpieza de datos temporales completas.
 - Base de datos: PostgreSQL en Neon, con conexión Psycopg 3 y zona horaria `America/Lima`.
 
 ## Suite automatizada
@@ -49,8 +49,8 @@ No quedaron fallos después de corregir una regresión de texto en el encabezado
 | 19 | Responsive | Correcto en vista local real de 390 x 844 px, sin desbordamiento horizontal |
 | 20 | Deployment de Semana 5 | Correcto; commit `1c2f46f`, build correcto y estado `Live` en 44,7 s |
 | 21 | HTTPS de Semana 5 | Correcto; catálogo HTTP 200 y `/escaneo` protegido redirige al login |
-| 22 | Cámara real desde teléfono | Pendiente de intervención del usuario |
-| 23 | Lectura de QR real desde teléfono | Pendiente de intervención del usuario |
+| 22 | Cámara real desde teléfono | Correcto; permiso concedido, cámara activa y visor visible sobre Render HTTPS |
+| 23 | Lectura de QR real desde teléfono | Correcto; lectura de `LIB-011-EJ01` y mensaje de identificación correcta |
 
 ## Contrato del endpoint
 
@@ -108,13 +108,13 @@ La vista local autenticada se revisó en un navegador real con viewport temporal
 - desaparición de la ficha y mensaje `Código no registrado.` ante `LIB-999999-EJ99`;
 - ausencia de controles de préstamo o devolución.
 
-El permiso de cámara no se concedió en esta validación local porque la prueba obligatoria debe realizarse desde el teléfono sobre Render HTTPS.
+La prueba posterior desde un teléfono sobre Render HTTPS confirmó que la cámara permanece apagada hasta pulsar `Iniciar cámara`, que el permiso activa el visor y que el QR real identifica `LIB-011-EJ01`. Las capturas 03, 06 y 07 documentan el flujo móvil; la captura 04 muestra la ficha devuelta para el mismo ejemplar.
 
 ## Neon y datos temporales
 
 La suite automatizada crea datos con sufijos aleatorios y los elimina en `tearDownClass` o bloques `finally`.
 
-Para la prueba móvil se conserva deliberadamente un conjunto controlado:
+Para la prueba móvil se creó deliberadamente el siguiente conjunto controlado:
 
 | Registro | Valor | Estado |
 |---|---|---|
@@ -123,9 +123,9 @@ Para la prueba móvil se conserva deliberadamente un conjunto controlado:
 | Ejemplar | `LIB-011-EJ02` | Activo y Dañado |
 | Ejemplar | `LIB-011-EJ03` | Inactivo y Operativo |
 
-La comprobación posterior confirmó exactamente 1 libro, 3 ejemplares, 0 lectores y 0 préstamos. El verificador histórico de Semana 2 informa 6/7 porque fue diseñado para una base sin catálogo; su único control no cumplido corresponde a estos datos temporales intencionales, no a residuos de la suite.
+Antes de eliminarlo se confirmó exactamente 1 libro, 3 ejemplares, 0 lectores y 0 préstamos asociados. Finalizada la prueba móvil, se eliminaron el libro ID 11 y sus tres ejemplares mediante una transacción limitada al marcador `TEMP-SEMANA-05`.
 
-El conjunto temporal se eliminará después de completar y documentar la prueba móvil.
+La suite completa se ejecutó nuevamente después de la limpieza y finalizó 30/30. `scripts/verificar_bd.py` confirmó 7/7 controles y ausencia de datos temporales.
 
 ## Deployment y HTTPS
 
@@ -139,9 +139,25 @@ El conjunto temporal se eliminará después de completar y documentar la prueba 
 - URL verificada: `https://biblioteca-quinones.onrender.com/` respondió por HTTPS y mostró el catálogo temporal correcto.
 - Protección verificada: el acceso anónimo a `/escaneo` redirigió a `/login`.
 
+## Revisión de evidencias visuales
+
+Las ocho capturas fueron abiertas y revisadas individualmente. No muestran contraseñas, variables privadas, `DATABASE_URL`, `SECRET_KEY`, tokens ni Deploy Hook.
+
+| Archivo | Evidencia verificada |
+|---|---|
+| `01_modulo_admin_qr.png` | Administración de ejemplares, selección múltiple, Ver QR y Reimprimir PDF |
+| `02_pdf_etiquetas_a4.png` | PDF A4 con tres QR cuadrados, códigos y título legibles |
+| `03_terminal_escaneo_movil.png` | Terminal responsive con cámara inicialmente apagada e ingreso manual disponible |
+| `04_ingreso_manual_correcto.png` | Código `LIB-011-EJ01`, ficha correcta y estado Disponible |
+| `05_codigo_no_registrado.png` | Mensaje `Código no registrado.` sin operación adicional |
+| `06_camara_activa_movil.png` | Cámara real activa después de la acción y permiso del usuario |
+| `07_qr_leido_correctamente.png` | Lectura real y confirmación de `LIB-011-EJ01` |
+| `08_render_deploy_semana05.png` | Commit `1c2f46f` con `Deploy succeeded | Live` |
+
 ## Controles complementarios
 
 - `compileall`: correcto.
 - `pip check`: dependencias compatibles.
 - `git diff --check`: correcto; solo avisos informativos de conversión LF/CRLF en Windows.
 - Revisión de secretos: `.env` excluido; no se incorporaron credenciales, tokens, cadenas reales de PostgreSQL ni Deploy Hook.
+- Verificación final de Neon: 7/7 controles correctos y ningún dato temporal residual.

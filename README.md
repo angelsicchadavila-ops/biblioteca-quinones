@@ -1,6 +1,6 @@
 # Sistema Web de Gestión Bibliotecaria con Control QR
 
-Aplicación académica de la Biblioteca Quiñones. La versión actual corresponde al desarrollo técnico de la Semana 5 e incorpora identificación QR, etiquetas PDF A4 y un terminal móvil de escaneo, además del catálogo y la administración construidos en semanas anteriores.
+Aplicación académica de la Biblioteca Quiñones. La Semana 5 está completa y pendiente de aprobación del usuario; incorpora identificación QR, etiquetas PDF A4 y un terminal móvil de escaneo, además del catálogo y la administración construidos en semanas anteriores. La Semana 6 no ha comenzado.
 
 ## Funciones disponibles
 

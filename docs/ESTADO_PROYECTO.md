@@ -3,8 +3,8 @@
 ## Identificación
 - Proyecto: Sistema Web de Gestión Bibliotecaria con Control QR
 - Documento Maestro: v1.0
-- Estado general: Semana 5 en ejecución; implementación, pruebas y deployment HTTPS completos
-- Semana actual: Semana 5 — QR, PDF y escáner móvil (pendiente de prueba real desde teléfono y evidencias visuales)
+- Estado general: Semana 5 completa; pendiente de revisión y aprobación expresa del usuario
+- Semana actual: Semana 5 — QR, PDF y escáner móvil (completa)
 - Última actualización: 12 de septiembre de 2026
 
 ## Fuente de verdad
@@ -86,7 +86,7 @@
 - Evidencias técnicas guardadas en `docs/evidencias/semana_04/`.
 - Seis capturas obligatorias guardadas con los nombres previstos, revisadas visualmente y sin secretos visibles.
 
-## Semana 5 en ejecución
+## Semana 5 completada
 
 ### QR PDF y escáner móvil
 
@@ -97,9 +97,12 @@
 - Endpoint autenticado `GET /api/ejemplar/<codigo_qr>` con respuestas JSON 200, 400, 401 y 404.
 - Terminal `/escaneo` con `html5-qrcode`, cámara trasera preferida, inicio bajo acción del usuario, detención/reinicio, ingreso manual y bloqueo de doble lectura.
 - Ficha de identificación para estados Disponible, Prestado, Dañado e Inactivo, sin acciones de Semana 6.
-- Suite completa: 30 de 30 pruebas correctas.
+- Suite completa final: 30 de 30 pruebas correctas en 170,628 segundos después de la limpieza.
 - PDF real generado y verificado como A4; interfaz comprobada a 390 x 844 px.
-- Conjunto temporal controlado en Neon: libro ID 11 y ejemplares `LIB-011-EJ01` a `LIB-011-EJ03`; 0 lectores y 0 préstamos.
+- Prueba real desde teléfono completada sobre Render HTTPS con cámara activa y lectura correcta de `LIB-011-EJ01`.
+- Ingreso manual correcto y código inexistente comprobados en móvil.
+- Ocho capturas obligatorias revisadas individualmente y guardadas en `docs/evidencias/semana_05/capturas/` sin secretos visibles.
+- Conjunto temporal `TEMP-SEMANA-05` eliminado; Neon volvió a 7 de 7 verificaciones correctas.
 - Commit técnico `1c2f46f` publicado correctamente en `origin/main`.
 - Render no reaccionó al push pese a conservar Auto-Deploy en `On Commit`; la contingencia `Deploy latest commit` dejó `1c2f46f` en estado `Live`.
 - Aplicación verificada por HTTPS; catálogo operativo y terminal protegido frente a acceso anónimo.
@@ -112,13 +115,13 @@
 - La implementación, las pruebas, las evidencias y el deployment de la Semana 4 están completos.
 - No existen pendientes bloqueantes dentro del alcance de la Semana 4.
 - Observación no bloqueante: el Auto-Deploy de Render está configurado como `On Commit`, pero el webhook no reaccionó al push de Semana 4; el deployment se completó correctamente mediante `Deploy latest commit`.
-- Semana 5: pendiente completar la prueba real de cámara y lectura QR desde teléfono y guardar las capturas obligatorias.
-- Semana 5: el conjunto `TEMP-SEMANA-05` debe conservarse hasta la prueba móvil y eliminarse después de guardar las evidencias.
+- No existen pendientes técnicos ni documentales dentro del alcance de la Semana 5.
+- Semana 5 queda pendiente únicamente de revisión y aprobación expresa del usuario.
 - El campo `Responsable` del Documento Maestro conserva el marcador `[Nombre del estudiante]`; es un dato administrativo no bloqueante que deberá completarse cuando el usuario proporcione el nombre.
 
 ## Fase actual
 
-Semana 5 en ejecución. La implementación, las pruebas y el deployment están completos; no cerrarla ni iniciar Semana 6 hasta terminar la prueba QR real en móvil, las capturas y la limpieza de datos temporales.
+Semana 5 completa y lista para revisión. No iniciar la Semana 6 antes de la aprobación expresa del usuario.
 
 ## Historial semanal
 | Semana | Estado | Fecha | Evidencia principal | Commit |
@@ -127,7 +130,7 @@ Semana 5 en ejecución. La implementación, las pruebas y el deployment están c
 | 02 | Completa | 09/09/2026 | `docs/evidencias/semana_02/SEMANA_02_EVIDENCIA.md` | `db: completar base de datos de semana 2` |
 | 03 | Completa | 10/09/2026 | `docs/evidencias/semana_03/SEMANA_03_EVIDENCIA.md` | `5096cf4` (implementación) + `docs: cerrar semana 3 y registrar deployment` |
 | 04 | Completa; pendiente de aprobación del usuario | 12/09/2026 | `docs/evidencias/semana_04/SEMANA_04_EVIDENCIA.md` | `a190a88` + `c30945d` + cierre visual |
-| 05 | En ejecución | 12/09/2026 | `docs/evidencias/semana_05/SEMANA_05_EVIDENCIA.md` | `1c2f46f` (implementación) |
+| 05 | Completa; pendiente de aprobación del usuario | 12/09/2026 | `docs/evidencias/semana_05/SEMANA_05_EVIDENCIA.md` | `1c2f46f` + `798b45c` + cierre visual |
 | 06 | Pendiente | — | — | — |
 | 07 | Pendiente | — | — | — |
 | 08 | Pendiente | — | — | — |
