@@ -4,8 +4,8 @@
 <div class="terminal-escaneo mx-auto">
   <div class="mb-4">
     <p class="text-primary fw-semibold mb-1">Rol verificado: {{ g.usuario.rol }}</p>
-    <h1 class="h3 mb-2">Identificar ejemplar</h1>
-    <p class="text-secondary mb-0">Escanea la etiqueta QR o escribe el código impreso. Esta pantalla solo identifica el ejemplar; no registra préstamos ni devoluciones.</p>
+    <h1 class="h3 mb-2">Terminal de préstamos y devoluciones</h1>
+    <p class="text-secondary mb-0">Escanea la etiqueta QR o escribe el código impreso. Ambos ingresos usan las mismas validaciones del servidor.</p>
   </div>
 
   <div id="mensaje-escaneo" class="alert alert-info" role="status" aria-live="polite">
@@ -50,7 +50,82 @@
           <div><dt>Nivel</dt><dd id="ficha-nivel"></dd></div>
           <div><dt>Condición física</dt><dd id="ficha-condicion"></dd></div>
         </dl>
-        <p class="small text-secondary mt-3 mb-0">La identificación no modifica el inventario ni el historial.</p>
+
+        <div id="bloqueo-operacion" class="alert alert-danger mt-3 mb-0 d-none"></div>
+
+        <section id="flujo-prestamo" class="mt-4 d-none" aria-labelledby="titulo-prestamo">
+          <h3 id="titulo-prestamo" class="h5">Registrar préstamo</h3>
+          <p class="small text-secondary">Busca primero al lector para reutilizar su historial, límite de préstamos y mora.</p>
+
+          <div class="input-group mb-2">
+            <input id="buscar-lector" class="form-control" type="search" maxlength="200" placeholder="Nombres o apellidos" aria-label="Buscar lector existente">
+            <button id="boton-buscar-lector" class="btn btn-outline-primary" type="button">Buscar lector</button>
+          </div>
+          <div id="resultados-lectores" class="lista-lectores mb-3" aria-live="polite"></div>
+          <button id="boton-nuevo-lector" class="btn btn-sm btn-outline-secondary mb-3" type="button">Crear lector nuevo</button>
+
+          <form id="form-prestamo" novalidate>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input id="prestamo-codigo" type="hidden" name="codigo_qr">
+            <input id="prestamo-lector-id" type="hidden" name="lector_id">
+
+            <div id="lector-seleccionado" class="alert alert-light border py-2 d-none"></div>
+            <div id="campos-nuevo-lector" class="row g-2 mb-3 d-none">
+              <div class="col-12 col-sm-6">
+                <label class="form-label" for="lector-nombres">Nombres</label>
+                <input id="lector-nombres" class="form-control" name="lector_nombres" maxlength="100" autocomplete="off">
+              </div>
+              <div class="col-12 col-sm-6">
+                <label class="form-label" for="lector-apellidos">Apellidos</label>
+                <input id="lector-apellidos" class="form-control" name="lector_apellidos" maxlength="100" autocomplete="off">
+              </div>
+            </div>
+
+            <div class="row g-2">
+              <div class="col-12 col-sm-6">
+                <label class="form-label" for="nivel-alumno">Nivel del alumno</label>
+                <select id="nivel-alumno" class="form-select" name="nivel_alumno" required>
+                  <option value="">Selecciona</option>
+                  <option>Primaria</option>
+                  <option>Secundaria</option>
+                </select>
+              </div>
+              <div class="col-12 col-sm-6">
+                <label class="form-label" for="grado-seccion">Grado y sección</label>
+                <input id="grado-seccion" class="form-control" name="grado_seccion_alumno" maxlength="50" placeholder="Ej. 2 A" required>
+              </div>
+              <div class="col-12 col-sm-6">
+                <label class="form-label" for="tipo-plazo">Plazo</label>
+                <select id="tipo-plazo" class="form-select" name="tipo_plazo" required>
+                  <option value="7">7 días</option>
+                  <option value="14">14 días</option>
+                  <option value="personalizada">Fecha personalizada</option>
+                </select>
+              </div>
+              <div id="campo-fecha-personalizada" class="col-12 col-sm-6 d-none">
+                <label class="form-label" for="fecha-personalizada">Fecha límite</label>
+                <input id="fecha-personalizada" class="form-control" name="fecha_personalizada" type="date">
+              </div>
+            </div>
+            <button id="boton-confirmar-prestamo" class="btn btn-primary btn-lg w-100 mt-3" type="submit">Confirmar préstamo</button>
+          </form>
+        </section>
+
+        <section id="flujo-devolucion" class="mt-4 d-none" aria-labelledby="titulo-devolucion">
+          <h3 id="titulo-devolucion" class="h5">Préstamo activo</h3>
+          <dl class="ficha-datos mb-3">
+            <div><dt>Lector</dt><dd id="devolucion-lector"></dd></div>
+            <div><dt>Nivel y grado</dt><dd id="devolucion-grado"></dd></div>
+            <div><dt>Fecha de préstamo</dt><dd id="devolucion-fecha-prestamo"></dd></div>
+            <div><dt>Fecha límite</dt><dd id="devolucion-fecha-limite"></dd></div>
+            <div><dt>Estado</dt><dd><span id="devolucion-estado" class="badge"></span></dd></div>
+          </dl>
+          <form id="form-devolucion">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input id="devolucion-codigo" type="hidden" name="codigo_qr">
+            <button class="btn btn-success btn-lg w-100" type="submit">Confirmar devolución</button>
+          </form>
+        </section>
       </section>
     </div>
   </div>

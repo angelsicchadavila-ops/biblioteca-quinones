@@ -252,7 +252,8 @@ class FlujoQrSemana5Test(unittest.TestCase):
         self.assertIn("Iniciar cámara", contenido)
         self.assertIn("Ingreso manual", contenido)
         self.assertIn("html5-qrcode@2.3.8", contenido)
-        self.assertNotIn("Confirmar préstamo", contenido)
+        self.assertIn("Confirmar préstamo", contenido)
+        self.assertIn("Confirmar devolución", contenido)
         self.assertEqual(
             self.cliente.get(
                 f"/admin/ejemplares/{self.ejemplar_ids[0]}/qr.png"

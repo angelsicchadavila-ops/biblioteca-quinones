@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 import secrets
+from datetime import date
 from functools import wraps
 from pathlib import Path
 from typing import Callable, ParamSpec, TypeVar
@@ -41,6 +42,18 @@ from utils.escaneo import (
     normalizar_codigo,
 )
 from utils.pdf_exporter import generar_pdf_etiquetas
+from utils.prestamos import (
+    ReglaOperacionError,
+    buscar_lectores,
+    consultar_prestamos,
+    contexto_prestamo_activo,
+    registrar_devolucion,
+    registrar_prestamo,
+    reporte_historial,
+    reporte_inventario,
+    reporte_prestamos_activos,
+    reporte_prestamos_vencidos,
+)
 from utils.qr_generator import generar_qr_png
 
 
@@ -244,7 +257,14 @@ def crear_app(configuracion_pruebas: dict | None = None) -> Flask:
             SELECT
                 (SELECT count(*) FROM materias WHERE activo) AS materias_activas,
                 (SELECT count(*) FROM libros WHERE activo) AS libros_activos,
-                (SELECT count(*) FROM ejemplares WHERE activo) AS ejemplares_activos
+                (SELECT count(*) FROM ejemplares WHERE activo) AS ejemplares_activos,
+                (SELECT count(*) FROM prestamos
+                  WHERE fecha_devolucion IS NULL) AS prestamos_pendientes,
+                (SELECT count(*) FROM prestamos
+                  WHERE fecha_devolucion IS NULL
+                    AND fecha_limite <
+                        (CURRENT_TIMESTAMP AT TIME ZONE 'America/Lima')::date
+                ) AS prestamos_vencidos
             """
         ).fetchone()
         return render_template("admin_dashboard.html", resumen=resumen)
@@ -666,8 +686,17 @@ def crear_app(configuracion_pruebas: dict | None = None) -> Flask:
                 },
             ), 404
 
+        prestamo_activo = contexto_prestamo_activo(ejemplar)
+        if prestamo_activo is not None:
+            operacion = "devolucion"
+        elif ejemplar["disponibilidad"] == "Disponible":
+            operacion = "prestamo"
+        else:
+            operacion = "bloqueado"
+
         return jsonify(
             ok=True,
+            operacion=operacion,
             ejemplar={
                 "codigo_qr": ejemplar["codigo_qr"],
                 "titulo": ejemplar["titulo"],
@@ -679,7 +708,153 @@ def crear_app(configuracion_pruebas: dict | None = None) -> Flask:
                 "libro_activo": ejemplar["libro_activo"],
                 "disponibilidad": ejemplar["disponibilidad"],
             },
+            prestamo_activo=prestamo_activo,
         )
+
+    def error_operacion(error: ReglaOperacionError):
+        return jsonify(
+            ok=False,
+            error={"codigo": error.codigo, "mensaje": error.mensaje},
+        ), error.estado_http
+
+    @app.get("/api/lectores")
+    @api_login_requerido
+    def api_lectores():
+        texto = request.args.get("q", "")
+        return jsonify(ok=True, lectores=buscar_lectores(obtener_bd(), texto))
+
+    @app.post("/api/prestamos")
+    @api_login_requerido
+    def api_registrar_prestamo():
+        codigo = normalizar_codigo(request.form.get("codigo_qr", ""))
+        if not codigo_valido(codigo):
+            return error_operacion(
+                ReglaOperacionError(
+                    "codigo_invalido",
+                    "El código del ejemplar no tiene un formato válido.",
+                    400,
+                )
+            )
+
+        lector_id_texto = request.form.get("lector_id", "").strip()
+        if lector_id_texto and not lector_id_texto.isdigit():
+            return error_operacion(
+                ReglaOperacionError(
+                    "lector_invalido", "Selecciona un lector válido.", 400
+                )
+            )
+        try:
+            prestamo = registrar_prestamo(
+                obtener_bd(),
+                codigo_qr=codigo,
+                usuario_id=g.usuario["id"],
+                lector_id=int(lector_id_texto) if lector_id_texto else None,
+                lector_nombres=request.form.get("lector_nombres", ""),
+                lector_apellidos=request.form.get("lector_apellidos", ""),
+                nivel_alumno=request.form.get("nivel_alumno", "").strip(),
+                grado_seccion_alumno=request.form.get(
+                    "grado_seccion_alumno", ""
+                ),
+                tipo_plazo=request.form.get("tipo_plazo", "").strip(),
+                fecha_personalizada=request.form.get(
+                    "fecha_personalizada", ""
+                ).strip(),
+            )
+        except ReglaOperacionError as error:
+            return error_operacion(error)
+        return jsonify(
+            ok=True,
+            mensaje="Préstamo registrado correctamente.",
+            prestamo=prestamo,
+        ), 201
+
+    @app.post("/api/devoluciones")
+    @api_login_requerido
+    def api_registrar_devolucion():
+        codigo = normalizar_codigo(request.form.get("codigo_qr", ""))
+        if not codigo_valido(codigo):
+            return error_operacion(
+                ReglaOperacionError(
+                    "codigo_invalido",
+                    "El código del ejemplar no tiene un formato válido.",
+                    400,
+                )
+            )
+        try:
+            devolucion = registrar_devolucion(
+                obtener_bd(), codigo_qr=codigo, usuario_id=g.usuario["id"]
+            )
+        except ReglaOperacionError as error:
+            return error_operacion(error)
+        return jsonify(
+            ok=True,
+            mensaje="Devolución registrada correctamente.",
+            devolucion=devolucion,
+        )
+
+    @app.get("/admin/prestamos")
+    @rol_requerido("admin")
+    def prestamos_admin():
+        filtro = request.args.get("estado", "todos").strip().lower()
+        if filtro not in {"todos", "activos", "vencidos", "devueltos"}:
+            filtro = "todos"
+        return render_template(
+            "prestamos.html",
+            prestamos=consultar_prestamos(obtener_bd(), filtro),
+            filtro=filtro,
+        )
+
+    @app.get("/admin/reportes")
+    @rol_requerido("admin")
+    def reportes_admin():
+        reporte = request.args.get("reporte", "inventario").strip().lower()
+        if reporte not in {"inventario", "activos", "vencidos", "historial"}:
+            reporte = "inventario"
+
+        fecha_desde_texto = request.args.get("desde", "").strip()
+        fecha_hasta_texto = request.args.get("hasta", "").strip()
+        fecha_desde = None
+        fecha_hasta = None
+        error_rango = ""
+        if reporte == "historial":
+            try:
+                fecha_desde = (
+                    date.fromisoformat(fecha_desde_texto)
+                    if fecha_desde_texto
+                    else None
+                )
+                fecha_hasta = (
+                    date.fromisoformat(fecha_hasta_texto)
+                    if fecha_hasta_texto
+                    else None
+                )
+            except ValueError:
+                error_rango = "El rango contiene una fecha inválida."
+            if fecha_desde and fecha_hasta and fecha_desde > fecha_hasta:
+                error_rango = "La fecha inicial no puede ser posterior a la fecha final."
+
+        conexion = obtener_bd()
+        consultas = {
+            "inventario": reporte_inventario,
+            "activos": reporte_prestamos_activos,
+            "vencidos": reporte_prestamos_vencidos,
+        }
+        if error_rango:
+            filas = []
+        elif reporte == "historial":
+            filas = reporte_historial(conexion, fecha_desde, fecha_hasta)
+        else:
+            filas = consultas[reporte](conexion)
+
+        respuesta = render_template(
+            "reportes.html",
+            reporte=reporte,
+            filas=filas,
+            desde=fecha_desde_texto,
+            hasta=fecha_hasta_texto,
+            error_rango=error_rango,
+        )
+        return (respuesta, 400) if error_rango else respuesta
 
     @app.errorhandler(403)
     def acceso_denegado(_error):

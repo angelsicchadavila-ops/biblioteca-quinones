@@ -22,12 +22,31 @@ def codigo_valido(codigo: str) -> bool:
 def consultar_ejemplar_por_codigo(
     conexion: psycopg.Connection, codigo: str
 ) -> dict | None:
-    """Devuelve solo la ficha necesaria para el terminal interno."""
+    """Devuelve la ficha y, si existe, el préstamo activo para el terminal."""
     return conexion.execute(
         """
-        SELECT e.codigo_qr, e.estado_fisico, e.activo,
+        SELECT e.id AS ejemplar_id, e.codigo_qr, e.estado_fisico, e.activo,
                l.titulo, l.autor, l.nivel, l.activo AS libro_activo,
                m.nombre AS materia,
+               p.id AS prestamo_id, p.lector_id,
+               le.nombres AS lector_nombres,
+               le.apellidos AS lector_apellidos,
+               p.nivel_alumno, p.grado_seccion_alumno,
+               p.fecha_prestamo, p.fecha_limite,
+               CASE
+                   WHEN p.id IS NULL THEN NULL
+                   WHEN p.fecha_limite <
+                        (CURRENT_TIMESTAMP AT TIME ZONE 'America/Lima')::date
+                        THEN 'Vencido'
+                   ELSE 'Activo'
+               END AS estado_prestamo,
+               CASE
+                   WHEN p.id IS NOT NULL AND p.fecha_limite <
+                        (CURRENT_TIMESTAMP AT TIME ZONE 'America/Lima')::date
+                   THEN (CURRENT_TIMESTAMP AT TIME ZONE 'America/Lima')::date
+                        - p.fecha_limite
+                   ELSE 0
+               END AS dias_atraso,
                CASE
                    WHEN NOT e.activo OR NOT l.activo OR NOT m.activo THEN 'Inactivo'
                    WHEN e.estado_fisico = 'Dañado' THEN 'Dañado'
@@ -40,6 +59,7 @@ def consultar_ejemplar_por_codigo(
           LEFT JOIN prestamos p
             ON p.ejemplar_id = e.id
            AND p.fecha_devolucion IS NULL
+          LEFT JOIN lectores le ON le.id = p.lector_id
          WHERE e.codigo_qr = %s
         """,
         (codigo,),

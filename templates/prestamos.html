@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Préstamos · Biblioteca Quiñones{% endblock %}
+{% block content %}
+<div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4">
+  <div>
+    <p class="text-primary fw-semibold mb-1">Administración</p>
+    <h1 class="h3 mb-2">Listado de préstamos</h1>
+    <p class="text-secondary mb-0">El estado se calcula desde la fecha límite y la devolución real.</p>
+  </div>
+  <div class="d-flex flex-wrap gap-2">
+    <a class="btn btn-outline-primary" href="{{ url_for('escaneo') }}">Abrir terminal</a>
+    <a class="btn btn-primary" href="{{ url_for('reportes_admin') }}">Ver reportes</a>
+  </div>
+</div>
+
+<nav class="nav nav-pills gap-2 mb-3" aria-label="Filtrar préstamos por estado">
+  {% for valor, etiqueta in [('todos', 'Todos'), ('activos', 'Activos'), ('vencidos', 'Vencidos'), ('devueltos', 'Devueltos')] %}
+    <a class="nav-link {{ 'active' if filtro == valor else '' }}" href="{{ url_for('prestamos_admin', estado=valor) }}">{{ etiqueta }}</a>
+  {% endfor %}
+</nav>
+
+<section class="bg-white border rounded-3 shadow-sm overflow-hidden">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0 tabla-prestamos">
+      <thead class="table-light">
+        <tr>
+          <th>Estado</th>
+          <th>Lector</th>
+          <th>Libro y ejemplar</th>
+          <th>Préstamo</th>
+          <th>Límite</th>
+          <th>Devolución</th>
+          <th>Trazabilidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for prestamo in prestamos %}
+          <tr class="fila-prestamo-{{ prestamo.estado|lower }}">
+            <td>
+              <span class="badge {{ 'text-bg-success' if prestamo.estado == 'Devuelto' else 'text-bg-danger' if prestamo.estado == 'Vencido' else 'text-bg-warning' }}">
+                {{ prestamo.estado }}
+              </span>
+              {% if prestamo.dias_atraso %}<small class="d-block text-danger mt-1">{{ prestamo.dias_atraso }} día(s)</small>{% endif %}
+            </td>
+            <td>
+              <strong>{{ prestamo.lector }}</strong>
+              <small class="d-block text-secondary">{{ prestamo.nivel_alumno }} · {{ prestamo.grado_seccion_alumno }}</small>
+            </td>
+            <td>
+              {{ prestamo.libro }}
+              <code class="d-block codigo-ejemplar">{{ prestamo.ejemplar }}</code>
+            </td>
+            <td class="text-nowrap">{{ prestamo.fecha_prestamo.strftime('%d/%m/%Y %H:%M') }}</td>
+            <td class="text-nowrap">{{ prestamo.fecha_limite.strftime('%d/%m/%Y') }}</td>
+            <td class="text-nowrap">{{ prestamo.fecha_devolucion.strftime('%d/%m/%Y %H:%M') if prestamo.fecha_devolucion else '—' }}</td>
+            <td>
+              <small><strong>Registró:</strong> {{ prestamo.registrado_por }}</small>
+              <small class="d-block"><strong>Devolvió:</strong> {{ prestamo.devuelto_por or '—' }}</small>
+            </td>
+          </tr>
+        {% else %}
+          <tr><td colspan="7" class="text-center text-secondary py-5">No existen préstamos para este filtro.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

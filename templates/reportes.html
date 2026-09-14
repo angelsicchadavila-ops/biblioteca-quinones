@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Reportes · Biblioteca Quiñones{% endblock %}
+{% block content %}
+<div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4">
+  <div>
+    <p class="text-primary fw-semibold mb-1">Administración</p>
+    <h1 class="h3 mb-2">Reportes operativos v1.0</h1>
+    <p class="text-secondary mb-0">Inventario, préstamos pendientes, mora e historial en tablas simples.</p>
+  </div>
+  <a class="btn btn-outline-primary" href="{{ url_for('prestamos_admin') }}">Listado de préstamos</a>
+</div>
+
+<nav class="nav nav-pills gap-2 mb-4" aria-label="Seleccionar reporte">
+  {% for valor, etiqueta in [('inventario', 'RPT-01 Inventario'), ('activos', 'RPT-02 Activos'), ('vencidos', 'RPT-03 Vencidos'), ('historial', 'RPT-04 Historial')] %}
+    <a class="nav-link {{ 'active' if reporte == valor else '' }}" href="{{ url_for('reportes_admin', reporte=valor) }}">{{ etiqueta }}</a>
+  {% endfor %}
+</nav>
+
+{% if reporte == 'historial' %}
+  <form class="bg-white border rounded-3 p-3 shadow-sm row g-3 align-items-end mb-4" method="get">
+    <input type="hidden" name="reporte" value="historial">
+    <div class="col-12 col-sm-4">
+      <label class="form-label" for="desde">Desde</label>
+      <input class="form-control" id="desde" name="desde" type="date" value="{{ desde }}">
+    </div>
+    <div class="col-12 col-sm-4">
+      <label class="form-label" for="hasta">Hasta</label>
+      <input class="form-control" id="hasta" name="hasta" type="date" value="{{ hasta }}">
+    </div>
+    <div class="col-12 col-sm-4 d-grid">
+      <button class="btn btn-primary" type="submit">Aplicar rango</button>
+    </div>
+    {% if error_rango %}<div class="col-12"><div class="alert alert-danger mb-0">{{ error_rango }}</div></div>{% endif %}
+  </form>
+{% endif %}
+
+<section class="bg-white border rounded-3 shadow-sm overflow-hidden">
+  <div class="p-3 border-bottom">
+    <h2 class="h5 mb-0">
+      {% if reporte == 'inventario' %}RPT-01 Inventario
+      {% elif reporte == 'activos' %}RPT-02 Préstamos activos sin devolver
+      {% elif reporte == 'vencidos' %}RPT-03 Préstamos vencidos
+      {% else %}RPT-04 Historial de préstamos{% endif %}
+    </h2>
+  </div>
+  <div class="table-responsive">
+    {% if reporte == 'inventario' %}
+      <table class="table table-striped align-middle mb-0">
+        <thead class="table-light"><tr><th>Título</th><th>Materia</th><th>Total</th><th>Disponibles</th><th>Prestados</th><th>Dañados</th></tr></thead>
+        <tbody>{% for fila in filas %}<tr><td>{{ fila.titulo }}</td><td>{{ fila.materia }}</td><td>{{ fila.total }}</td><td>{{ fila.disponibles }}</td><td>{{ fila.prestados }}</td><td>{{ fila.danados }}</td></tr>{% else %}<tr><td colspan="6" class="text-center text-secondary py-5">Sin datos.</td></tr>{% endfor %}</tbody>
+      </table>
+    {% elif reporte == 'activos' %}
+      <table class="table table-striped align-middle mb-0">
+        <thead class="table-light"><tr><th>Alumno o lector</th><th>Libro</th><th>Ejemplar</th><th>Préstamo</th><th>Límite</th><th>Estado</th></tr></thead>
+        <tbody>{% for fila in filas %}<tr><td>{{ fila.lector }}</td><td>{{ fila.libro }}</td><td><code>{{ fila.ejemplar }}</code></td><td class="text-nowrap">{{ fila.fecha_prestamo.strftime('%d/%m/%Y %H:%M') }}</td><td class="text-nowrap">{{ fila.fecha_limite.strftime('%d/%m/%Y') }}</td><td><span class="badge {{ 'text-bg-danger' if fila.estado == 'Vencido' else 'text-bg-warning' }}">{{ fila.estado }}</span></td></tr>{% else %}<tr><td colspan="6" class="text-center text-secondary py-5">Sin préstamos activos.</td></tr>{% endfor %}</tbody>
+      </table>
+    {% elif reporte == 'vencidos' %}
+      <table class="table table-striped align-middle mb-0">
+        <thead class="table-light"><tr><th>Alumno o lector</th><th>Nivel</th><th>Grado y sección</th><th>Libro</th><th>Fecha límite</th><th>Días de atraso</th></tr></thead>
+        <tbody>{% for fila in filas %}<tr><td>{{ fila.lector }}</td><td>{{ fila.nivel_alumno }}</td><td>{{ fila.grado_seccion_alumno }}</td><td>{{ fila.libro }}</td><td class="text-nowrap">{{ fila.fecha_limite.strftime('%d/%m/%Y') }}</td><td><span class="badge text-bg-danger">{{ fila.dias_atraso }}</span></td></tr>{% else %}<tr><td colspan="6" class="text-center text-secondary py-5">No hay préstamos vencidos.</td></tr>{% endfor %}</tbody>
+      </table>
+    {% else %}
+      <table class="table table-striped align-middle mb-0">
+        <thead class="table-light"><tr><th>Alumno o lector</th><th>Libro y ejemplar</th><th>Préstamo</th><th>Límite</th><th>Devolución</th><th>Estado final</th><th>Usuarios responsables</th></tr></thead>
+        <tbody>{% for fila in filas %}<tr><td>{{ fila.lector }}</td><td>{{ fila.libro }}<code class="d-block">{{ fila.ejemplar }}</code></td><td class="text-nowrap">{{ fila.fecha_prestamo.strftime('%d/%m/%Y %H:%M') }}</td><td class="text-nowrap">{{ fila.fecha_limite.strftime('%d/%m/%Y') }}</td><td class="text-nowrap">{{ fila.fecha_devolucion.strftime('%d/%m/%Y %H:%M') if fila.fecha_devolucion else '—' }}</td><td>{{ fila.estado_final }}</td><td><small><strong>Registró:</strong> {{ fila.registrado_por }}</small><small class="d-block"><strong>Devolvió:</strong> {{ fila.devuelto_por or '—' }}</small></td></tr>{% else %}<tr><td colspan="7" class="text-center text-secondary py-5">Sin préstamos en el rango indicado.</td></tr>{% endfor %}</tbody>
+      </table>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

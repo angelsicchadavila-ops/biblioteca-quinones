@@ -109,6 +109,37 @@ body {
   overflow-wrap: anywhere;
 }
 
+.lista-lectores {
+  max-height: 15rem;
+  overflow-y: auto;
+}
+
+.tabla-prestamos .fila-prestamo-devuelto > * {
+  background-color: #e9f7ef;
+}
+
+.tabla-prestamos .fila-prestamo-activo > * {
+  background-color: #fff8db;
+}
+
+.tabla-prestamos .fila-prestamo-vencido > * {
+  background-color: #fdecec;
+}
+
+.tabla-prestamos th,
+.tabla-prestamos td {
+  min-width: 7.5rem;
+}
+
+.tabla-prestamos th:nth-child(2),
+.tabla-prestamos td:nth-child(2),
+.tabla-prestamos th:nth-child(3),
+.tabla-prestamos td:nth-child(3),
+.tabla-prestamos th:nth-child(7),
+.tabla-prestamos td:nth-child(7) {
+  min-width: 12rem;
+}
+
 @media (max-width: 575.98px) {
   .navbar .container {
     align-items: flex-start;
