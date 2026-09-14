@@ -3,7 +3,7 @@
 ## Identificación
 - Proyecto: Sistema Web de Gestión Bibliotecaria con Control QR
 - Documento Maestro: v1.0
-- Estado general: Semana 6 en validación; implementación y pruebas automáticas completas
+- Estado general: Semana 6 en validación; implementación, pruebas automáticas y deployment completos
 - Semana actual: Semana 6 — préstamos, devoluciones y reportes
 - Última actualización: 14 de septiembre de 2026
 
@@ -122,7 +122,7 @@
 
 ## Fase actual
 
-Semana 6 iniciada por aprobación expresa del usuario. Implementación técnica y suite automática completas; falta deployment del commit de Semana 6, ciclo real desde móvil, capturas y limpieza del conjunto temporal manual. No iniciar la Semana 7.
+Semana 6 iniciada por aprobación expresa del usuario. Implementación técnica, suite automática, push y deployment completos; faltan ciclo real desde móvil, capturas y limpieza del conjunto temporal manual. Auto-Deploy volvió a fallar y la contingencia manual dejó `7db4cd7` en estado `Live`. No iniciar la Semana 7.
 
 ## Historial semanal
 | Semana | Estado | Fecha | Evidencia principal | Commit |
@@ -132,7 +132,7 @@ Semana 6 iniciada por aprobación expresa del usuario. Implementación técnica 
 | 03 | Completa | 10/09/2026 | `docs/evidencias/semana_03/SEMANA_03_EVIDENCIA.md` | `5096cf4` (implementación) + `docs: cerrar semana 3 y registrar deployment` |
 | 04 | Completa; pendiente de aprobación del usuario | 12/09/2026 | `docs/evidencias/semana_04/SEMANA_04_EVIDENCIA.md` | `a190a88` + `c30945d` + cierre visual |
 | 05 | Completa; aprobada al iniciar Semana 6 | 14/09/2026 | `docs/evidencias/semana_05/SEMANA_05_EVIDENCIA.md` | `1c2f46f` + `798b45c` + `e0f83ff` |
-| 06 | En validación; técnica automática completa | 14/09/2026 | `docs/evidencias/semana_06/SEMANA_06_EVIDENCIA.md` | Pendiente |
+| 06 | En validación; falta prueba móvil y capturas | 14/09/2026 | `docs/evidencias/semana_06/SEMANA_06_EVIDENCIA.md` | `861a89a` + `7db4cd7` |
 | 07 | Pendiente | — | — | — |
 | 08 | Pendiente | — | — | — |
 | 09 | Pendiente | — | — | — |

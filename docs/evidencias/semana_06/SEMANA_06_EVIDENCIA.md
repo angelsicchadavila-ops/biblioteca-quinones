@@ -2,7 +2,7 @@
 
 ## Estado
 
-Implementación técnica y pruebas automáticas completas. Pendientes: deployment del commit de Semana 6, ciclo real desde teléfono, capturas obligatorias y limpieza del conjunto temporal que se prepare para esa validación.
+Implementación técnica, pruebas automáticas, push y deployment completos. Pendientes: ciclo real desde teléfono, capturas obligatorias y limpieza del conjunto temporal que se prepare para esa validación.
 
 ## Funcionalidad implementada
 
@@ -51,9 +51,16 @@ CA-03, CA-04, CA-05, CA-06, CA-07, CA-08, CA-09, CA-10, CA-12, CA-13 y CA-14 que
 
 ## Pendientes antes del cierre
 
-1. Publicar el commit técnico en `origin/main`.
-2. Verificar Auto-Deploy de Render y aplicar `Deploy latest commit` si vuelve a fallar.
-3. Completar el ciclo real desde teléfono por HTTPS.
-4. Guardar capturas y video reales según las instrucciones.
-5. Eliminar los datos temporales manuales después de conservar la evidencia.
-6. Actualizar este documento y `docs/ESTADO_PROYECTO.md` con el resultado final.
+1. Completar el ciclo real desde teléfono por HTTPS.
+2. Guardar capturas y video reales según las instrucciones.
+3. Eliminar los datos temporales manuales después de conservar la evidencia.
+4. Actualizar este documento y `docs/ESTADO_PROYECTO.md` con el resultado final.
+
+## Git y deployment
+
+- Commit técnico: `861a89a`.
+- Commit de evidencia automática: `7db4cd7`.
+- Push a `origin/main`: correcto.
+- Auto-Deploy: no reaccionó al push, por tercera semana consecutiva.
+- Contingencia: `Deploy latest commit` ejecutada sin cambiar configuración.
+- Resultado: `7db4cd7` en estado `Deploy succeeded | Live`, duración 49,9 segundos y aplicación HTTPS operativa.

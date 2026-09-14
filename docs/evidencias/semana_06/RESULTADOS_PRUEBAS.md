@@ -48,7 +48,7 @@ La primera ejecución aislada no pudo abrir conexiones TCP hacia Neon y devolvi�
 | 28 | RPT-02 | Correcto | préstamos sin devolver con estado calculado |
 | 29 | RPT-03 | Correcto | lector, grado/sección, límite y atraso |
 | 30 | RPT-04 | Correcto | historial y validación de rango; rango inverso HTTP 400 |
-| 31 | Aplicación en Render | Pendiente final | la versión de Semana 5 respondió por HTTPS antes de implementar; falta verificar el nuevo commit |
+| 31 | Aplicación en Render | Correcto | commit `7db4cd7`, deployment manual en 49,9 s, estado `Deploy succeeded \| Live` y health check HTTP 200 |
 | 32 | Ciclo real desde móvil | Pendiente manual | requiere cámara física, login, préstamo, relectura y devolución |
 
 ## Integridad y concurrencia
@@ -57,4 +57,13 @@ La aplicación usa transacciones explícitas y bloqueos `FOR UPDATE` sobre lecto
 
 ## Pendientes manuales
 
-La Semana 6 no se declara cerrada hasta completar el ciclo móvil real, las capturas indicadas en `capturas/INSTRUCCIONES_CAPTURAS.md` y la verificación del deployment del commit técnico.
+La Semana 6 no se declara cerrada hasta completar el ciclo móvil real y las capturas indicadas en `capturas/INSTRUCCIONES_CAPTURAS.md`.
+
+## Deployment en Render
+
+- El push `e0f83ff..7db4cd7` a `origin/main` fue correcto.
+- Auto-Deploy no inició un deployment y el panel continuó mostrando `1c2f46f` como último commit desplegado.
+- Se ejecutó la contingencia autorizada `Deploy latest commit` sin cambiar configuración.
+- Render desplegó `7db4cd7` manualmente en 49,9 segundos.
+- El build terminó correctamente, Gunicorn 23.0.0 inició, el health check recibió HTTP 200 y el estado final fue `Deploy succeeded | Live`.
+- `https://biblioteca-quinones.onrender.com/` respondió por HTTPS y mostró el catálogo público.
