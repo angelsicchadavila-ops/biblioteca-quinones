@@ -3,9 +3,9 @@
 ## Identificación
 - Proyecto: Sistema Web de Gestión Bibliotecaria con Control QR
 - Documento Maestro: v1.0
-- Estado general: Semana 5 completa; pendiente de revisión y aprobación expresa del usuario
-- Semana actual: Semana 5 — QR, PDF y escáner móvil (completa)
-- Última actualización: 12 de septiembre de 2026
+- Estado general: Semana 6 en validación; implementación y pruebas automáticas completas
+- Semana actual: Semana 6 — préstamos, devoluciones y reportes
+- Última actualización: 14 de septiembre de 2026
 
 ## Fuente de verdad
 - `docs/Documento_Maestro_Biblioteca_v1.0.docx`
@@ -116,12 +116,13 @@
 - No existen pendientes bloqueantes dentro del alcance de la Semana 4.
 - Observación no bloqueante: el Auto-Deploy de Render está configurado como `On Commit`, pero el webhook no reaccionó al push de Semana 4; el deployment se completó correctamente mediante `Deploy latest commit`.
 - No existen pendientes técnicos ni documentales dentro del alcance de la Semana 5.
-- Semana 5 queda pendiente únicamente de revisión y aprobación expresa del usuario.
+- La Semana 5 fue aprobada expresamente al solicitar el inicio oficial de la Semana 6.
+- Semana 6: pendiente de deployment, prueba móvil real, capturas y limpieza manual posterior; la suite automática está completa.
 - El campo `Responsable` del Documento Maestro conserva el marcador `[Nombre del estudiante]`; es un dato administrativo no bloqueante que deberá completarse cuando el usuario proporcione el nombre.
 
 ## Fase actual
 
-Semana 5 completa y lista para revisión. No iniciar la Semana 6 antes de la aprobación expresa del usuario.
+Semana 6 iniciada por aprobación expresa del usuario. Implementación técnica y suite automática completas; falta deployment del commit de Semana 6, ciclo real desde móvil, capturas y limpieza del conjunto temporal manual. No iniciar la Semana 7.
 
 ## Historial semanal
 | Semana | Estado | Fecha | Evidencia principal | Commit |
@@ -130,8 +131,8 @@ Semana 5 completa y lista para revisión. No iniciar la Semana 6 antes de la apr
 | 02 | Completa | 09/09/2026 | `docs/evidencias/semana_02/SEMANA_02_EVIDENCIA.md` | `db: completar base de datos de semana 2` |
 | 03 | Completa | 10/09/2026 | `docs/evidencias/semana_03/SEMANA_03_EVIDENCIA.md` | `5096cf4` (implementación) + `docs: cerrar semana 3 y registrar deployment` |
 | 04 | Completa; pendiente de aprobación del usuario | 12/09/2026 | `docs/evidencias/semana_04/SEMANA_04_EVIDENCIA.md` | `a190a88` + `c30945d` + cierre visual |
-| 05 | Completa; pendiente de aprobación del usuario | 12/09/2026 | `docs/evidencias/semana_05/SEMANA_05_EVIDENCIA.md` | `1c2f46f` + `798b45c` + cierre visual |
-| 06 | Pendiente | — | — | — |
+| 05 | Completa; aprobada al iniciar Semana 6 | 14/09/2026 | `docs/evidencias/semana_05/SEMANA_05_EVIDENCIA.md` | `1c2f46f` + `798b45c` + `e0f83ff` |
+| 06 | En validación; técnica automática completa | 14/09/2026 | `docs/evidencias/semana_06/SEMANA_06_EVIDENCIA.md` | Pendiente |
 | 07 | Pendiente | — | — | — |
 | 08 | Pendiente | — | — | — |
 | 09 | Pendiente | — | — | — |
