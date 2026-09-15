@@ -3,9 +3,9 @@
 ## Identificación
 - Proyecto: Sistema Web de Gestión Bibliotecaria con Control QR
 - Documento Maestro: v1.0
-- Estado general: Semana 6 en validación; implementación, pruebas automáticas y deployment completos
-- Semana actual: Semana 6 — préstamos, devoluciones y reportes
-- Última actualización: 14 de septiembre de 2026
+- Estado general: Semana 6 completa y aprobada con observaciones menores de evidencia visual
+- Semana actual: Semana 6 — préstamos, devoluciones y reportes; no iniciar Semana 7
+- Última actualización: 15 de septiembre de 2026
 
 ## Fuente de verdad
 - `docs/Documento_Maestro_Biblioteca_v1.0.docx`
@@ -117,12 +117,13 @@
 - Observación no bloqueante: el Auto-Deploy de Render está configurado como `On Commit`, pero el webhook no reaccionó al push de Semana 4; el deployment se completó correctamente mediante `Deploy latest commit`.
 - No existen pendientes técnicos ni documentales dentro del alcance de la Semana 5.
 - La Semana 5 fue aprobada expresamente al solicitar el inicio oficial de la Semana 6.
-- Semana 6: pendiente de deployment, prueba móvil real, capturas y limpieza manual posterior; la suite automática está completa.
+- Semana 6 completa y aprobada expresamente el 15/09/2026: 34/34 pruebas automáticas, ciclo móvil real y 13 capturas aceptadas, conjunto TEMP-SEMANA-06 eliminado, Neon 7/7 y Render HTTP 200 por HTTPS.
+- Observación menor no bloqueante: algunas capturas recortan información o no muestran un filtro aplicado; el responsable verificó esas funciones en la interfaz completa y aceptó las evidencias. El video comienza con la sesión ya iniciada para evitar exponer credenciales.
 - El campo `Responsable` del Documento Maestro conserva el marcador `[Nombre del estudiante]`; es un dato administrativo no bloqueante que deberá completarse cuando el usuario proporcione el nombre.
 
 ## Fase actual
 
-Semana 6 iniciada por aprobación expresa del usuario. Implementación técnica, suite automática, push y deployment completos; faltan ciclo real desde móvil, capturas y limpieza del conjunto temporal manual. Auto-Deploy volvió a fallar y la contingencia manual dejó `7db4cd7` en estado `Live`. No iniciar la Semana 7.
+Semana 6 completa y aprobada expresamente por el responsable del proyecto, con observaciones menores de encuadre visual registradas en su evidencia. Implementación técnica, suite automática, ciclo real móvil, capturas, limpieza TEMP-SEMANA-06 y deployment verificados. Auto-Deploy falló en el push técnico; la contingencia manual dejó `ecfd370` en estado `Live`. No iniciar la Semana 7 sin nueva autorización.
 
 ## Historial semanal
 | Semana | Estado | Fecha | Evidencia principal | Commit |
@@ -132,7 +133,7 @@ Semana 6 iniciada por aprobación expresa del usuario. Implementación técnica,
 | 03 | Completa | 10/09/2026 | `docs/evidencias/semana_03/SEMANA_03_EVIDENCIA.md` | `5096cf4` (implementación) + `docs: cerrar semana 3 y registrar deployment` |
 | 04 | Completa; pendiente de aprobación del usuario | 12/09/2026 | `docs/evidencias/semana_04/SEMANA_04_EVIDENCIA.md` | `a190a88` + `c30945d` + cierre visual |
 | 05 | Completa; aprobada al iniciar Semana 6 | 14/09/2026 | `docs/evidencias/semana_05/SEMANA_05_EVIDENCIA.md` | `1c2f46f` + `798b45c` + `e0f83ff` |
-| 06 | En validación; falta prueba móvil y capturas | 14/09/2026 | `docs/evidencias/semana_06/SEMANA_06_EVIDENCIA.md` | `861a89a` + `7db4cd7` |
+| 06 | Completa y aprobada; observaciones visuales menores | 15/09/2026 | `docs/evidencias/semana_06/SEMANA_06_EVIDENCIA.md` | `861a89a` + `7db4cd7` + `ecfd370` + cierre documental y visual |
 | 07 | Pendiente | — | — | — |
 | 08 | Pendiente | — | — | — |
 | 09 | Pendiente | — | — | — |

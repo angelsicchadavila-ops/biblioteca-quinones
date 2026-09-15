@@ -49,15 +49,17 @@ La primera ejecución aislada no pudo abrir conexiones TCP hacia Neon y devolvi�
 | 29 | RPT-03 | Correcto | lector, grado/sección, límite y atraso |
 | 30 | RPT-04 | Correcto | historial y validación de rango; rango inverso HTTP 400 |
 | 31 | Aplicación en Render | Correcto | commit `7db4cd7`, deployment manual en 49,9 s, estado `Deploy succeeded \| Live` y health check HTTP 200 |
-| 32 | Ciclo real desde móvil | Pendiente manual | requiere cámara física, login, préstamo, relectura y devolución |
+| 32 | Ciclo real desde móvil | Correcto; aceptado por el responsable | video real: sesión autenticada, ingreso manual, lector nuevo, préstamo, reidentificación, devolución y disponibilidad final |
 
 ## Integridad y concurrencia
 
 La aplicación usa transacciones explícitas y bloqueos `FOR UPDATE` sobre lector y ejemplar. Las validaciones se repiten en el backend y permanecen respaldadas por `trg_validar_prestamo_activo` y `uq_prestamos_ejemplar_activo`. La prueba concurrente abrió dos conexiones independientes contra Neon y confirmó un único préstamo activo.
 
-## Pendientes manuales
+## Validación manual y observaciones visuales
 
-La Semana 6 no se declara cerrada hasta completar el ciclo móvil real y las capturas indicadas en `capturas/INSTRUCCIONES_CAPTURAS.md`.
+El responsable del proyecto confirmó el 15 de septiembre de 2026 que la funcionalidad de las capturas 01, 03, 09, 10, 11 y 12 fue verificada en la interfaz completa. Aceptó expresamente sus limitaciones de encuadre y presentación: algunas columnas o fichas no caben en la imagen; la captura 11 no exhibe un rango aplicado, aunque el filtro fue comprobado manualmente y automáticamente. El video inicia con la sesión ya autenticada para no grabar credenciales; el ciclo operativo completo sí aparece. No hubo fallos funcionales asociados a estas observaciones. Se conservaron las 13 capturas y el video originales, sin recrear evidencias.
+
+Tras una limpieza transaccional del conjunto manual TEMP-SEMANA-06 se eliminaron 7 préstamos, 3 lectores, 7 ejemplares, 1 libro y 1 materia de prueba. La verificación final en Neon fue **7/7**, con cero residuos temporales y sin cambios de estructura ni datos reales. El catálogo Render respondió HTTP 200 por HTTPS.
 
 ## Deployment en Render
 
