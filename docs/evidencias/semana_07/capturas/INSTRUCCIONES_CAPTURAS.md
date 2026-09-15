@@ -1,6 +1,6 @@
-# Capturas manuales necesarias para la Semana 7
+# Guía de capturas de la Semana 7
 
-Realizar estas capturas desde PC después del deployment definitivo. Usar recortes de la zona indicada; no incluir menús de perfil ni información ajena. Guardar los PNG exactamente en esta carpeta. No hace falta repetir capturas de módulos funcionales ya aceptadas en Semanas 4 a 6.
+Las cuatro capturas de PC se guardaron en esta carpeta y fueron revisadas el 15 de septiembre de 2026. La tabla conserva las indicaciones de captura para trazabilidad. Los resultados de la revisión y los límites de cada imagen constan en `../SEMANA_07_EVIDENCIA.md`. No se repitieron capturas de módulos funcionales ya aceptadas en Semanas 4 a 6.
 
 | Archivo exacto | Pantalla a abrir y contenido visible | Excluir del encuadre |
 |---|---|---|

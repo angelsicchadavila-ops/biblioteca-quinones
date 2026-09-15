@@ -1,6 +1,6 @@
 # Evidencia técnica de la Semana 7
 
-Estado: verificaciones técnicas completadas; pendientes las capturas del estado final y la revisión del usuario. La Semana 7 no está cerrada ni aprobada.
+Estado: implementación, verificaciones y evidencias de Semana 7 completas; pendiente la aprobación expresa del usuario. No se ha iniciado la Semana 8.
 
 ## Alcance y fuente
 
@@ -38,8 +38,23 @@ Después del redeploy, la prueba HTTPS de solo lectura superó 32 comprobaciones
 
 Se ejecutó además `Restart service`. Los logs recientes mostraron un nuevo arranque de Gunicorn sin errores relevantes. La prueba de humo volvió a pasar 32/32 y la huella de los registros Neon siguió igual. Render continuó Live en `0ae60c9`. El plan Free puede suspender una instancia por inactividad y demorar su primera solicitud; la comprobación controlada cubrió arranque tras redeploy y reinicio, no una espera prolongada de inactividad.
 
-## Pendientes para completar la evidencia
+El registro documental final se publicó en `a0b935c`. Auto-Deploy tampoco reaccionó a ese push, por lo que se utilizó nuevamente `Deploy latest commit`. La captura final muestra `a0b935c` en estado `Live`, con disparador manual y duración de 45,7 s. El detalle del deployment mostró `Deploy succeeded | Live` y la ejecución de `gunicorn app:app`. Después, la prueba de humo HTTPS pasó 32/32, Neon pasó 7/7 y la huella de los registros existentes permaneció igual. `HEAD`, `origin/main` y la referencia remota coincidieron al terminar la publicación técnica.
 
-- Incorporar las capturas puntuales del deployment documental final indicadas en `capturas/INSTRUCCIONES_CAPTURAS.md` y permitir revisión del usuario antes de declarar el cierre.
+## Capturas finales verificadas
+
+Se abrieron individualmente los cuatro PNG reales de `capturas/`, se revisaron nombre, resolución, legibilidad, contenido y metadata. Todos son capturas de PC; sus tamaños son suficientes para leer el dato que respaldan. No contienen contraseñas, tokens, cadenas de conexión, Deploy Hook ni metadata sensible.
+
+| Archivo | Evidencia visual verificada | Límite de la captura |
+|---|---|---|
+| `01_render_live_semana07.png` | Servicio correcto, fuente GitHub, rama `main`, `a0b935c` Live y deployment manual final. | El arranque Gunicorn se verificó en el detalle del deployment y en la prueba HTTPS. |
+| `02_render_build_semana07.png` | Repositorio, rama `main`, Root Directory vacío, Build Command correcto e Included Paths sin entradas. | Ignored Paths queda fuera del recorte; se comprobó directamente en Settings. Es visible el identificador de la cuenta Git, ya presente en la metadata pública de commits, sin clave ni token. |
+| `03_render_deploy_semana07.png` | Start Command `gunicorn app:app` y Auto-Deploy `On Commit`. | El bloque Deploy Hook queda fuera de la imagen. |
+| `04_https_catalogo_semana07.png` | Página pública cargada y URL HTTPS visible. | La barra de dirección está activa; la conexión HTTPS efectiva se respaldó además con la prueba de humo real. |
+
+Las capturas no sustituyen la verificación de Neon, variables privadas o persistencia; esos controles constan en `RESULTADOS_PRUEBAS.md` sin revelar valores secretos. Las capturas funcionales de Semanas 4 a 6 no se repitieron.
+
+## Estado para aprobación
+
+No queda un pendiente técnico identificado de Semana 7. Auto-Deploy continúa en `On Commit` y su falta de reacción a pushes se mantiene como observación no bloqueante, con `Deploy latest commit` probado como contingencia. La Semana 7 queda lista para revisión y aprobación expresa del usuario; hasta entonces no se inicia la Semana 8.
 
 El campo `Responsable` del Documento Maestro conserva `[Nombre del estudiante]`; se mantiene como dato administrativo pendiente del estudiante, sin bloquear la Semana 7.
