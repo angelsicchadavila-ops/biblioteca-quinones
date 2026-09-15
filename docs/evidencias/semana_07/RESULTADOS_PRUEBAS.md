@@ -12,9 +12,16 @@ Fecha: 15 de septiembre de 2026. Entornos: aplicación local conectada a Neon y 
 | `python scripts/verificar_produccion.py` | Correcto: catálogo HTTPS, login admin/asistente, sesiones, cookie Secure y HttpOnly, CSRF, rutas por rol, reportes, QR/PDF protegidos, logout |
 | Revisión de archivos versionados y `.gitignore` | `.env` ignorado y no versionado; `.env.example` contiene marcadores; búsqueda de patrones de URL/clave real sin coincidencias |
 | Consulta de solo lectura a Neon | Host Neon confirmado; 2 usuarios con hashes Werkzeug, 5 materias iniciales, 0 libros, ejemplares, lectores y préstamos, 0 residuos `TEMP-SEMANA-%` |
+| Redeploy manual de `0ae60c9` | `Deploy succeeded | Live` en 48,9 s; Render ejecutó `gunicorn app:app` |
+| Humo posterior al redeploy | 32/32 comprobaciones correctas por HTTPS |
+| Persistencia posterior al redeploy | 2 usuarios y 5 materias; huella de identificadores/nombres igual a la línea base; Neon 7/7 |
+| Reinicio controlado del servicio | Gunicorn volvió a iniciar sin errores relevantes en los logs recientes |
+| Humo y persistencia posteriores al reinicio | 32/32 comprobaciones correctas; misma huella de registros Neon |
 
 La suite cubrió catálogo, materias, libros, ejemplares, QR, PDF A4, terminal, ingreso manual, préstamos, devoluciones, listados, reportes, CSRF, permisos y concurrencia. En Render se comprobó que el público recibe 401 al consultar la API interna y que el asistente recibe 403 en las rutas administrativas. Los endpoints QR/PDF devolvieron 404 para un ejemplar inexistente con sesión admin; la generación real de archivos quedó respaldada por la suite automática, sin crear datos temporales en producción para esta prueba de humo.
 
 La primera ejecución de `verificar_bd.py` dentro del entorno restringido no pudo conectarse por el permiso de red local. La misma orden con acceso de red autorizado pasó 7/7. No fue un fallo de Neon ni de la aplicación.
 
 El script de humo toma las contraseñas de prueba del entorno local y nunca las imprime. No se guardaron cookies, tokens CSRF, cabeceras completas ni cadenas de conexión en esta evidencia.
+
+Auto-Deploy siguió configurado en `On Commit`, pero no inició un deployment tras el push `0ae60c9`; el panel continuó mostrando el commit anterior después de la ventana de observación. Se utilizó `Deploy latest commit` y el nuevo commit pasó a `Live`. Los Build Filters están vacíos, Root Directory está vacío, y repositorio/rama son correctos; no se identificó una causa segura del fallo de detección.

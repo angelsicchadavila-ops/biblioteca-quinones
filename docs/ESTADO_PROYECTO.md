@@ -3,8 +3,8 @@
 ## Identificación
 - Proyecto: Sistema Web de Gestión Bibliotecaria con Control QR
 - Documento Maestro: v1.0
-- Estado general: Semana 6 completa y aprobada; Semana 7 en verificación técnica
-- Semana actual: Semana 7 — producción y endurecimiento; pendiente redeploy y revisión de evidencias
+- Estado general: Semana 6 completa y aprobada; Semana 7 técnicamente verificada, pendiente evidencias visuales y aprobación
+- Semana actual: Semana 7 — producción y endurecimiento; pendientes capturas y aprobación
 - Última actualización: 15 de septiembre de 2026
 
 ## Fuente de verdad
@@ -123,7 +123,7 @@
 
 ## Fase actual
 
-Semana 7 iniciada por autorización expresa del usuario. La Semana 6 permanece completa y aprobada, con sus observaciones visuales documentadas. La revisión de producción confirmó Render Live, configuración de Build/Gunicorn, tres variables privadas, HTTPS y Neon 7/7; la regresión obtuvo 34/34, integridad 11/11 y la prueba de humo Render validó sesiones y permisos. Pendientes el redeploy controlado, la comprobación de persistencia posterior y las capturas de infraestructura para revisión. No declarar cerrada la Semana 7 ni avanzar a la Semana 8 sin aprobación expresa.
+Semana 7 iniciada por autorización expresa del usuario. La Semana 6 permanece completa y aprobada, con sus observaciones visuales documentadas. Render Live mantiene Build/Gunicorn, tres variables privadas y HTTPS. Neon pasó 7/7; regresión 34/34; integridad 11/11. El redeploy manual de `0ae60c9` completó en 48,9 s tras otro fallo de Auto-Deploy; humo Render 32/32 y datos Neon idénticos antes/después. Un reinicio controlado volvió a iniciar Gunicorn sin errores relevantes, con humo 32/32 y persistencia confirmada. Pendientes las capturas de infraestructura y la revisión del usuario. No declarar cerrada la Semana 7 ni avanzar a la Semana 8 sin aprobación expresa.
 
 ## Historial semanal
 | Semana | Estado | Fecha | Evidencia principal | Commit |
@@ -134,6 +134,6 @@ Semana 7 iniciada por autorización expresa del usuario. La Semana 6 permanece c
 | 04 | Completa; pendiente de aprobación del usuario | 12/09/2026 | `docs/evidencias/semana_04/SEMANA_04_EVIDENCIA.md` | `a190a88` + `c30945d` + cierre visual |
 | 05 | Completa; aprobada al iniciar Semana 6 | 14/09/2026 | `docs/evidencias/semana_05/SEMANA_05_EVIDENCIA.md` | `1c2f46f` + `798b45c` + `e0f83ff` |
 | 06 | Completa y aprobada; observaciones visuales menores | 15/09/2026 | `docs/evidencias/semana_06/SEMANA_06_EVIDENCIA.md` | `861a89a` + `7db4cd7` + `ecfd370` + cierre documental y visual |
-| 07 | En verificación; pendiente revisión de evidencias | 15/09/2026 | `docs/evidencias/semana_07/SEMANA_07_EVIDENCIA.md` | Pendiente de commit técnico/documental |
+| 07 | Técnica verificada; pendientes capturas y aprobación | 15/09/2026 | `docs/evidencias/semana_07/SEMANA_07_EVIDENCIA.md` | `0ae60c9` + registro documental final |
 | 08 | Pendiente | — | — | — |
 | 09 | Pendiente | — | — | — |

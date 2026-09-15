@@ -1,6 +1,6 @@
 # Evidencia técnica de la Semana 7
 
-Estado: verificaciones técnicas en curso; pendiente la prueba de redeploy, su comparación de persistencia y las capturas finales. La Semana 7 no está cerrada ni aprobada.
+Estado: verificaciones técnicas completadas; pendientes las capturas del estado final y la revisión del usuario. La Semana 7 no está cerrada ni aprobada.
 
 ## Alcance y fuente
 
@@ -30,11 +30,16 @@ Se revisaron `AGENTS.md`, el Documento Maestro v1.0, `docs/ESTADO_PROYECTO.md`, 
 
 El verificador existente confirmó 6 tablas, constraints, índices, triggers, cinco materias y las dos cuentas aprobadas: 7/7. La integridad transaccional y de concurrencia pasó 11/11. La suite completa terminó 34/34. Tras estas pruebas se observaron 0 libros, ejemplares, lectores y préstamos, y 0 residuos `TEMP-SEMANA-%`. El detalle está en `RESULTADOS_PRUEBAS.md`. No se recreó la base, no se ejecutó DROP y no se modificaron datos reales.
 
+## Redeploy, reinicio y persistencia
+
+El commit legítimo `0ae60c9` se publicó en `origin/main` después de las pruebas y revisión de secretos. Durante la ventana de observación Render no creó un deployment automático, pese a conservar `On Commit`; el panel seguía en `ecfd370`. Se ejecutó `Manual Deploy` → `Deploy latest commit`. Render construyó e instaló las dependencias de `requirements.txt`, ejecutó `gunicorn app:app` y completó el deployment manual en 48,9 s con `Deploy succeeded | Live` para `0ae60c9`. No se utilizó el Deploy Hook ni se modificaron variables o configuración crítica.
+
+Después del redeploy, la prueba HTTPS de solo lectura superó 32 comprobaciones, incluidas ambos logins y las consultas a Neon a través de Render. La verificación de Neon volvió a pasar 7/7. Antes y después se compararon conteos y una huella calculada de identificadores/nombres de las cinco materias y de los dos usuarios; ambas coincidieron. Los datos existentes persistieron y no hubo registros operativos o temporales residuales.
+
+Se ejecutó además `Restart service`. Los logs recientes mostraron un nuevo arranque de Gunicorn sin errores relevantes. La prueba de humo volvió a pasar 32/32 y la huella de los registros Neon siguió igual. Render continuó Live en `0ae60c9`. El plan Free puede suspender una instancia por inactividad y demorar su primera solicitud; la comprobación controlada cubrió arranque tras redeploy y reinicio, no una espera prolongada de inactividad.
+
 ## Pendientes para completar la evidencia
 
-- Publicar el cambio técnico/documental de Semana 7 y observar si Auto-Deploy reacciona; si no reacciona, usar `Deploy latest commit` como contingencia.
-- Confirmar el nuevo deployment Live, el arranque Gunicorn, HTTPS y la conexión Neon.
-- Comparar los registros existentes de Neon antes y después del redeploy.
-- Incorporar las capturas puntuales indicadas en `capturas/INSTRUCCIONES_CAPTURAS.md` y permitir revisión del usuario antes de declarar el cierre.
+- Incorporar las capturas puntuales del deployment documental final indicadas en `capturas/INSTRUCCIONES_CAPTURAS.md` y permitir revisión del usuario antes de declarar el cierre.
 
 El campo `Responsable` del Documento Maestro conserva `[Nombre del estudiante]`; se mantiene como dato administrativo pendiente del estudiante, sin bloquear la Semana 7.
