@@ -540,7 +540,12 @@ def crear_app(configuracion_pruebas: dict | None = None) -> Flask:
 
         if request.method == "POST":
             valor = request.form.get("cantidad", "").strip()
-            if not valor.isdigit() or not 1 <= int(valor) <= 100:
+            if not libro["activo"]:
+                flash(
+                    "El libro está inactivo. Reactívalo antes de agregar ejemplares.",
+                    "danger",
+                )
+            elif not valor.isdigit() or not 1 <= int(valor) <= 100:
                 flash("La cantidad debe ser un número entre 1 y 100.", "danger")
             else:
                 codigos = crear_ejemplares(conexion, libro_id, int(valor))

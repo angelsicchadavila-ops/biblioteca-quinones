@@ -120,12 +120,14 @@ def consultar_ejemplares(
         """
         SELECT e.id, e.codigo_qr, e.estado_fisico, e.activo, e.fecha_registro,
                CASE
-                   WHEN NOT e.activo THEN 'Inactivo'
+                   WHEN NOT e.activo OR NOT l.activo OR NOT m.activo THEN 'Inactivo'
                    WHEN e.estado_fisico = 'Dañado' THEN 'Dañado'
                    WHEN p.id IS NOT NULL THEN 'Prestado'
                    ELSE 'Disponible'
                END AS disponibilidad
           FROM ejemplares e
+          JOIN libros l ON l.id = e.libro_id
+          JOIN materias m ON m.id = l.materia_id
           LEFT JOIN prestamos p
             ON p.ejemplar_id = e.id
            AND p.fecha_devolucion IS NULL

@@ -17,14 +17,20 @@
       <p class="text-secondary mb-md-0">Los códigos se generan automáticamente con el formato LIB-XXX-EJYY.</p>
     </div>
     <div class="col-12 col-md-5">
-      <form method="post" class="d-flex gap-2">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-        <div class="flex-grow-1">
-          <label class="form-label" for="cantidad">Cantidad</label>
-          <input class="form-control" id="cantidad" name="cantidad" type="number" min="1" max="100" value="1" required>
+      {% if libro.activo %}
+        <form method="post" class="d-flex gap-2">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <div class="flex-grow-1">
+            <label class="form-label" for="cantidad">Cantidad</label>
+            <input class="form-control" id="cantidad" name="cantidad" type="number" min="1" max="100" value="1" required>
+          </div>
+          <button class="btn btn-primary align-self-end" type="submit">Crear</button>
+        </form>
+      {% else %}
+        <div class="alert alert-warning mb-0" role="alert">
+          Reactiva el libro antes de agregar ejemplares nuevos.
         </div>
-        <button class="btn btn-primary align-self-end" type="submit">Crear</button>
-      </form>
+      {% endif %}
     </div>
   </div>
 </section>
