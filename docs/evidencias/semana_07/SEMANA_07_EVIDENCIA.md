@@ -1,6 +1,6 @@
 # Evidencia técnica de la Semana 7
 
-Estado: implementación, verificaciones y evidencias de Semana 7 completas; pendiente la aprobación expresa del usuario. No se ha iniciado la Semana 8.
+Estado: Semana 7 completa y aprobada expresamente el 16/09/2026 al autorizarse el inicio oficial de la Semana 8.
 
 ## Alcance y fuente
 
@@ -55,6 +55,6 @@ Las capturas no sustituyen la verificación de Neon, variables privadas o persis
 
 ## Estado para aprobación
 
-No queda un pendiente técnico identificado de Semana 7. Auto-Deploy continúa en `On Commit` y su falta de reacción a pushes se mantiene como observación no bloqueante, con `Deploy latest commit` probado como contingencia. La Semana 7 queda lista para revisión y aprobación expresa del usuario; hasta entonces no se inicia la Semana 8.
+No queda un pendiente técnico identificado de Semana 7. Auto-Deploy continúa en `On Commit` y su falta de reacción a pushes se mantiene como observación no bloqueante, con `Deploy latest commit` probado como contingencia. La Semana 7 fue aprobada expresamente el 16/09/2026 cuando el usuario autorizó el inicio oficial de la Semana 8.
 
 El campo `Responsable` del Documento Maestro conserva `[Nombre del estudiante]`; se mantiene como dato administrativo pendiente del estudiante, sin bloquear la Semana 7.
