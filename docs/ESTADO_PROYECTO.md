@@ -125,7 +125,7 @@
 
 ## Fase actual
 
-Semana 8 completa técnicamente y pendiente únicamente de aprobación expresa del usuario. El QA integral revalidó catálogo, autenticación, materias, libros, ejemplares, QR/PDF, escáner, lectores, préstamos, devoluciones, semáforo, reportes, permisos, seguridad, Neon y Render. INC-08-001 quedó corregida y desplegada en `83d1677`; INC-08-002 corrigió la normalización del auxiliar de limpieza en `2bbf06f`. La prueba móvil fue aprobada y respaldada por cinco capturas; se usó Samsung Internet y no se informó el modelo del teléfono. La bibliotecaria no participó. Resultado final: 167/167 casos clasificados, suite 38/38, integridad 11/11, Neon limpio 7/7 y smoke HTTPS 32/32. Render permanece `Deploy succeeded | Live` con Gunicorn; Auto-Deploy no reaccionó y se usó la contingencia manual. No iniciar la Semana 9.
+Semana 8 completa técnicamente y pendiente únicamente de aprobación expresa del usuario. El QA integral revalidó catálogo, autenticación, materias, libros, ejemplares, QR/PDF, escáner, lectores, préstamos, devoluciones, semáforo, reportes, permisos, seguridad, Neon y Render. INC-08-001 quedó corregida y desplegada en `83d1677`; INC-08-002 corrigió la normalización del auxiliar de limpieza en `2bbf06f`. La prueba móvil fue aprobada y respaldada por cinco capturas; se usó Samsung Internet y no se informó el modelo del teléfono. La bibliotecaria no participó. Resultado final: 167/167 casos clasificados, suite 38/38, integridad 11/11, Neon limpio 7/7 y smoke HTTPS 32/32. El cierre `f985761` quedó `Deploy succeeded | Live` mediante deployment manual `dep-dalcirnf3r2c738pi5ag`, con Gunicorn 23.0.0 y smoke posterior 32/32; Auto-Deploy no reaccionó. No iniciar la Semana 9.
 
 ## Historial semanal
 | Semana | Estado | Fecha | Evidencia principal | Commit |
@@ -137,5 +137,5 @@ Semana 8 completa técnicamente y pendiente únicamente de aprobación expresa d
 | 05 | Completa; aprobada al iniciar Semana 6 | 14/09/2026 | `docs/evidencias/semana_05/SEMANA_05_EVIDENCIA.md` | `1c2f46f` + `798b45c` + `e0f83ff` |
 | 06 | Completa y aprobada; observaciones visuales menores | 15/09/2026 | `docs/evidencias/semana_06/SEMANA_06_EVIDENCIA.md` | `861a89a` + `7db4cd7` + `ecfd370` + cierre documental y visual |
 | 07 | Completa y aprobada al iniciar Semana 8 | 16/09/2026 | `docs/evidencias/semana_07/SEMANA_07_EVIDENCIA.md` | `0ae60c9` + `a0b935c` + `f1f1515` |
-| 08 | Completa técnicamente; pendiente aprobación expresa | 16/09/2026 | `docs/evidencias/semana_08/SEMANA_08_EVIDENCIA.md` | `83d1677` + `2bbf06f` + cierre documental |
+| 08 | Completa técnicamente; pendiente aprobación expresa | 16/09/2026 | `docs/evidencias/semana_08/SEMANA_08_EVIDENCIA.md` | `83d1677` + `2bbf06f` + `f985761` + registro final |
 | 09 | Pendiente | — | — | — |

@@ -59,6 +59,10 @@ Las pruebas nuevas cubren sesión inválida, catálogo sin coincidencias y sin c
 - Health check visible: `GET /` HTTP 200.
 - Smoke posterior: 32/32 por HTTPS.
 - Revisión de navegador: catálogo responsive visible, Bootstrap cargado y sin errores o advertencias en la consola del navegador.
+- Después del commit documental `f985761` y su push, Auto-Deploy volvió a no reaccionar. Se aplicó nuevamente `Deploy latest commit`.
+- Deployment final: `dep-dalcirnf3r2c738pi5ag`, fuente `f985761`, `Deploy succeeded | Live`, duración 1 min 07 s.
+- Logs finales: build correcto, `gunicorn app:app`, Gunicorn 23.0.0, worker iniciado y comprobaciones `HEAD /` y `GET /` con HTTP 200, sin errores relevantes.
+- Smoke posterior al deployment final: 32/32 por HTTPS.
 
 ## Datos y validación móvil
 

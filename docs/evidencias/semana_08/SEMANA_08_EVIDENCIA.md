@@ -32,7 +32,7 @@ Semana 8 completa técnicamente y lista para revisión del usuario. El QA integr
 - Validación móvil: aprobada; cinco capturas revisadas; navegador Samsung Internet; modelo no informado.
 - Prueba de campo con bibliotecaria: no realizada; guía lista.
 - Datos temporales: materias 0, libros 0, ejemplares 0, préstamos 0 y lectores 0.
-- Render: `83d1677` Live por HTTPS, Gunicorn 23.0.0, logs del deployment sin errores relevantes.
+- Render: cierre `f985761` Live por HTTPS mediante deployment manual `dep-dalcirnf3r2c738pi5ag`; Gunicorn 23.0.0, logs sin errores relevantes y smoke posterior 32/32.
 - Auto-Deploy: continúa en `On Commit` según la configuración previamente verificada, pero no reaccionó al push; contingencia manual correcta.
 - Verificación final: suite 38/38 en 303,407 s, integridad 11/11, Neon final 7/7 y smoke HTTPS 32/32.
 
