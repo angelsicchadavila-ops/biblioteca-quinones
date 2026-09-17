@@ -60,4 +60,3 @@
 ## Declaración de estado
 
 Este checklist prepara la entrega, pero no acredita que la entrega o firma ya hayan ocurrido. Las casillas institucionales deben marcarse solo después de una acción real y verificable.
-

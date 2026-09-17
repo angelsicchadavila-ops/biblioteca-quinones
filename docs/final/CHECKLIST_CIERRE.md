@@ -61,10 +61,9 @@ Este checklist distingue el cierre técnico/documental de la entrega formal a la
 - [x] Documento Maestro, estado y cierres de Semanas 1 a 8 revisados.
 - [x] Semana 8 aprobada por la orden expresa de iniciar Semana 9.
 - [x] Revisión de rutas, esquema, scripts, plantillas y dependencias.
-- [ ] Commit documental final registrado en este checklist.
-- [ ] Push final confirmado y repositorio limpio/sincronizado.
-
-Las dos últimas casillas se completan después de crear y publicar el commit que contiene estos documentos.
+- [x] Commit documental `69f6d0b` registrado en este checklist.
+- [x] Push de contenido confirmado a `origin/main`.
+- [x] Commit de registro final preparado después de la publicación del contenido.
 
 ## Evidencias de Semana 9
 
@@ -99,4 +98,3 @@ Las capturas son una acción manual del estudiante porque incluyen sesiones y pa
 ## Resultado
 
 El sistema y la documentación están preparados para cierre técnico de la versión 1.0. La entrega institucional, las credenciales definitivas, las capturas manuales y las firmas continúan pendientes hasta que el estudiante las realice y registre.
-

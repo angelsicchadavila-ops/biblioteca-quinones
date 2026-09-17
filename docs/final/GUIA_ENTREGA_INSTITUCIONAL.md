@@ -193,4 +193,3 @@ No use datos reales de alumnos durante la demostración salvo autorización inst
 ## Estado actual de la entrega
 
 La versión 1.0 está preparada técnicamente para la transferencia documental. A la fecha de este documento no se declara realizada la entrega formal, no se declara creada la cuenta institucional definitiva y no se declara firmada el acta.
-

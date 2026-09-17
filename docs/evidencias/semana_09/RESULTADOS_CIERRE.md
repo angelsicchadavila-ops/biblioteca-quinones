@@ -107,11 +107,10 @@ Resultado final: **10/10 archivos obligatorios presentes; enlaces locales correc
 
 ## Git final
 
-- Commit de contenido: **[PENDIENTE DE REGISTRAR]**.
-- Commit final de cierre, si aplica: **[PENDIENTE DE REGISTRAR]**.
-- Push: **[PENDIENTE DE REGISTRAR]**.
-- Divergencia final: **[PENDIENTE DE REGISTRAR]**.
-- Árbol final: **[PENDIENTE DE REGISTRAR]**.
+- Commit de contenido: `69f6d0b` (`docs: cerrar semana 9 y preparar entrega v1.0`).
+- Push del contenido: correcto, `0f581cb..69f6d0b main -> main`.
+- Commit de registro final: el commit que contiene este archivo actualizado; consultar `git log -1`.
+- Verificación definitiva de divergencia y árbol: se ejecuta después de publicar el registro final y queda informada en el resumen de cierre.
 
 ## Resultado general
 

@@ -139,4 +139,4 @@ Semana 9 completó la documentación final y la verificación ligera de operaci�
 | 06 | Completa y aprobada; observaciones visuales menores | 15/09/2026 | `docs/evidencias/semana_06/SEMANA_06_EVIDENCIA.md` | `861a89a` + `7db4cd7` + `ecfd370` + cierre documental y visual |
 | 07 | Completa y aprobada al iniciar Semana 8 | 16/09/2026 | `docs/evidencias/semana_07/SEMANA_07_EVIDENCIA.md` | `0ae60c9` + `a0b935c` + `f1f1515` |
 | 08 | Completa y aprobada al iniciar Semana 9 | 17/09/2026 | `docs/evidencias/semana_08/SEMANA_08_EVIDENCIA.md` | `83d1677` + `2bbf06f` + `f985761` + `0f581cb` |
-| 09 | Completa técnica y documentalmente; entrega institucional pendiente | 17/09/2026 | `docs/evidencias/semana_09/SEMANA_09_EVIDENCIA.md` | Pendiente de registrar commit final |
+| 09 | Completa técnica y documentalmente; entrega institucional pendiente | 17/09/2026 | `docs/evidencias/semana_09/SEMANA_09_EVIDENCIA.md` | `69f6d0b` + registro final |

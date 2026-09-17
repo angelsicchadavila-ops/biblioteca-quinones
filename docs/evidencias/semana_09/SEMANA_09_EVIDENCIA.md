@@ -83,10 +83,10 @@ Se limitó la solicitud a cinco capturas útiles: catálogo público, panel admi
 
 - Estado inicial: limpio en `main`.
 - Sincronización inicial: `main...origin/main` = 0/0 en `0f581cb`.
-- Commit documental: **[PENDIENTE DE REGISTRAR]**.
-- Push a `origin/main`: **[PENDIENTE DE REGISTRAR]**.
-- Estado final limpio y sincronizado: **[PENDIENTE DE REGISTRAR]**.
+- Commit documental: `69f6d0b` (`docs: cerrar semana 9 y preparar entrega v1.0`).
+- Push del contenido a `origin/main`: correcto.
+- El commit posterior que contiene este registro completa el cierre documental; su hash se consulta con `git log -1` para evitar autorreferencia imposible dentro del propio commit.
 
 ## Criterios de cierre
 
-Los cinco documentos finales mínimos y la plantilla de acta están preparados. El smoke, Neon y revisión de seguridad están aprobados. La Semana 9 queda lista para cierre técnico una vez completados el commit, push y comprobación de repositorio limpio. La entrega institucional y la firma no se declaran realizadas.
+Los cinco documentos finales mínimos y la plantilla de acta están preparados. El smoke, Neon, revisión de seguridad, commit de contenido y push están aprobados. El registro final se publicará como último commit y se comprobará contra `origin/main`. La entrega institucional y la firma no se declaran realizadas.
