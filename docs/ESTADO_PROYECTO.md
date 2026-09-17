@@ -3,9 +3,9 @@
 ## Identificación
 - Proyecto: Sistema Web de Gestión Bibliotecaria con Control QR
 - Documento Maestro: v1.0
-- Estado general: Semana 8 completa técnicamente y lista para aprobación expresa; QA integral, móvil, limpieza, Neon y Render verificados
-- Semana actual: Semana 8 — QA y pruebas de campo; no iniciar Semana 9 sin aprobación expresa
-- Última actualización: 16 de septiembre de 2026
+- Estado general: Versión 1.0 en cierre técnico y documental de Semana 9; aplicación, Neon, manuales y smoke final verificados; entrega institucional aún no realizada
+- Semana actual: Semana 9 — documentación y cierre, lista para revisión final y entrega institucional
+- Última actualización: 17 de septiembre de 2026
 
 ## Fuente de verdad
 - `docs/Documento_Maestro_Biblioteca_v1.0.docx`
@@ -120,12 +120,13 @@
 - Semana 6 completa y aprobada expresamente el 15/09/2026: 34/34 pruebas automáticas, ciclo móvil real y 13 capturas aceptadas, conjunto TEMP-SEMANA-06 eliminado, Neon 7/7 y Render HTTP 200 por HTTPS.
 - Observación menor no bloqueante: algunas capturas recortan información o no muestran un filtro aplicado; el responsable verificó esas funciones en la interfaz completa y aceptó las evidencias. El video comienza con la sesión ya iniciada para evitar exponer credenciales.
 - Semana 7 completa y aprobada expresamente al autorizar el inicio oficial de la Semana 8 el 16/09/2026. No se identificó un pendiente técnico bloqueante. Auto-Deploy sigue en `On Commit` y `Deploy latest commit` funciona como contingencia.
-- Semana 8 completa técnicamente y lista para aprobación expresa: 167/167 casos con estado final —160 aprobados, 4 corregidos y 3 no aplicables—, suite final 38/38, integridad 11/11, Neon 7/7, smoke Render 32/32 y cinco capturas móviles revisadas. INC-08-001 e INC-08-002 quedaron corregidas; `TEMP-SEMANA-08` fue eliminado por completo. La bibliotecaria no participó y la guía de campo queda preparada. No iniciar Semana 9.
+- Semana 8 completa y aprobada expresamente mediante la autorización de inicio oficial de la Semana 9 el 17/09/2026: 167/167 casos con estado final —160 aprobados, 4 corregidos y 3 no aplicables—, suite final 38/38, integridad 11/11, Neon 7/7, smoke Render 32/32 y cinco capturas móviles revisadas. INC-08-001 e INC-08-002 quedaron corregidas; `TEMP-SEMANA-08` fue eliminado por completo. La bibliotecaria no participó y la guía de campo queda preparada.
+- Semana 9 completa en su componente técnico y documental: manual de usuario, manual técnico, memoria final, guía de entrega, checklist y plantilla de acta preparados; smoke final Render 32/32, Neon 7/7, QR 2/2 y préstamos/devolución/reportes 2/2. Quedan como acciones del estudiante la cuenta institucional definitiva, capturas privadas, datos administrativos, entrega y firma.
 - El campo `Responsable` del Documento Maestro conserva el marcador `[Nombre del estudiante]`; es un dato administrativo no bloqueante que deberá completarse cuando el usuario proporcione el nombre.
 
 ## Fase actual
 
-Semana 8 completa técnicamente y pendiente únicamente de aprobación expresa del usuario. El QA integral revalidó catálogo, autenticación, materias, libros, ejemplares, QR/PDF, escáner, lectores, préstamos, devoluciones, semáforo, reportes, permisos, seguridad, Neon y Render. INC-08-001 quedó corregida y desplegada en `83d1677`; INC-08-002 corrigió la normalización del auxiliar de limpieza en `2bbf06f`. La prueba móvil fue aprobada y respaldada por cinco capturas; se usó Samsung Internet y no se informó el modelo del teléfono. La bibliotecaria no participó. Resultado final: 167/167 casos clasificados, suite 38/38, integridad 11/11, Neon limpio 7/7 y smoke HTTPS 32/32. El cierre `f985761` quedó `Deploy succeeded | Live` mediante deployment manual `dep-dalcirnf3r2c738pi5ag`, con Gunicorn 23.0.0 y smoke posterior 32/32; Auto-Deploy no reaccionó. No iniciar la Semana 9.
+Semana 9 completó la documentación final y la verificación ligera de operación sin desarrollar funciones nuevas. La aplicación pública respondió por HTTPS; el smoke de producción pasó 32/32, Neon 7/7, QR 2/2 y las pruebas seleccionadas de préstamo, devolución, semáforo y reportes 2/2. Los documentos están en `docs/final/` y la evidencia en `docs/evidencias/semana_09/`. La versión desplegada no incluye una pantalla de autogestión de cuentas; la cuenta institucional definitiva debe prepararse mediante mantenimiento técnico autorizado y las cuentas de prueba deben cambiarse, sustituirse o desactivarse. El responsable, custodio, capturas privadas, entrega al colegio y acta siguen pendientes. No se declara la entrega institucional realizada.
 
 ## Historial semanal
 | Semana | Estado | Fecha | Evidencia principal | Commit |
@@ -137,5 +138,5 @@ Semana 8 completa técnicamente y pendiente únicamente de aprobación expresa d
 | 05 | Completa; aprobada al iniciar Semana 6 | 14/09/2026 | `docs/evidencias/semana_05/SEMANA_05_EVIDENCIA.md` | `1c2f46f` + `798b45c` + `e0f83ff` |
 | 06 | Completa y aprobada; observaciones visuales menores | 15/09/2026 | `docs/evidencias/semana_06/SEMANA_06_EVIDENCIA.md` | `861a89a` + `7db4cd7` + `ecfd370` + cierre documental y visual |
 | 07 | Completa y aprobada al iniciar Semana 8 | 16/09/2026 | `docs/evidencias/semana_07/SEMANA_07_EVIDENCIA.md` | `0ae60c9` + `a0b935c` + `f1f1515` |
-| 08 | Completa técnicamente; pendiente aprobación expresa | 16/09/2026 | `docs/evidencias/semana_08/SEMANA_08_EVIDENCIA.md` | `83d1677` + `2bbf06f` + `f985761` + registro final |
-| 09 | Pendiente | — | — | — |
+| 08 | Completa y aprobada al iniciar Semana 9 | 17/09/2026 | `docs/evidencias/semana_08/SEMANA_08_EVIDENCIA.md` | `83d1677` + `2bbf06f` + `f985761` + `0f581cb` |
+| 09 | Completa técnica y documentalmente; entrega institucional pendiente | 17/09/2026 | `docs/evidencias/semana_09/SEMANA_09_EVIDENCIA.md` | Pendiente de registrar commit final |
