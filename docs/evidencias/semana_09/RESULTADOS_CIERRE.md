@@ -1,6 +1,7 @@
 # Resultados de cierre de la Semana 9
 
 Fecha de ejecución: 17 de septiembre de 2026.
+Fecha de revisión de capturas finales: 22 de septiembre de 2026.
 
 ## Precondiciones
 
@@ -112,6 +113,12 @@ Resultado final: **10/10 archivos obligatorios presentes; enlaces locales correc
 - Commit de registro final: el commit que contiene este archivo actualizado; consultar `git log -1`.
 - Verificación definitiva de divergencia y árbol: se ejecuta después de publicar el registro final y queda informada en el resumen de cierre.
 
+## Evidencia visual final
+
+Se revisaron las cinco capturas finales: catálogo público por HTTPS, panel administrativo, terminal QR, módulo de reportes y panel de Render. Todas fueron aprobadas y quedaron organizadas en `docs/evidencias/semana_09/capturas/`, sin secretos ni datos personales sensibles visibles.
+
+La captura de Render muestra el servicio `Live` en el snapshot `0f581cb`, que contiene el último cambio funcional `83d1677`. Los commits posteriores ya publicados, `69f6d0b` y `407e6b8`, son documentales; la incorporación de las capturas también es documental. No se forzó un nuevo deployment.
+
 ## Resultado general
 
-Smoke de aplicación, producción y Neon aprobados. No se detectó un error crítico en la operación final. Los pendientes son institucionales o administrativos: cuenta definitiva, capturas privadas, custodio, entrega y firma.
+Smoke de aplicación, producción y Neon aprobados. Evidencias visuales finales aprobadas. No se detectó un error crítico en la operación final. La Semana 9 queda cerrada técnica y documentalmente. Los pendientes son institucionales o administrativos: cuenta definitiva, custodio, datos de responsables, entrega y firma.

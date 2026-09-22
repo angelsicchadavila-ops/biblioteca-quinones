@@ -1,6 +1,6 @@
 # Checklist de cierre de la versión 1.0
 
-Fecha de revisión técnica: 17 de septiembre de 2026.
+Fecha de revisión técnica: 17 de septiembre de 2026. Capturas finales revisadas: 22 de septiembre de 2026.
 
 Este checklist distingue el cierre técnico/documental de la entrega formal a la institución. Una casilla pendiente no debe presentarse como ejecutada.
 
@@ -71,9 +71,12 @@ Este checklist distingue el cierre técnico/documental de la entrega formal a la
 - [x] `RESULTADOS_CIERRE.md` creado.
 - [x] `CHECKLIST_ENTREGA.md` creado.
 - [x] Instrucciones para capturas finales mínimas creadas.
-- [ ] Capturas finales manuales incorporadas y revisadas.
+- [x] Cinco capturas finales manuales incorporadas y revisadas.
+- [x] Capturas sin credenciales, secretos ni datos personales sensibles visibles.
+- [x] Render `Live` documentado en `0f581cb`, snapshot que contiene el último cambio funcional `83d1677`.
+- [x] Commits posteriores a `0f581cb` identificados como documentales; deployment adicional omitido por no ser necesario.
 
-Las capturas son una acción manual del estudiante porque incluyen sesiones y paneles privados. No bloquean la validez de los resultados automatizados, pero deben incorporarse si la institución o evaluación académica exige evidencia visual de cierre.
+Las capturas fueron realizadas por el estudiante y validadas como evidencia visual mínima del cierre. Complementan los resultados automatizados sin repetir el QA exhaustivo de la Semana 8.
 
 ## Limitaciones y decisiones pendientes
 
@@ -97,4 +100,4 @@ Las capturas son una acción manual del estudiante porque incluyen sesiones y pa
 
 ## Resultado
 
-El sistema y la documentación están preparados para cierre técnico de la versión 1.0. La entrega institucional, las credenciales definitivas, las capturas manuales y las firmas continúan pendientes hasta que el estudiante las realice y registre.
+El cierre técnico, documental y visual de la Semana 9 está completo y la versión 1.0 queda preparada para entrega. La entrega institucional, las credenciales definitivas, los datos administrativos y las firmas continúan pendientes hasta que el estudiante los realice y registre.

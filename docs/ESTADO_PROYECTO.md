@@ -3,9 +3,9 @@
 ## Identificación
 - Proyecto: Sistema Web de Gestión Bibliotecaria con Control QR
 - Documento Maestro: v1.0
-- Estado general: Versión 1.0 en cierre técnico y documental de Semana 9; aplicación, Neon, manuales y smoke final verificados; entrega institucional aún no realizada
-- Semana actual: Semana 9 — documentación y cierre, lista para revisión final y entrega institucional
-- Última actualización: 17 de septiembre de 2026
+- Estado general: Versión 1.0 cerrada técnica, documental y visualmente en Semana 9; aplicación, Neon, manuales, smoke y cinco capturas finales verificados; entrega institucional aún no realizada
+- Semana actual: Semana 9 — completa; versión 1.0 preparada para entrega institucional
+- Última actualización: 22 de septiembre de 2026
 
 ## Fuente de verdad
 - `docs/Documento_Maestro_Biblioteca_v1.0.docx`
@@ -121,12 +121,14 @@
 - Observación menor no bloqueante: algunas capturas recortan información o no muestran un filtro aplicado; el responsable verificó esas funciones en la interfaz completa y aceptó las evidencias. El video comienza con la sesión ya iniciada para evitar exponer credenciales.
 - Semana 7 completa y aprobada expresamente al autorizar el inicio oficial de la Semana 8 el 16/09/2026. No se identificó un pendiente técnico bloqueante. Auto-Deploy sigue en `On Commit` y `Deploy latest commit` funciona como contingencia.
 - Semana 8 completa y aprobada expresamente mediante la autorización de inicio oficial de la Semana 9 el 17/09/2026: 167/167 casos con estado final —160 aprobados, 4 corregidos y 3 no aplicables—, suite final 38/38, integridad 11/11, Neon 7/7, smoke Render 32/32 y cinco capturas móviles revisadas. INC-08-001 e INC-08-002 quedaron corregidas; `TEMP-SEMANA-08` fue eliminado por completo. La bibliotecaria no participó y la guía de campo queda preparada.
-- Semana 9 completa en su componente técnico y documental: manual de usuario, manual técnico, memoria final, guía de entrega, checklist y plantilla de acta preparados; smoke final Render 32/32, Neon 7/7, QR 2/2 y préstamos/devolución/reportes 2/2. Quedan como acciones del estudiante la cuenta institucional definitiva, capturas privadas, datos administrativos, entrega y firma.
+- Semana 9 completa técnica, documental y visualmente: manual de usuario, manual técnico, memoria final, guía de entrega, checklist y plantilla de acta preparados; smoke final Render 32/32, Neon 7/7, QR 2/2 y préstamos/devolución/reportes 2/2; cinco capturas finales revisadas sin secretos ni datos sensibles visibles.
+- La captura final de Render registra el servicio `Live` sobre `0f581cb`, snapshot que contiene el último cambio funcional `83d1677`. Los commits posteriores existentes (`69f6d0b` y `407e6b8`) son documentales, por lo que no se forzó un deployment innecesario.
+- Quedan como acciones del estudiante la cuenta institucional definitiva, los datos administrativos, la custodia de accesos, la entrega formal y la firma.
 - El campo `Responsable` del Documento Maestro conserva el marcador `[Nombre del estudiante]`; es un dato administrativo no bloqueante que deberá completarse cuando el usuario proporcione el nombre.
 
 ## Fase actual
 
-Semana 9 completó la documentación final y la verificación ligera de operación sin desarrollar funciones nuevas. La aplicación pública respondió por HTTPS; el smoke de producción pasó 32/32, Neon 7/7, QR 2/2 y las pruebas seleccionadas de préstamo, devolución, semáforo y reportes 2/2. Los documentos están en `docs/final/` y la evidencia en `docs/evidencias/semana_09/`. La versión desplegada no incluye una pantalla de autogestión de cuentas; la cuenta institucional definitiva debe prepararse mediante mantenimiento técnico autorizado y las cuentas de prueba deben cambiarse, sustituirse o desactivarse. El responsable, custodio, capturas privadas, entrega al colegio y acta siguen pendientes. No se declara la entrega institucional realizada.
+Semana 9 completó la documentación final, la verificación ligera de operación y la revisión de cinco capturas sin desarrollar funciones nuevas. La aplicación pública respondió por HTTPS; el smoke de producción pasó 32/32, Neon 7/7, QR 2/2 y las pruebas seleccionadas de préstamo, devolución, semáforo y reportes 2/2. Los documentos están en `docs/final/` y la evidencia en `docs/evidencias/semana_09/`. Render se documentó `Live` en `0f581cb`, que contiene el último cambio funcional `83d1677`; los cambios posteriores son documentales y no justifican un deployment. La versión desplegada no incluye una pantalla de autogestión de cuentas; la cuenta institucional definitiva debe prepararse mediante mantenimiento técnico autorizado y las cuentas de prueba deben cambiarse, sustituirse o desactivarse. El responsable, custodio, entrega al colegio y acta siguen pendientes. No se declara la entrega institucional realizada.
 
 ## Historial semanal
 | Semana | Estado | Fecha | Evidencia principal | Commit |
@@ -139,4 +141,4 @@ Semana 9 completó la documentación final y la verificación ligera de operaci�
 | 06 | Completa y aprobada; observaciones visuales menores | 15/09/2026 | `docs/evidencias/semana_06/SEMANA_06_EVIDENCIA.md` | `861a89a` + `7db4cd7` + `ecfd370` + cierre documental y visual |
 | 07 | Completa y aprobada al iniciar Semana 8 | 16/09/2026 | `docs/evidencias/semana_07/SEMANA_07_EVIDENCIA.md` | `0ae60c9` + `a0b935c` + `f1f1515` |
 | 08 | Completa y aprobada al iniciar Semana 9 | 17/09/2026 | `docs/evidencias/semana_08/SEMANA_08_EVIDENCIA.md` | `83d1677` + `2bbf06f` + `f985761` + `0f581cb` |
-| 09 | Completa técnica y documentalmente; entrega institucional pendiente | 17/09/2026 | `docs/evidencias/semana_09/SEMANA_09_EVIDENCIA.md` | `69f6d0b` + registro final |
+| 09 | Completa técnica, documental y visualmente; entrega institucional pendiente | 22/09/2026 | `docs/evidencias/semana_09/SEMANA_09_EVIDENCIA.md` | `69f6d0b` + `407e6b8` + cierre visual final |

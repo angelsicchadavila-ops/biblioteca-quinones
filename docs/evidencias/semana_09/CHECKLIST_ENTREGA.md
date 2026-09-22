@@ -13,6 +13,18 @@
 - [x] Plantilla de acta preparada.
 - [x] URL pública registrada.
 
+## Evidencias visuales finales
+
+- [x] Captura 01: catálogo público y URL HTTPS revisados.
+- [x] Captura 02: panel administrativo revisado sin credenciales visibles.
+- [x] Captura 03: terminal QR e ingreso manual revisados.
+- [x] Captura 04: módulo de reportes revisado.
+- [x] Captura 05: Render `Live` y snapshot desplegado `0f581cb` revisados.
+- [x] Cinco archivos PNG organizados en `docs/evidencias/semana_09/capturas/`.
+- [x] Ausencia de contraseñas, tokens, cadenas de conexión y datos personales sensibles en las capturas.
+- [x] Confirmado que `0f581cb` contiene el último cambio funcional `83d1677` y que los commits posteriores existentes (`69f6d0b` y `407e6b8`) son documentales.
+- [x] Deployment adicional omitido deliberadamente por no existir cambios funcionales posteriores.
+
 ## Seguridad de la entrega
 
 - [x] Ningún manual contiene contraseñas reales.
@@ -59,4 +71,4 @@
 
 ## Declaración de estado
 
-Este checklist prepara la entrega, pero no acredita que la entrega o firma ya hayan ocurrido. Las casillas institucionales deben marcarse solo después de una acción real y verificable.
+La preparación técnica, documental y visual de la Semana 9 está completa. Este checklist no acredita que la entrega institucional, la entrega privada de credenciales o la firma ya hayan ocurrido. Las casillas institucionales deben marcarse solo después de una acción real y verificable.

@@ -2,7 +2,7 @@
 
 ## Estado
 
-Semana 9 desarrollada como fase documental y de cierre de la versión 1.0. No se añadieron funcionalidades ni se modificaron reglas de negocio, arquitectura, esquema, roles o permisos. La entrega formal a la institución, la cuenta institucional definitiva, las capturas privadas y la firma de conformidad permanecen pendientes del estudiante.
+Semana 9 cerrada técnica y documentalmente como fase final de la versión 1.0. No se añadieron funcionalidades ni se modificaron reglas de negocio, arquitectura, esquema, roles o permisos. Las cinco capturas finales fueron incorporadas y revisadas el 22 de septiembre de 2026. La entrega formal a la institución, la cuenta institucional definitiva, los datos administrativos y la firma de conformidad permanecen pendientes del estudiante.
 
 ## Fuente de verdad y continuidad
 
@@ -35,7 +35,8 @@ En `docs/evidencias/semana_09/`:
 - `SEMANA_09_EVIDENCIA.md`;
 - `RESULTADOS_CIERRE.md`;
 - `CHECKLIST_ENTREGA.md`;
-- `capturas/INSTRUCCIONES_CAPTURAS.md`.
+- `capturas/INSTRUCCIONES_CAPTURAS.md`;
+- cinco capturas finales verificadas en `capturas/`.
 
 ## Smoke final ejecutado
 
@@ -77,16 +78,28 @@ No se repitió la matriz exhaustiva de Semana 8. El smoke se limitó a producci�
 
 ## Capturas finales
 
-Se limitó la solicitud a cinco capturas útiles: catálogo público, panel admin, terminal QR, reporte y Render Live. Las instrucciones están en `capturas/INSTRUCCIONES_CAPTURAS.md`. Las capturas autenticadas y del panel privado deben realizarlas manualmente el estudiante para evitar exposición de credenciales.
+Las cinco capturas solicitadas fueron incorporadas en `docs/evidencias/semana_09/capturas/` y revisadas visualmente. Todas son archivos PNG válidos; no muestran contraseñas, tokens, cadenas de conexión, claves privadas ni datos personales de lectores.
+
+| Captura | Dimensiones | Verificación | Resultado |
+|---|---:|---|---|
+| `01_catalogo_publico_live_semana09.png` | 1902 × 962 | URL pública por HTTPS, catálogo y filtros visibles. | Aprobada. |
+| `02_panel_admin_semana09.png` | 1912 × 872 | Panel administrativo y rol `admin` visibles, sin credenciales. | Aprobada. |
+| `03_terminal_qr_semana09.png` | 1897 × 852 | Terminal QR, control de cámara e ingreso manual visibles. | Aprobada. |
+| `04_reporte_semana09.png` | 1912 × 870 | Módulo Reportes v1.0 y reportes RPT-01 a RPT-04 visibles. | Aprobada. |
+| `05_render_live_semana09.png` | 1891 × 872 | Servicio `biblioteca-quinones`, rama `main`, HTTPS y estado `Live`; snapshot desplegado `0f581cb`. | Aprobada. |
+
+La captura 05 demuestra que Render continúa `Live` sobre el snapshot `0f581cb`. Ese snapshot contiene el último cambio funcional de la aplicación, `83d1677`; los commits posteriores a `0f581cb` que existían antes de incorporar estas capturas (`69f6d0b` y `407e6b8`) son exclusivamente documentales. El presente cierre solo agrega documentación y evidencias visuales. Por ello no se forzó ni se requiere un deployment adicional.
 
 ## Git y publicación
 
 - Estado inicial: limpio en `main`.
 - Sincronización inicial: `main...origin/main` = 0/0 en `0f581cb`.
 - Commit documental: `69f6d0b` (`docs: cerrar semana 9 y preparar entrega v1.0`).
+- Registro documental posterior: `407e6b8` (`docs: registrar cierre final de semana 9`).
 - Push del contenido a `origin/main`: correcto.
-- El commit posterior que contiene este registro completa el cierre documental; su hash se consulta con `git log -1` para evitar autorreferencia imposible dentro del propio commit.
+- El commit que incorpora las capturas y esta validación completa el cierre visual/documental; su hash se consulta con `git log -1` para evitar autorreferencia imposible dentro del propio commit.
+- No se solicitó deployment de Render porque no hubo cambios funcionales posteriores al snapshot desplegado `0f581cb`.
 
 ## Criterios de cierre
 
-Los cinco documentos finales mínimos y la plantilla de acta están preparados. El smoke, Neon, revisión de seguridad, commit de contenido y push están aprobados. El registro final se publicará como último commit y se comprobará contra `origin/main`. La entrega institucional y la firma no se declaran realizadas.
+Los cinco documentos finales mínimos, la plantilla de acta y las cinco capturas finales están preparados y revisados. El smoke, Neon, revisión de seguridad y cierre documental están aprobados. La Semana 9 queda cerrada técnica y documentalmente. La entrega institucional, la entrega de credenciales por canal privado y la firma no se declaran realizadas.
