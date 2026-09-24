@@ -10,11 +10,11 @@
 <section class="bg-white border rounded-3 p-3 p-md-4 mb-4 shadow-sm" aria-labelledby="titulo-busqueda">
   <h2 class="h5 mb-3" id="titulo-busqueda">Buscar y filtrar</h2>
   <form method="get" class="row g-3 align-items-end">
-    <div class="col-12 col-lg-5">
+    <div class="col-12 col-lg-4">
       <label class="form-label" for="q">Título o autor</label>
       <input class="form-control" id="q" name="q" maxlength="200" value="{{ filtros.q }}" placeholder="Ej. El principito o Antoine de Saint-Exupéry">
     </div>
-    <div class="col-12 col-sm-6 col-lg-3">
+    <div class="col-12 col-sm-6 col-lg-2">
       <label class="form-label" for="materia">Materia</label>
       <select class="form-select" id="materia" name="materia">
         <option value="">Todas las materias</option>
@@ -32,9 +32,13 @@
         {% endfor %}
       </select>
     </div>
+    <div class="col-12 col-sm-6 col-lg-2">
+      <label class="form-label" for="anio">Año</label>
+      <input class="form-control" id="anio" name="anio" type="text" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" value="{{ filtros.anio }}" placeholder="Ej. 2022">
+    </div>
     <div class="col-12 col-lg-2 d-grid gap-2">
       <button class="btn btn-primary" type="submit">Buscar</button>
-      {% if filtros.q or filtros.materia or filtros.nivel %}
+      {% if filtros.q or filtros.materia or filtros.nivel or filtros.anio %}
         <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('inicio') }}">Limpiar</a>
       {% endif %}
     </div>
@@ -55,6 +59,7 @@
             <div class="d-flex flex-wrap gap-2 mb-3">
               <span class="badge text-bg-primary">{{ libro.materia }}</span>
               <span class="badge text-bg-light border text-dark">{{ libro.nivel }}</span>
+              {% if libro.anio_publicacion %}<span class="badge text-bg-light border text-dark">Año {{ libro.anio_publicacion }}</span>{% endif %}
             </div>
             <h3 class="h5 card-title">{{ libro.titulo }}</h3>
             <p class="text-secondary mb-2">{{ libro.autor }}</p>

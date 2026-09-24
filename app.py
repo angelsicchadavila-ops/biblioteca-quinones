@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import re
 import secrets
 from datetime import date
 from functools import wraps
@@ -24,7 +25,7 @@ from flask import (
     session,
     url_for,
 )
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
 from utils.catalogo import (
     ESTADOS_FISICOS,
@@ -138,6 +139,23 @@ def crear_app(configuracion_pruebas: dict | None = None) -> Flask:
 
         return decorador
 
+    def roles_requeridos(*roles: str):
+        """Restringe una vista a cualquiera de los roles indicados."""
+
+        permitidos = set(roles)
+
+        def decorador(vista: Callable[P, R]) -> Callable[P, R]:
+            @wraps(vista)
+            @login_requerido
+            def protegida(*args: P.args, **kwargs: P.kwargs):
+                if g.usuario["rol"] not in permitidos:
+                    abort(403)
+                return vista(*args, **kwargs)
+
+            return protegida
+
+        return decorador
+
     def api_login_requerido(vista: Callable[P, R]) -> Callable[P, R]:
         """Responde JSON 401 cuando una API interna no tiene sesión válida."""
 
@@ -187,6 +205,13 @@ def crear_app(configuracion_pruebas: dict | None = None) -> Flask:
         if materia_solicitada.isdigit():
             materia_id = int(materia_solicitada)
 
+        anio_publicacion = None
+        anio_solicitado = request.args.get("anio", "").strip()
+        if re.fullmatch(r"\d{4}", anio_solicitado):
+            candidato = int(anio_solicitado)
+            if 1000 <= candidato <= 9999:
+                anio_publicacion = candidato
+
         conexion = obtener_bd()
         materias = conexion.execute(
             """
@@ -196,12 +221,19 @@ def crear_app(configuracion_pruebas: dict | None = None) -> Flask:
              ORDER BY lower(nombre)
             """
         ).fetchall()
-        libros = consultar_catalogo(conexion, texto, materia_id, nivel)
+        libros = consultar_catalogo(
+            conexion, texto, materia_id, nivel, anio_publicacion
+        )
         return render_template(
             "index.html",
             libros=libros,
             materias=materias,
-            filtros={"q": texto, "materia": materia_id, "nivel": nivel},
+            filtros={
+                "q": texto,
+                "materia": materia_id,
+                "nivel": nivel,
+                "anio": anio_publicacion or "",
+            },
         )
 
     @app.route("/login", methods=["GET", "POST"])
@@ -258,6 +290,8 @@ def crear_app(configuracion_pruebas: dict | None = None) -> Flask:
                 (SELECT count(*) FROM materias WHERE activo) AS materias_activas,
                 (SELECT count(*) FROM libros WHERE activo) AS libros_activos,
                 (SELECT count(*) FROM ejemplares WHERE activo) AS ejemplares_activos,
+                (SELECT count(*) FROM usuarios
+                  WHERE rol = 'asistente' AND activo) AS asistentes_activos,
                 (SELECT count(*) FROM prestamos
                   WHERE fecha_devolucion IS NULL) AS prestamos_pendientes,
                 (SELECT count(*) FROM prestamos
@@ -370,7 +404,7 @@ def crear_app(configuracion_pruebas: dict | None = None) -> Flask:
         return redirect(url_for("materias_admin"))
 
     @app.get("/admin/libros")
-    @rol_requerido("admin")
+    @roles_requeridos("admin", "asistente")
     def libros_admin():
         return render_template(
             "libros.html", libros=consultar_libros_admin(obtener_bd())
@@ -381,7 +415,10 @@ def crear_app(configuracion_pruebas: dict | None = None) -> Flask:
             "SELECT id, nombre FROM materias WHERE activo ORDER BY lower(nombre)"
         ).fetchall()
 
-    def validar_libro_formulario() -> tuple[dict, list[str]]:
+    def validar_libro_formulario(
+        *, permitir_anio_vacio: bool
+    ) -> tuple[dict, list[str]]:
+        anio_texto = request.form.get("anio_publicacion", "").strip()
         datos = {
             "titulo": normalizar_texto(request.form.get("titulo", "")),
             "autor": normalizar_texto(request.form.get("autor", "")),
@@ -390,6 +427,7 @@ def crear_app(configuracion_pruebas: dict | None = None) -> Flask:
                 request.form.get("isbn_editorial", "")
             ),
             "materia_id": request.form.get("materia_id", "").strip(),
+            "anio_publicacion": anio_texto,
         }
         errores: list[str] = []
         if not datos["titulo"]:
@@ -404,6 +442,16 @@ def crear_app(configuracion_pruebas: dict | None = None) -> Flask:
             errores.append("Selecciona un nivel académico válido.")
         if len(datos["isbn_editorial"]) > 100:
             errores.append("ISBN/editorial no puede superar 100 caracteres.")
+        if not anio_texto:
+            if not permitir_anio_vacio:
+                errores.append("El año es obligatorio para un libro nuevo.")
+            datos["anio_publicacion"] = None
+        elif not re.fullmatch(r"\d{4}", anio_texto):
+            errores.append("El año debe contener exactamente cuatro dígitos.")
+        elif not 1000 <= int(anio_texto) <= 9999:
+            errores.append("El año debe estar entre 1000 y 9999.")
+        else:
+            datos["anio_publicacion"] = int(anio_texto)
         if not datos["materia_id"].isdigit():
             errores.append("Selecciona una materia válida.")
         elif not obtener_bd().execute(
@@ -414,17 +462,18 @@ def crear_app(configuracion_pruebas: dict | None = None) -> Flask:
         return datos, errores
 
     @app.route("/admin/libros/nuevo", methods=["GET", "POST"])
-    @rol_requerido("admin")
+    @roles_requeridos("admin", "asistente")
     def crear_libro():
         datos = {}
         if request.method == "POST":
-            datos, errores = validar_libro_formulario()
+            datos, errores = validar_libro_formulario(permitir_anio_vacio=False)
             if not errores:
                 fila = obtener_bd().execute(
                     """
                     INSERT INTO libros
-                        (titulo, autor, materia_id, nivel, isbn_editorial)
-                    VALUES (%s, %s, %s, %s, %s)
+                        (titulo, autor, materia_id, nivel, anio_publicacion,
+                         isbn_editorial)
+                    VALUES (%s, %s, %s, %s, %s, %s)
                     RETURNING id
                     """,
                     (
@@ -432,11 +481,18 @@ def crear_app(configuracion_pruebas: dict | None = None) -> Flask:
                         datos["autor"],
                         int(datos["materia_id"]),
                         datos["nivel"],
+                        datos["anio_publicacion"],
                         datos["isbn_editorial"] or None,
                     ),
                 ).fetchone()
-                flash("Libro creado correctamente. Ya puedes agregar ejemplares.", "success")
-                return redirect(url_for("ejemplares_admin", libro_id=fila["id"]))
+                if g.usuario["rol"] == "admin":
+                    flash(
+                        "Libro creado correctamente. Ya puedes agregar ejemplares.",
+                        "success",
+                    )
+                    return redirect(url_for("ejemplares_admin", libro_id=fila["id"]))
+                flash("Libro creado correctamente.", "success")
+                return redirect(url_for("libros_admin"))
             for error in errores:
                 flash(error, "danger")
         return render_template(
@@ -445,15 +501,17 @@ def crear_app(configuracion_pruebas: dict | None = None) -> Flask:
             materias=obtener_materias_activas(),
             niveles=NIVELES_LIBRO,
             es_nuevo=True,
+            anio_requerido=True,
         )
 
     @app.route("/admin/libros/<int:libro_id>/editar", methods=["GET", "POST"])
-    @rol_requerido("admin")
+    @roles_requeridos("admin", "asistente")
     def editar_libro(libro_id: int):
         conexion = obtener_bd()
         libro = conexion.execute(
             """
-            SELECT id, titulo, autor, materia_id, nivel, isbn_editorial, activo
+            SELECT id, titulo, autor, materia_id, nivel, anio_publicacion,
+                   isbn_editorial, activo
               FROM libros
              WHERE id = %s
             """,
@@ -462,14 +520,19 @@ def crear_app(configuracion_pruebas: dict | None = None) -> Flask:
         if libro is None:
             abort(404)
 
+        permitir_anio_vacio = libro["anio_publicacion"] is None
+
         if request.method == "POST":
-            datos, errores = validar_libro_formulario()
+            datos, errores = validar_libro_formulario(
+                permitir_anio_vacio=permitir_anio_vacio
+            )
             if not errores:
                 conexion.execute(
                     """
                     UPDATE libros
                        SET titulo = %s, autor = %s, materia_id = %s,
-                           nivel = %s, isbn_editorial = %s
+                           nivel = %s, anio_publicacion = %s,
+                           isbn_editorial = %s
                      WHERE id = %s
                     """,
                     (
@@ -477,6 +540,7 @@ def crear_app(configuracion_pruebas: dict | None = None) -> Flask:
                         datos["autor"],
                         int(datos["materia_id"]),
                         datos["nivel"],
+                        datos["anio_publicacion"],
                         datos["isbn_editorial"] or None,
                         libro_id,
                     ),
@@ -493,6 +557,7 @@ def crear_app(configuracion_pruebas: dict | None = None) -> Flask:
             materias=obtener_materias_activas(),
             niveles=NIVELES_LIBRO,
             es_nuevo=False,
+            anio_requerido=not permitir_anio_vacio,
         )
 
     @app.post("/admin/libros/<int:libro_id>/estado")
@@ -521,6 +586,140 @@ def crear_app(configuracion_pruebas: dict | None = None) -> Flask:
         accion = "reactivado" if nuevo_estado else "desactivado"
         flash(f"Libro {accion} correctamente.", "success")
         return redirect(url_for("libros_admin"))
+
+    def validar_password_nueva(password: str, confirmacion: str) -> list[str]:
+        errores: list[str] = []
+        if len(password) < 12:
+            errores.append("La contraseña debe tener al menos 12 caracteres.")
+        if password != confirmacion:
+            errores.append("La confirmación de contraseña no coincide.")
+        return errores
+
+    def obtener_asistente_o_404(usuario_id: int):
+        usuario = obtener_bd().execute(
+            """
+            SELECT id, username, nombre_completo, rol, activo, fecha_registro
+              FROM usuarios
+             WHERE id = %s AND rol = 'asistente'
+            """,
+            (usuario_id,),
+        ).fetchone()
+        if usuario is None:
+            abort(404)
+        return usuario
+
+    @app.get("/admin/usuarios")
+    @rol_requerido("admin")
+    def usuarios_admin():
+        usuarios = obtener_bd().execute(
+            """
+            SELECT id, username, nombre_completo, activo, fecha_registro
+              FROM usuarios
+             WHERE rol = 'asistente'
+             ORDER BY activo DESC, lower(username), id
+            """
+        ).fetchall()
+        return render_template("usuarios.html", usuarios=usuarios)
+
+    @app.route("/admin/usuarios/nuevo", methods=["GET", "POST"])
+    @rol_requerido("admin")
+    def crear_usuario_asistente():
+        datos: dict[str, str] = {}
+        if request.method == "POST":
+            datos = {
+                "username": request.form.get("username", "").strip(),
+                "nombre_completo": normalizar_texto(
+                    request.form.get("nombre_completo", "")
+                ),
+            }
+            password = request.form.get("password", "")
+            confirmacion = request.form.get("confirmar_password", "")
+            errores: list[str] = []
+            if not datos["username"]:
+                errores.append("El nombre de usuario es obligatorio.")
+            elif len(datos["username"]) > 50:
+                errores.append("El nombre de usuario no puede superar 50 caracteres.")
+            if not datos["nombre_completo"]:
+                errores.append("El nombre completo es obligatorio.")
+            elif len(datos["nombre_completo"]) > 100:
+                errores.append("El nombre completo no puede superar 100 caracteres.")
+            errores.extend(validar_password_nueva(password, confirmacion))
+            if datos["username"] and obtener_bd().execute(
+                "SELECT 1 FROM usuarios WHERE username = %s",
+                (datos["username"],),
+            ).fetchone():
+                errores.append("Ya existe una cuenta con ese nombre de usuario.")
+
+            if not errores:
+                fila = obtener_bd().execute(
+                    """
+                    INSERT INTO usuarios
+                        (username, password_hash, nombre_completo, rol)
+                    VALUES (%s, %s, %s, 'asistente')
+                    ON CONFLICT (username) DO NOTHING
+                    RETURNING id
+                    """,
+                    (
+                        datos["username"],
+                        generate_password_hash(password),
+                        datos["nombre_completo"],
+                    ),
+                ).fetchone()
+                if fila is not None:
+                    flash("Cuenta de asistente creada correctamente.", "success")
+                    return redirect(url_for("usuarios_admin"))
+                errores.append("Ya existe una cuenta con ese nombre de usuario.")
+            for error in errores:
+                flash(error, "danger")
+        return render_template("usuario_form.html", usuario=datos)
+
+    @app.route(
+        "/admin/usuarios/<int:usuario_id>/contrasena", methods=["GET", "POST"]
+    )
+    @rol_requerido("admin")
+    def cambiar_password_asistente(usuario_id: int):
+        usuario = obtener_asistente_o_404(usuario_id)
+        if request.method == "POST":
+            password = request.form.get("password", "")
+            confirmacion = request.form.get("confirmar_password", "")
+            errores = validar_password_nueva(password, confirmacion)
+            if not errores:
+                fila = obtener_bd().execute(
+                    """
+                    UPDATE usuarios
+                       SET password_hash = %s
+                     WHERE id = %s AND rol = 'asistente'
+                     RETURNING id
+                    """,
+                    (generate_password_hash(password), usuario_id),
+                ).fetchone()
+                if fila is None:
+                    abort(404)
+                flash("Contraseña del asistente actualizada correctamente.", "success")
+                return redirect(url_for("usuarios_admin"))
+            for error in errores:
+                flash(error, "danger")
+        return render_template("usuario_contrasena.html", usuario=usuario)
+
+    @app.post("/admin/usuarios/<int:usuario_id>/estado")
+    @rol_requerido("admin")
+    def cambiar_estado_asistente(usuario_id: int):
+        usuario = obtener_asistente_o_404(usuario_id)
+        nuevo_estado = not usuario["activo"]
+        fila = obtener_bd().execute(
+            """
+            UPDATE usuarios
+               SET activo = %s
+             WHERE id = %s AND rol = 'asistente'
+             RETURNING id
+            """,
+            (nuevo_estado, usuario_id),
+        ).fetchone()
+        if fila is None:
+            abort(404)
+        accion = "reactivada" if nuevo_estado else "desactivada"
+        flash(f"Cuenta de asistente {accion} correctamente.", "success")
+        return redirect(url_for("usuarios_admin"))
 
     @app.route("/admin/libros/<int:libro_id>/ejemplares", methods=["GET", "POST"])
     @rol_requerido("admin")

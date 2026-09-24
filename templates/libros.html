@@ -3,11 +3,15 @@
 {% block content %}
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
   <div>
-    <p class="text-primary fw-semibold mb-1">Administración del catálogo</p>
+    <p class="text-primary fw-semibold mb-1">Gestión del catálogo</p>
     <h1 class="h3 mb-0">Libros e inventario</h1>
   </div>
   <div class="d-flex gap-2">
-    <a class="btn btn-outline-secondary" href="{{ url_for('admin') }}">Volver al panel</a>
+    {% if g.usuario.rol == 'admin' %}
+      <a class="btn btn-outline-secondary" href="{{ url_for('admin') }}">Volver al panel</a>
+    {% else %}
+      <a class="btn btn-outline-secondary" href="{{ url_for('escaneo') }}">Volver al escaneo</a>
+    {% endif %}
     <a class="btn btn-primary" href="{{ url_for('crear_libro') }}">Nuevo libro</a>
   </div>
 </div>
@@ -26,6 +30,7 @@
             <td>
               <span class="fw-semibold d-block">{{ libro.titulo }}</span>
               <span class="small text-secondary">{{ libro.autor }}</span>
+              {% if libro.anio_publicacion %}<span class="small text-secondary d-block">Año {{ libro.anio_publicacion }}</span>{% else %}<span class="small text-secondary d-block">Año no registrado</span>{% endif %}
               {% if libro.isbn_editorial %}<span class="small text-secondary d-block">{{ libro.isbn_editorial }}</span>{% endif %}
             </td>
             <td><span class="d-block">{{ libro.materia }}</span><span class="small text-secondary">{{ libro.nivel }}</span></td>
@@ -36,11 +41,13 @@
             <td><span class="badge {{ 'text-bg-success' if libro.activo else 'text-bg-secondary' }}">{{ 'Activo' if libro.activo else 'Inactivo' }}</span></td>
             <td class="text-end acciones-tabla">
               <a class="btn btn-sm btn-outline-primary" href="{{ url_for('editar_libro', libro_id=libro.id) }}">Editar</a>
-              <a class="btn btn-sm btn-outline-dark" href="{{ url_for('ejemplares_admin', libro_id=libro.id) }}">Ejemplares</a>
-              <form method="post" action="{{ url_for('cambiar_estado_libro', libro_id=libro.id) }}">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                <button class="btn btn-sm {{ 'btn-outline-danger' if libro.activo else 'btn-outline-success' }}" type="submit">{{ 'Desactivar' if libro.activo else 'Reactivar' }}</button>
-              </form>
+              {% if g.usuario.rol == 'admin' %}
+                <a class="btn btn-sm btn-outline-dark" href="{{ url_for('ejemplares_admin', libro_id=libro.id) }}">Ejemplares</a>
+                <form method="post" action="{{ url_for('cambiar_estado_libro', libro_id=libro.id) }}">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                  <button class="btn btn-sm {{ 'btn-outline-danger' if libro.activo else 'btn-outline-success' }}" type="submit">{{ 'Desactivar' if libro.activo else 'Reactivar' }}</button>
+                </form>
+              {% endif %}
             </td>
           </tr>
         {% else %}

@@ -48,6 +48,17 @@ class SchemaEstaticoTest(unittest.TestCase):
         ).group(1)
         self.assertNotRegex(bloque, r"(?im)^\s*estado\s+")
 
+    def test_anio_publicacion_es_nullable_y_tiene_rango_v1_1(self) -> None:
+        bloque = re.search(
+            r"(?is)CREATE TABLE libros\s*\((.*?)\);", SCHEMA
+        ).group(1)
+        self.assertRegex(bloque, r"(?im)^\s*anio_publicacion\s+SMALLINT")
+        self.assertIn("ck_libros_anio_publicacion", bloque)
+        self.assertRegex(
+            bloque,
+            r"anio_publicacion\s+IS\s+NULL\s+OR\s+anio_publicacion\s+BETWEEN\s+1000\s+AND\s+9999",
+        )
+
     def test_indices_de_busqueda_y_operacion(self) -> None:
         for nombre in (
             "idx_libros_titulo_lower",

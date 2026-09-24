@@ -52,6 +52,15 @@
         </div>
       </a>
     </div>
+    <div class="col-12 col-md-6 col-xl-4">
+      <a class="card h-100 text-decoration-none modulo-admin" href="{{ url_for('usuarios_admin') }}">
+        <div class="card-body">
+          <span class="display-6 fw-semibold">{{ resumen.asistentes_activos }}</span>
+          <h2 class="h5 mt-2">Usuarios asistentes</h2>
+          <p class="text-secondary mb-0">Crear cuentas, restablecer contraseñas y controlar su estado.</p>
+        </div>
+      </a>
+    </div>
   </div>
 </section>
 {% endblock %}

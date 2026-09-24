@@ -66,6 +66,12 @@ def main() -> None:
     publico = build_opener(HTTPCookieProcessor(CookieJar()))
     estado, pagina, _ = solicitar(publico, "/")
     comprobar(estado == 200 and "Catálogo".encode() in pagina, "catálogo público por HTTPS")
+    comprobar(b'name="anio"' in pagina, "filtro público por año disponible")
+    estado, pagina, _ = solicitar(publico, "/?q=sin-coincidencias-v1-1&anio=2024")
+    comprobar(
+        estado == 200 and b'value="2024"' in pagina,
+        "filtro por año combinable y conservado",
+    )
     estado, _, _ = solicitar(publico, "/api/ejemplar/LIB-000-EJ00")
     comprobar(estado == 401, "público sin acceso a API interna")
 
@@ -74,6 +80,7 @@ def main() -> None:
         "/admin",
         "/admin/materias",
         "/admin/libros",
+        "/admin/usuarios",
         "/admin/prestamos",
         "/admin/reportes?reporte=inventario",
         "/admin/reportes?reporte=activos",
@@ -83,17 +90,24 @@ def main() -> None:
         "/api/lectores?q=",
     )
     for ruta in rutas_admin:
-        estado, _, _ = solicitar(admin, ruta)
+        estado, pagina, _ = solicitar(admin, ruta)
         comprobar(estado == 200, f"admin: {ruta}")
+        if ruta == "/admin/usuarios":
+            comprobar(b"Usuarios asistentes" in pagina, "módulo de usuarios v1.1")
     for ruta in ("/admin/ejemplares/0/qr.png", "/admin/ejemplares/0/etiqueta.pdf"):
         estado, _, _ = solicitar(admin, ruta)
         comprobar(estado == 404, f"endpoint QR/PDF protegido y sin ejemplar inexistente: {ruta}")
 
     asistente = sesion_usuario("asistente_prueba", asistente_clave)
-    for ruta in ("/escaneo", "/api/lectores?q="):
-        estado, _, _ = solicitar(asistente, ruta)
+    for ruta in ("/escaneo", "/api/lectores?q=", "/admin/libros", "/admin/libros/nuevo"):
+        estado, pagina, _ = solicitar(asistente, ruta)
         comprobar(estado == 200, f"asistente: {ruta}")
-    for ruta in ("/admin", "/admin/materias", "/admin/libros", "/admin/prestamos", "/admin/reportes"):
+        if ruta == "/admin/libros/nuevo":
+            comprobar(
+                b'name="anio_publicacion"' in pagina,
+                "asistente recibe formulario de libro con año",
+            )
+    for ruta in ("/admin", "/admin/materias", "/admin/usuarios", "/admin/prestamos", "/admin/reportes"):
         estado, _, _ = solicitar(asistente, ruta)
         comprobar(estado == 403, f"asistente bloqueado: {ruta}")
 

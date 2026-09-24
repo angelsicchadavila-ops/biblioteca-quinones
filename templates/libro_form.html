@@ -38,6 +38,10 @@
           </select>
         </div>
         <div class="col-12 col-md-6">
+          <label class="form-label" for="anio_publicacion">Año{% if not anio_requerido %} <span class="text-secondary">(opcional para libro legado)</span>{% endif %}</label>
+          <input class="form-control" id="anio_publicacion" name="anio_publicacion" type="text" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" value="{{ libro.anio_publicacion|default('', true) }}" placeholder="Ej. 2022" {% if anio_requerido %}required{% endif %}>
+        </div>
+        <div class="col-12 col-md-6">
           <label class="form-label" for="isbn_editorial">ISBN o editorial <span class="text-secondary">(opcional)</span></label>
           <input class="form-control" id="isbn_editorial" name="isbn_editorial" maxlength="100" value="{{ libro.isbn_editorial|default('', true) }}">
         </div>

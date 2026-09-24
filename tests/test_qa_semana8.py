@@ -121,16 +121,18 @@ class QaSemana8Test(unittest.TestCase):
         self.login("asistente_prueba", self.asistente_password, asistente)
         self.assertEqual(asistente.get("/escaneo").status_code, 200)
         self.assertEqual(asistente.get("/api/lectores?q=x").status_code, 200)
+        self.assertEqual(asistente.get("/admin/libros").status_code, 200)
+        self.assertEqual(asistente.get("/admin/libros/nuevo").status_code, 200)
+        self.assertEqual(asistente.get("/admin/libros/999999/editar").status_code, 404)
         for ruta in (
             "/admin",
             "/admin/materias",
             "/admin/materias/999999/editar",
-            "/admin/libros",
-            "/admin/libros/nuevo",
-            "/admin/libros/999999/editar",
             "/admin/libros/999999/ejemplares",
             "/admin/ejemplares/999999/qr.png",
             "/admin/ejemplares/999999/etiqueta.pdf",
+            "/admin/usuarios",
+            "/admin/usuarios/nuevo",
             "/admin/prestamos",
             "/admin/reportes",
         ):

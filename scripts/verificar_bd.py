@@ -24,6 +24,7 @@ RESTRICCIONES_ESPERADAS = {
     "uq_materias_nombre",
     "fk_libros_materia",
     "ck_libros_nivel",
+    "ck_libros_anio_publicacion",
     "fk_ejemplares_libro",
     "uq_ejemplares_codigo_qr",
     "ck_ejemplares_estado_fisico",

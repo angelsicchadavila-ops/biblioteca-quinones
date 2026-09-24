@@ -161,6 +161,7 @@ class CatalogoSemana4Test(unittest.TestCase):
                     "autor": "Autor inicial",
                     "materia_id": str(materia_id),
                     "nivel": "Primaria",
+                    "anio_publicacion": "2021",
                     "isbn_editorial": "Editorial de prueba",
                 },
                 seguir=False,
@@ -179,6 +180,7 @@ class CatalogoSemana4Test(unittest.TestCase):
                     "autor": autor,
                     "materia_id": str(materia_filtro_id),
                     "nivel": "Secundaria",
+                    "anio_publicacion": "2022",
                     "isbn_editorial": "ISBN 978-TEST",
                 },
             )
@@ -331,12 +333,10 @@ class CatalogoSemana4Test(unittest.TestCase):
             asistente = self.app.test_client()
             self.cliente = asistente
             self.login("asistente_prueba", self.asistente_password)
-            for ruta in (
-                "/admin/materias",
-                "/admin/libros",
-                "/admin/libros/nuevo",
-                f"/admin/libros/{libro_id}/ejemplares",
-            ):
+            for ruta in ("/admin/libros", "/admin/libros/nuevo", f"/admin/libros/{libro_id}/editar"):
+                with self.subTest(ruta=ruta):
+                    self.assertEqual(asistente.get(ruta).status_code, 200)
+            for ruta in ("/admin/materias", f"/admin/libros/{libro_id}/ejemplares"):
                 with self.subTest(ruta=ruta):
                     self.assertEqual(asistente.get(ruta).status_code, 403)
             token = self.obtener_csrf("/escaneo")

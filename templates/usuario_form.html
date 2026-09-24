@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Nuevo asistente · Administración{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-7">
+    <section class="bg-white border rounded-3 p-4 p-md-5 shadow-sm">
+      <p class="text-primary fw-semibold mb-1">Administración de usuarios</p>
+      <h1 class="h3 mb-4">Crear asistente</h1>
+      <form method="post" class="row g-3" novalidate>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="username">Nombre de usuario</label>
+          <input class="form-control" id="username" name="username" maxlength="50" value="{{ usuario.username|default('') }}" autocomplete="off" required autofocus>
+        </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="nombre_completo">Nombre completo</label>
+          <input class="form-control" id="nombre_completo" name="nombre_completo" maxlength="100" value="{{ usuario.nombre_completo|default('') }}" required>
+        </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="password">Contraseña inicial</label>
+          <input class="form-control" id="password" name="password" type="password" minlength="12" autocomplete="new-password" required>
+        </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="confirmar_password">Confirmar contraseña</label>
+          <input class="form-control" id="confirmar_password" name="confirmar_password" type="password" minlength="12" autocomplete="new-password" required>
+        </div>
+        <div class="col-12 d-flex gap-2 mt-4">
+          <button class="btn btn-primary" type="submit">Crear asistente</button>
+          <a class="btn btn-outline-secondary" href="{{ url_for('usuarios_admin') }}">Cancelar</a>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>
+{% endblock %}

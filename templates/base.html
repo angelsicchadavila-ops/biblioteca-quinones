@@ -19,6 +19,7 @@
           {% if g.usuario.rol == 'admin' %}
             <a class="btn btn-sm btn-outline-light" href="{{ url_for('admin') }}">Administración</a>
           {% endif %}
+          <a class="btn btn-sm btn-outline-light" href="{{ url_for('libros_admin') }}">Libros</a>
           <a class="btn btn-sm btn-outline-light" href="{{ url_for('inicio') }}">Catálogo</a>
           <a class="btn btn-sm btn-outline-light" href="{{ url_for('escaneo') }}">Escaneo</a>
           <form method="post" action="{{ url_for('logout') }}" class="m-0">

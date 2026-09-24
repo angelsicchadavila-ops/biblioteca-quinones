@@ -26,6 +26,7 @@ def consultar_catalogo(
     texto: str = "",
     materia_id: int | None = None,
     nivel: str = "",
+    anio_publicacion: int | None = None,
 ) -> list[dict]:
     """Devuelve títulos activos y su inventario calculado."""
     condiciones = ["l.activo", "m.activo"]
@@ -48,8 +49,13 @@ def consultar_catalogo(
     elif nivel == "Ambos":
         condiciones.append("l.nivel = 'Ambos'")
 
+    if anio_publicacion is not None:
+        condiciones.append("l.anio_publicacion = %s")
+        parametros.append(anio_publicacion)
+
     consulta = f"""
-        SELECT l.id, l.titulo, l.autor, l.nivel, l.isbn_editorial,
+        SELECT l.id, l.titulo, l.autor, l.nivel, l.anio_publicacion,
+               l.isbn_editorial,
                m.id AS materia_id, m.nombre AS materia,
                count(e.id) AS total_ejemplares,
                count(e.id) FILTER (
@@ -83,7 +89,8 @@ def consultar_libros_admin(conexion: psycopg.Connection) -> list[dict]:
     """Lista todos los libros con un resumen exclusivo de sus ejemplares."""
     return conexion.execute(
         """
-        SELECT l.id, l.titulo, l.autor, l.nivel, l.isbn_editorial, l.activo,
+        SELECT l.id, l.titulo, l.autor, l.nivel, l.anio_publicacion,
+               l.isbn_editorial, l.activo,
                m.id AS materia_id, m.nombre AS materia, m.activo AS materia_activa,
                count(e.id) AS total_ejemplares,
                count(e.id) FILTER (

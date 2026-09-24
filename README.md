@@ -1,14 +1,15 @@
 # Sistema Web de Gestión Bibliotecaria con Control QR
 
-Aplicación académica desarrollada para el Colegio Privado José Abelardo Quiñones en el marco de Prácticas Pre-Profesionales II. La versión 1.0 integra catálogo, inventario, QR, préstamos, devoluciones, mora, reportes y despliegue web. La Semana 9 corresponde al cierre documental y preparación de la entrega institucional.
+Aplicación académica desarrollada para el Colegio Privado José Abelardo Quiñones en el marco de Prácticas Pre-Profesionales II. La versión 1.1 conserva el alcance estable de la v1.0 y añade año de publicación, permisos bibliográficos del asistente, gestión de cuentas asistentes y recuperación técnica de contraseña admin.
 
 ## Funciones disponibles
 
 - Catálogo público en `/`, sin autenticación, con búsqueda por título o autor.
-- Filtros combinables por materia y nivel académico.
+- Filtros combinables por texto, materia, nivel académico y año.
 - Conteos derivados de ejemplares disponibles, prestados, dañados e inactivos.
 - Gestión administrativa de materias en `/admin/materias`.
-- Gestión administrativa de libros y ejemplares en `/admin/libros`.
+- Gestión de libros en `/admin/libros`: admin y asistente pueden crear/editar; solo admin controla estado y ejemplares.
+- Gestión exclusiva de asistentes por admin en `/admin/usuarios`.
 - Generación automática de códigos de ejemplar con el formato `LIB-XXX-EJYY`.
 - Generación y reimpresión administrativa de QR estables sin archivos temporales.
 - PDF A4 con una cuadrícula de 21 etiquetas por página mediante ReportLab.
@@ -21,6 +22,7 @@ Aplicación académica desarrollada para el Colegio Privado José Abelardo Quiñ
 - Semáforo de préstamos y reportes RPT-01 a RPT-04.
 - Activación y desactivación lógica para conservar el historial.
 - Autenticación y permisos diferenciados para `admin` y `asistente`.
+- Recuperación técnica de contraseña admin mediante `scripts/restablecer_password_admin.py`.
 
 ## Producción
 
@@ -40,6 +42,8 @@ Los documentos de cierre están indexados en [`docs/final/README.md`](docs/final
 - guía de entrega institucional;
 - checklist de cierre;
 - plantilla de acta.
+
+La adenda, migración, resultados y procedimiento propios de v1.1 están documentados en [`docs/v1_1/`](docs/v1_1/).
 
 ## Requisitos
 

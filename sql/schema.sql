@@ -30,6 +30,7 @@ CREATE TABLE libros (
     autor VARCHAR(150) NOT NULL,
     materia_id INT NOT NULL,
     nivel VARCHAR(20) NOT NULL,
+    anio_publicacion SMALLINT NULL,
     isbn_editorial VARCHAR(100),
     activo BOOLEAN NOT NULL DEFAULT TRUE,
     fecha_registro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -38,6 +39,8 @@ CREATE TABLE libros (
     CONSTRAINT ck_libros_titulo_no_vacio CHECK (btrim(titulo) <> ''),
     CONSTRAINT ck_libros_autor_no_vacio CHECK (btrim(autor) <> ''),
     CONSTRAINT ck_libros_nivel CHECK (nivel IN ('Primaria', 'Secundaria', 'Ambos')),
+    CONSTRAINT ck_libros_anio_publicacion
+        CHECK (anio_publicacion IS NULL OR anio_publicacion BETWEEN 1000 AND 9999),
     CONSTRAINT ck_libros_isbn_editorial_no_vacio
         CHECK (isbn_editorial IS NULL OR btrim(isbn_editorial) <> '')
 );

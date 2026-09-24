@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Cambiar contraseña · Administración{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-6">
+    <section class="bg-white border rounded-3 p-4 p-md-5 shadow-sm">
+      <p class="text-primary fw-semibold mb-1">Administración de usuarios</p>
+      <h1 class="h3 mb-2">Cambiar contraseña</h1>
+      <p class="text-secondary mb-4">Asistente: <strong>{{ usuario.nombre_completo }}</strong> ({{ usuario.username }})</p>
+      <form method="post" class="row g-3" novalidate>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="col-12">
+          <label class="form-label" for="password">Nueva contraseña</label>
+          <input class="form-control" id="password" name="password" type="password" minlength="12" autocomplete="new-password" required autofocus>
+        </div>
+        <div class="col-12">
+          <label class="form-label" for="confirmar_password">Confirmar nueva contraseña</label>
+          <input class="form-control" id="confirmar_password" name="confirmar_password" type="password" minlength="12" autocomplete="new-password" required>
+        </div>
+        <div class="col-12 d-flex gap-2 mt-4">
+          <button class="btn btn-primary" type="submit">Guardar nueva contraseña</button>
+          <a class="btn btn-outline-secondary" href="{{ url_for('usuarios_admin') }}">Cancelar</a>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>
+{% endblock %}

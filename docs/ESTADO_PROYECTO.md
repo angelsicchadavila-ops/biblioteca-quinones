@@ -3,9 +3,9 @@
 ## Identificación
 - Proyecto: Sistema Web de Gestión Bibliotecaria con Control QR
 - Documento Maestro: v1.0
-- Estado general: Versión 1.0 cerrada técnica, documental y visualmente en Semana 9; aplicación, Neon, manuales, smoke y cinco capturas finales verificados; entrega institucional aún no realizada
-- Semana actual: Semana 9 — completa; versión 1.0 preparada para entrega institucional
-- Última actualización: 22 de septiembre de 2026
+- Estado general: Versión 1.0 protegida y versión 1.1 validada localmente y en Neon; pendiente deployment y smoke final
+- Fase actual: Versión 1.1 — lista para commit y deployment
+- Última actualización: 24 de septiembre de 2026
 
 ## Fuente de verdad
 - `docs/Documento_Maestro_Biblioteca_v1.0.docx`
@@ -128,7 +128,7 @@
 
 ## Fase actual
 
-Semana 9 completó la documentación final, la verificación ligera de operación y la revisión de cinco capturas sin desarrollar funciones nuevas. La aplicación pública respondió por HTTPS; el smoke de producción pasó 32/32, Neon 7/7, QR 2/2 y las pruebas seleccionadas de préstamo, devolución, semáforo y reportes 2/2. Los documentos están en `docs/final/` y la evidencia en `docs/evidencias/semana_09/`. Render se documentó `Live` en `0f581cb`, que contiene el último cambio funcional `83d1677`; los cambios posteriores son documentales y no justifican un deployment. La versión desplegada no incluye una pantalla de autogestión de cuentas; la cuenta institucional definitiva debe prepararse mediante mantenimiento técnico autorizado y las cuentas de prueba deben cambiarse, sustituirse o desactivarse. El responsable, custodio, entrega al colegio y acta siguen pendientes. No se declara la entrega institucional realizada.
+La v1.1 se construye sobre `a629694aae199a00a55ae34009fe60f1326c9b49`, protegido con la etiqueta `v1.0-final`. Neon recibió la migración aditiva de `anio_publicacion`; no se eliminaron datos y los conteos operativos permanecen en cero. Se implementaron el año y su filtro, los permisos bibliográficos del asistente, la gestión admin de asistentes y la recuperación técnica de contraseña admin. La suite acumulada final pasó 43/43, integridad y concurrencia 11/11 y Neon 7/7. Restan commits, push, deployment Render y smoke de producción. La documentación congelada de v1.0 permanece sin cambios. No se declara realizada la entrega institucional.
 
 ## Historial semanal
 | Semana | Estado | Fecha | Evidencia principal | Commit |
