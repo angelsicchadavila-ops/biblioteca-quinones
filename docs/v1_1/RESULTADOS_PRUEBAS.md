@@ -12,6 +12,8 @@
 | Verificación Neon | 7/7 correcta; esquema, seed y limpieza |
 | Compilación Python | Correcta |
 | `pip check` | Sin dependencias incompatibles |
+| Render | Deployment manual correcto; commit `7dfa17f`, `Deploy succeeded | Live`, 57,8 s |
+| Smoke HTTPS v1.1 | 39/39 comprobaciones correctas |
 
 ## Cobertura v1.1
 
@@ -25,8 +27,8 @@
 
 Los datos funcionales temporales incorporaron identificadores UUID y se eliminaron al finalizar cada prueba. La verificación posterior confirmó 0 libros, 0 ejemplares, 0 lectores y 0 préstamos, con las dos cuentas base y cinco materias iniciales intactas.
 
-## Pendiente de cierre
+## Producción
 
-- Smoke actualizado sobre Render después del deployment.
+El deployment manual de `7dfa17ff687ed458e703b7a82ffcaf9d7011d940` arrancó Gunicorn correctamente, superó el health check HTTP 200 y quedó Live. El smoke posterior verificó el filtro Año, ambos roles, el módulo de usuarios, las restricciones del asistente y las rutas operativas de v1.0. No creó datos en producción.
 
 Commit técnico validado: `e0283aaf428933e06ae05e3f830057d216aea970`.

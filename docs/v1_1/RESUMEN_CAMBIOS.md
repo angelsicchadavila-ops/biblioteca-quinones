@@ -42,3 +42,5 @@ La migración es aditiva y el código v1.0 ignora la columna nueva, por lo que e
 ## Commit de implementación
 
 La implementación probada quedó registrada en `e0283aaf428933e06ae05e3f830057d216aea970` (`feat: implementar version 1.1`).
+
+El commit `7dfa17ff687ed458e703b7a82ffcaf9d7011d940` quedó desplegado manualmente en Render con estado `Deploy succeeded | Live`. El smoke v1.1 posterior pasó 39/39 comprobaciones.
