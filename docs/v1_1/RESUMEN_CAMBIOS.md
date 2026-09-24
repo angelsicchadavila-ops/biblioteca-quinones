@@ -41,4 +41,4 @@ La migración es aditiva y el código v1.0 ignora la columna nueva, por lo que e
 
 ## Commit de implementación
 
-Se registrará aquí el hash definitivo después de completar la revisión pre-deployment.
+La implementación probada quedó registrada en `e0283aaf428933e06ae05e3f830057d216aea970` (`feat: implementar version 1.1`).

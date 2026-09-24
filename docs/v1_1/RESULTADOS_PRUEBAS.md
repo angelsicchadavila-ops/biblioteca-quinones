@@ -28,3 +28,5 @@ Los datos funcionales temporales incorporaron identificadores UUID y se eliminar
 ## Pendiente de cierre
 
 - Smoke actualizado sobre Render después del deployment.
+
+Commit técnico validado: `e0283aaf428933e06ae05e3f830057d216aea970`.
