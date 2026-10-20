@@ -135,23 +135,46 @@ def main() -> int:
             "triggers de materia activa y préstamos presentes",
         )
 
-        materias = conn.execute("SELECT count(*) FROM materias").fetchone()[0]
+        materias_iniciales = {
+            "Comunicación",
+            "Matemática",
+            "Ciencia y Tecnología",
+            "Ciencias Sociales",
+            "Inglés",
+        }
+        materias = {
+            fila[0] for fila in conn.execute("SELECT nombre FROM materias")
+        }
         usuarios = conn.execute(
             """
-            SELECT username, rol
+            SELECT username, rol, activo
               FROM usuarios
-             WHERE username IN ('admin_prueba', 'asistente_prueba')
+             WHERE username IN (
+                       'AdminJAQ',
+                       'AsistJAQ1',
+                       'admin_prueba',
+                       'asistente_prueba'
+                   )
              ORDER BY username
             """
         ).fetchall()
-        registrar(resultados, materias == 5, "cinco materias iniciales cargadas")
         registrar(
             resultados,
-            usuarios == [("admin_prueba", "admin"), ("asistente_prueba", "asistente")],
-            "cuentas de prueba cargadas con roles válidos",
+            materias_iniciales.issubset(materias) and len(materias) >= 22,
+            "materias iniciales e institucionales conservadas",
+        )
+        registrar(
+            resultados,
+            usuarios
+            == [
+                ("AdminJAQ", "admin", True),
+                ("AsistJAQ1", "asistente", True),
+                ("asistente_prueba", "asistente", False),
+            ],
+            "cuentas institucionales activas y cuenta asistente de prueba inactiva",
         )
 
-        conteos_operativos = conn.execute(
+        conteos_catalogo = conn.execute(
             """
             SELECT
                 (SELECT count(*) FROM libros),
@@ -162,8 +185,30 @@ def main() -> int:
         ).fetchone()
         registrar(
             resultados,
-            conteos_operativos == (0, 0, 0, 0),
-            "no quedaron datos temporales de las pruebas de integridad",
+            conteos_catalogo[0] >= 6 and conteos_catalogo[1] >= 7,
+            (
+                "catálogo institucional conservado "
+                f"({conteos_catalogo[0]} libros, {conteos_catalogo[1]} ejemplares, "
+                f"{conteos_catalogo[2]} lectores, {conteos_catalogo[3]} préstamos)"
+            ),
+        )
+
+        residuos_temporales = conn.execute(
+            """
+            SELECT
+                (SELECT count(*) FROM libros
+                  WHERE titulo ILIKE 'TEMP-%' OR titulo ILIKE '%PRUEBA%'),
+                (SELECT count(*) FROM ejemplares
+                  WHERE codigo_qr ILIKE 'TEMP-%' OR codigo_qr ILIKE '%PRUEBA%'),
+                (SELECT count(*) FROM lectores
+                  WHERE nombres ILIKE 'TEMP-%' OR apellidos ILIKE 'TEMP-%'
+                     OR nombres ILIKE '%PRUEBA%' OR apellidos ILIKE '%PRUEBA%')
+            """
+        ).fetchone()
+        registrar(
+            resultados,
+            residuos_temporales == (0, 0, 0),
+            "no existen marcadores de datos temporales en catálogo o lectores",
         )
 
     print("\n".join(resultados))

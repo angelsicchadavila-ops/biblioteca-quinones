@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import getpass
 import os
 import re
 from http.cookiejar import CookieJar
@@ -56,12 +57,37 @@ def sesion_usuario(usuario: str, clave: str):
     return opener
 
 
+def solicitar_clave(nombre: str, variable: str) -> str:
+    """Obtiene una clave del entorno o la solicita sin mostrarla."""
+    clave = os.getenv(variable, "")
+    if clave:
+        return clave
+    return getpass.getpass(f"Contraseña de {nombre}: ")
+
+
+def comprobar_login_bloqueado(usuario: str, clave: str) -> None:
+    opener = build_opener(HTTPCookieProcessor(CookieJar()))
+    estado, pagina, _ = solicitar(opener, "/login")
+    coincidencia = TOKEN_CSRF.search(pagina)
+    comprobar(estado == 200 and coincidencia is not None, "login disponible para prueba de bloqueo")
+    estado, _, _ = solicitar(
+        opener,
+        "/login",
+        {
+            "username": usuario,
+            "password": clave,
+            "csrf_token": coincidencia.group(1).decode(),
+        },
+    )
+    comprobar(estado == 401, f"login bloqueado para {usuario}")
+
+
 def main() -> None:
     load_dotenv(RAIZ / ".env", override=False)
-    admin_clave = os.getenv("SEED_ADMIN_PASSWORD", "")
-    asistente_clave = os.getenv("SEED_ASISTENTE_PASSWORD", "")
-    if not admin_clave or not asistente_clave:
-        raise RuntimeError("Faltan contraseñas de prueba en el entorno local.")
+    admin_usuario = os.getenv("PROD_ADMIN_USERNAME", "AdminJAQ")
+    asistente_usuario = os.getenv("PROD_ASISTENTE_USERNAME", "AsistJAQ1")
+    admin_clave = solicitar_clave(admin_usuario, "PROD_ADMIN_PASSWORD")
+    asistente_clave = solicitar_clave(asistente_usuario, "PROD_ASISTENTE_PASSWORD")
 
     publico = build_opener(HTTPCookieProcessor(CookieJar()))
     estado, pagina, _ = solicitar(publico, "/")
@@ -75,7 +101,7 @@ def main() -> None:
     estado, _, _ = solicitar(publico, "/api/ejemplar/LIB-000-EJ00")
     comprobar(estado == 401, "público sin acceso a API interna")
 
-    admin = sesion_usuario("admin_prueba", admin_clave)
+    admin = sesion_usuario(admin_usuario, admin_clave)
     rutas_admin = (
         "/admin",
         "/admin/materias",
@@ -98,7 +124,7 @@ def main() -> None:
         estado, _, _ = solicitar(admin, ruta)
         comprobar(estado == 404, f"endpoint QR/PDF protegido y sin ejemplar inexistente: {ruta}")
 
-    asistente = sesion_usuario("asistente_prueba", asistente_clave)
+    asistente = sesion_usuario(asistente_usuario, asistente_clave)
     for ruta in ("/escaneo", "/api/lectores?q=", "/admin/libros", "/admin/libros/nuevo"):
         estado, pagina, _ = solicitar(asistente, ruta)
         comprobar(estado == 200, f"asistente: {ruta}")
@@ -110,6 +136,10 @@ def main() -> None:
     for ruta in ("/admin", "/admin/materias", "/admin/usuarios", "/admin/prestamos", "/admin/reportes"):
         estado, _, _ = solicitar(asistente, ruta)
         comprobar(estado == 403, f"asistente bloqueado: {ruta}")
+
+    clave_prueba = os.getenv("SEED_ASISTENTE_PASSWORD", "")
+    if clave_prueba:
+        comprobar_login_bloqueado("asistente_prueba", clave_prueba)
 
     estado, pagina, _ = solicitar(admin, "/admin")
     token = TOKEN_CSRF.search(pagina)
