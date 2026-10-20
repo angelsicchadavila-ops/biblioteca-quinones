@@ -2,9 +2,9 @@
 
 ## Propósito y público
 
-Este manual explica cómo utilizar la versión 1.0 del sistema de la Biblioteca Quiñones. Está dirigido al personal de la institución y no requiere conocimientos de programación, base de datos ni administración de servidores.
+Este manual explica cómo utilizar la versión 1.1 del sistema de la Biblioteca Quiñones. Está dirigido al personal de la institución y no requiere conocimientos de programación, base de datos ni administración de servidores.
 
-El sistema permite consultar el catálogo, organizar materias, libros y ejemplares, imprimir etiquetas QR, registrar préstamos y devoluciones, y consultar reportes operativos. La información se guarda en línea y se actualiza al confirmar cada operación.
+El sistema permite consultar el catálogo, organizar materias, libros y ejemplares, imprimir etiquetas QR, registrar préstamos y devoluciones, consultar reportes operativos y administrar cuentas asistentes. La información se guarda en línea y se actualiza al confirmar cada operación.
 
 ## Objetivo del sistema
 
@@ -23,8 +23,8 @@ Si el sistema tarda en responder después de un periodo sin uso, espere hasta 90
 | Rol | Qué puede hacer |
 |---|---|
 | Público | Consultar el catálogo, buscar por título o autor y filtrar por materia o nivel. No ve lectores ni préstamos. |
-| Administrador (`admin`) | Acceder a materias, libros, ejemplares, QR, préstamos, terminal de escaneo y reportes. |
-| Asistente (`asistente`) | Usar el terminal de escaneo y registrar préstamos o devoluciones. No accede a configuración ni reportes administrativos. |
+| Administrador (`admin`) | Acceder a materias, libros, ejemplares, QR, préstamos, terminal de escaneo, reportes y gestión de asistentes. |
+| Asistente (`asistente`) | Usar el terminal, registrar préstamos o devoluciones y crear o editar datos bibliográficos de libros. No administra materias, ejemplares, usuarios, reportes ni el estado activo de los libros. |
 
 Cada persona debe usar únicamente la cuenta que le asigne la institución. No comparta contraseñas ni las escriba en capturas, manuales o mensajes públicos.
 
@@ -50,7 +50,8 @@ El catálogo está disponible sin iniciar sesión.
 1. En **Título o autor**, escriba una palabra o parte del nombre.
 2. Si lo necesita, elija una **Materia**.
 3. Si lo necesita, elija **Primaria**, **Secundaria** o **Ambos**.
-4. Pulse **Buscar**.
+4. Si lo necesita, indique el **Año** de publicación.
+5. Pulse **Buscar**.
 
 Los filtros pueden combinarse. Cada resultado muestra el inventario calculado en ese momento. Un ejemplar operativo, activo y sin préstamo pendiente aparece como disponible. Si no hay coincidencias, limpie o cambie los filtros.
 
@@ -64,7 +65,8 @@ Solo el rol administrador puede abrir **Administración**. El panel resume:
 - libros activos;
 - ejemplares activos;
 - préstamos sin devolver y vencidos;
-- acceso a los cuatro reportes de la versión 1.0.
+- acceso a los cuatro reportes operativos;
+- acceso a la gestión de cuentas asistentes.
 
 Use los botones del panel o la barra superior para desplazarse entre módulos.
 
@@ -96,11 +98,13 @@ No se permiten nombres vacíos ni repetidos.
 
 1. Abra **Administración** y luego **Libros activos**.
 2. Pulse **Nuevo libro**.
-3. Complete título, autor, materia y nivel académico.
+3. Complete título, autor, materia, nivel académico y año.
 4. Complete ISBN/editorial solo si corresponde; es opcional.
 5. Guarde.
 
-Todo libro debe pertenecer a una materia activa y tener nivel **Primaria**, **Secundaria** o **Ambos**.
+Todo libro nuevo debe pertenecer a una materia activa, tener nivel **Primaria**, **Secundaria** o **Ambos** y un año entre 1000 y 9999. Los registros heredados de la versión 1.0 pueden conservar el año vacío hasta su actualización.
+
+El administrador y el asistente pueden crear y editar estos datos bibliográficos. Solo el administrador puede activar o desactivar libros y gestionar sus ejemplares.
 
 ### Editar, desactivar o reactivar
 
@@ -123,6 +127,26 @@ En el inventario puede:
 - consultar su estado calculado: Disponible, Prestado, Dañado o Inactivo.
 
 Un ejemplar dañado o inactivo no puede prestarse. La condición Prestado se calcula a partir de un préstamo sin devolución; no se cambia manualmente.
+
+## Gestión de cuentas asistentes
+
+Solo el administrador puede abrir **Administración → Usuarios**.
+
+### Crear un asistente
+
+1. Abra **Usuarios asistentes**.
+2. Pulse **Nuevo asistente**.
+3. Complete nombre de usuario, nombre completo y una contraseña inicial de al menos 12 caracteres.
+4. Confirme la contraseña y pulse **Crear asistente**.
+
+El sistema asigna automáticamente el rol `asistente`. Esta pantalla no permite crear administradores y nunca muestra una contraseña guardada.
+
+### Cambiar contraseña o estado
+
+- Use **Cambiar contraseña** para establecer una nueva clave sin afectar el historial.
+- Use **Desactivar** cuando un asistente deje de trabajar o pierda autorización.
+- Una cuenta inactiva no puede iniciar sesión, pero conserva la trazabilidad de sus operaciones.
+- Use **Reactivar** solo cuando la institución vuelva a autorizar a la misma persona.
 
 ## Generación y reimpresión de QR
 
@@ -260,14 +284,18 @@ Pulse **Cerrar sesión** en la barra superior cuando termine, especialmente en e
 | El lector está bloqueado por mora | Devuelva los préstamos vencidos; el permiso se recalcula automáticamente. |
 | Se rechaza un tercer préstamo | El lector ya tiene dos activos; debe devolver uno antes. |
 | Error de red al confirmar | No repita inmediatamente. Vuelva a consultar el ejemplar para saber si la operación se guardó. |
-| El asistente recibe “Acceso denegado” | La página es exclusiva del administrador; use el terminal de escaneo. |
+| El asistente recibe “Acceso denegado” | La página es exclusiva del administrador; use el terminal o la gestión bibliográfica de libros permitida. |
 | El reporte no muestra datos | Revise el tipo de reporte y, en historial, el rango de fechas. |
 | El problema persiste | Anote fecha, hora, página, acción y mensaje; tome una captura sin credenciales y comuníquelo al responsable técnico. |
 
-## Soporte y datos pendientes
+## Recuperación de la cuenta administradora
 
-- Responsable técnico: **[PENDIENTE DE COMPLETAR POR EL ESTUDIANTE]**
-- Responsable institucional: **[PENDIENTE DE COMPLETAR]**
-- Canal de soporte: **[PENDIENTE DE COMPLETAR]**
+La versión 1.1 no incluye recuperación por correo ni el enlace “Olvidé mi contraseña”. Si el administrador pierde la clave, debe solicitar al responsable técnico institucional el restablecimiento mediante el procedimiento seguro documentado. La nueva contraseña se introduce de forma oculta y nunca debe enviarse en capturas, documentos o mensajes públicos.
+
+## Soporte
+
+- Responsable técnico institucional: **Lic. Milner Jesus Urbina Diaz**
+- Responsable institucional receptor: **Mg. Lenny Esther Urbina Diaz — Directora**
+- Canal de soporte: **Pendiente de definición institucional**
 
 No incluya contraseñas, tokens, `DATABASE_URL` ni `SECRET_KEY` al solicitar ayuda.

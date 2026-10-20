@@ -4,8 +4,8 @@
 - Proyecto: Sistema Web de Gestión Bibliotecaria con Control QR
 - Documento Maestro: v1.0
 - Estado general: Versión 1.0 protegida; versión 1.1 técnicamente terminada, probada, documentada y desplegada
-- Fase actual: Versión 1.1 — cierre técnico completo; entrega institucional no realizada
-- Última actualización: 24 de septiembre de 2026
+- Fase actual: Preparación operativa de entrega institucional de la versión 1.1
+- Última actualización: 20 de octubre de 2026
 
 ## Fuente de verdad
 - `docs/Documento_Maestro_Biblioteca_v1.0.docx`
@@ -128,7 +128,21 @@
 
 ## Fase actual
 
-La v1.1 se construyó sobre `a629694aae199a00a55ae34009fe60f1326c9b49`, protegido con la etiqueta `v1.0-final`. Neon recibió la migración aditiva de `anio_publicacion`; no se eliminaron datos y los conteos operativos permanecen en cero. Se implementaron el año y su filtro, los permisos bibliográficos del asistente, la gestión admin de asistentes y la recuperación técnica de contraseña admin. La suite acumulada final pasó 43/43, integridad y concurrencia 11/11 y Neon 7/7. Render desplegó manualmente `7dfa17f` con estado Live y el smoke de producción pasó 39/39. La documentación congelada de v1.0 permanece sin cambios. No se declara realizada la entrega institucional.
+La v1.1 se construyó sobre `a629694aae199a00a55ae34009fe60f1326c9b49`, protegido con la etiqueta `v1.0-final`. Neon recibió la migración aditiva de `anio_publicacion`; no se eliminaron datos. Se implementaron el año y su filtro, los permisos bibliográficos del asistente, la gestión admin de asistentes y la recuperación técnica de contraseña admin. La suite acumulada final pasó 43/43, integridad y concurrencia 11/11 y Neon 7/7. Render desplegó manualmente `7dfa17f` con estado Live y el smoke de producción pasó 39/39. El catálogo actual contiene 22 materias, 6 libros y 7 ejemplares institucionales; no son residuos de prueba. No se declara realizada la entrega institucional.
+
+## Preparación operativa de entrega institucional
+
+- La cuenta administrativa base fue reutilizada conservando su ID, rol, estado y fecha de registro; su identidad institucional es `AdminJAQ` con nombre visible `Lic. Milner Jesus Urbina Diaz`.
+- La contraseña de `AdminJAQ` fue restablecida mediante el procedimiento técnico seguro con `getpass` y el login administrativo fue comprobado.
+- La cuenta `AsistJAQ1`, con nombre visible `Angel Siccha Davila`, fue creada mediante el módulo web v1.1 y su login y permisos fueron comprobados.
+- `asistente_prueba` fue desactivada lógicamente; no fue eliminada y conserva cualquier trazabilidad.
+- Ya no existe el username `admin_prueba`.
+- GitHub, Render y Neon permanecen bajo mantenimiento técnico autorizado, sin cambios de propiedad, cuentas, proyectos, facturación o permisos.
+- Receptor previsto: Mg. Lenny Esther Urbina Diaz, Directora.
+- Responsable técnico institucional de referencia: Lic. Milner Jesus Urbina Diaz.
+- Canal de soporte: pendiente de definición institucional.
+- Fecha tentativa de entrega: semana del 26 al 30 de octubre de 2026, sujeta a confirmación.
+- Continúan pendientes la entrega privada de credenciales, la capacitación, la confirmación de fecha/modalidad y la firma del acta.
 
 ## Historial semanal
 | Semana | Estado | Fecha | Evidencia principal | Commit |
@@ -142,4 +156,4 @@ La v1.1 se construyó sobre `a629694aae199a00a55ae34009fe60f1326c9b49`, protegid
 | 07 | Completa y aprobada al iniciar Semana 8 | 16/09/2026 | `docs/evidencias/semana_07/SEMANA_07_EVIDENCIA.md` | `0ae60c9` + `a0b935c` + `f1f1515` |
 | 08 | Completa y aprobada al iniciar Semana 9 | 17/09/2026 | `docs/evidencias/semana_08/SEMANA_08_EVIDENCIA.md` | `83d1677` + `2bbf06f` + `f985761` + `0f581cb` |
 | 09 | Completa técnica, documental y visualmente; entrega institucional pendiente | 22/09/2026 | `docs/evidencias/semana_09/SEMANA_09_EVIDENCIA.md` | `69f6d0b` + `407e6b8` + cierre visual final |
-| v1.1 | Completa técnica y desplegada; capturas personales pendientes | 24/09/2026 | `docs/v1_1/RESULTADOS_PRUEBAS.md` | `e0283aa` + `7dfa17f` + cierre documental |
+| v1.1 | Completa técnica, desplegada y con capturas revisadas; entrega institucional en preparación | 20/10/2026 | `docs/v1_1/RESULTADOS_PRUEBAS.md` | `e0283aa` + `7dfa17f` + cierre documental |

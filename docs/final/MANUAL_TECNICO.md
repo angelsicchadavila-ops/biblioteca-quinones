@@ -2,7 +2,7 @@
 
 ## Propósito
 
-Este documento permite comprender, desplegar y mantener la versión 1.0 del sistema de la Biblioteca Quiñones. Describe la solución existente; no sustituye las políticas internas de seguridad de la institución ni contiene secretos.
+Este documento permite comprender, desplegar y mantener la versión 1.1 del sistema de la Biblioteca Quiñones. La versión 1.1 conserva la arquitectura y las reglas operativas de la v1.0 e incorpora año de publicación, permisos bibliográficos del asistente, gestión web de asistentes y recuperación técnica del administrador. El documento no sustituye las políticas internas de seguridad de la institución ni contiene secretos.
 
 Datos de referencia:
 
@@ -10,7 +10,7 @@ Datos de referencia:
 - Repositorio: <https://github.com/angelsicchadavila-ops/biblioteca-quinones>
 - Rama de producción: `main`
 - Zona horaria de negocio: `America/Lima`
-- Responsable técnico: **[PENDIENTE DE COMPLETAR POR EL ESTUDIANTE]**
+- Responsable técnico institucional: **Lic. Milner Jesus Urbina Diaz**
 
 ## Arquitectura general
 
@@ -62,9 +62,11 @@ biblioteca_quinones/
 |-- .env.example               # Nombres y marcadores, nunca secretos
 |-- sql/
 |   |-- schema.sql             # Tablas, constraints, índices y triggers
+|   |-- migracion_v1_1.sql     # Migración aditiva del año de publicación
 |   `-- seed.sql               # Materias iniciales, sin contraseñas
 |-- scripts/
 |   |-- inicializar_bd.py      # Inicialización segura de una BD vacía
+|   |-- restablecer_password_admin.py # Recuperación técnica interactiva
 |   |-- verificar_bd.py        # Verificación de esquema y estado base
 |   |-- probar_integridad_bd.py# Pruebas transaccionales y concurrencia
 |   |-- verificar_produccion.py# Smoke HTTPS de solo lectura
@@ -159,6 +161,7 @@ Las claves foráneas usan `ON DELETE RESTRICT`. La aplicación desactiva registr
 - `Vencido` no se almacena: se calcula a partir de las fechas.
 - El nivel y grado/sección del alumno pertenecen al préstamo, no al lector.
 - QR único y estable por ejemplar; reimprimir no cambia el código.
+- Año de publicación entre 1000 y 9999 para altas nuevas; `NULL` permitido en registros heredados.
 - Cámara e ingreso manual utilizan la misma API y reglas.
 - Préstamo y devolución se ejecutan en transacciones.
 - Cada operación registra al usuario responsable.
@@ -175,9 +178,9 @@ Las claves foráneas usan `ON DELETE RESTRICT`. La aplicación desactiva registr
 | `GET/POST /admin/materias` | Admin | Listado y alta de materias. |
 | `GET/POST /admin/materias/<id>/editar` | Admin | Edición de materia. |
 | `POST /admin/materias/<id>/estado` | Admin | Activación lógica. |
-| `GET /admin/libros` | Admin | Listado de libros. |
-| `GET/POST /admin/libros/nuevo` | Admin | Alta de libro. |
-| `GET/POST /admin/libros/<id>/editar` | Admin | Edición de libro. |
+| `GET /admin/libros` | Admin/asistente | Listado administrativo de libros. |
+| `GET/POST /admin/libros/nuevo` | Admin/asistente | Alta bibliográfica de libro. |
+| `GET/POST /admin/libros/<id>/editar` | Admin/asistente | Edición bibliográfica de libro. |
 | `POST /admin/libros/<id>/estado` | Admin | Activación lógica. |
 | `GET/POST /admin/libros/<id>/ejemplares` | Admin | Inventario y altas por lote. |
 | `POST /admin/ejemplares/<id>/estado-fisico` | Admin | Operativo/dañado. |
@@ -192,21 +195,18 @@ Las claves foráneas usan `ON DELETE RESTRICT`. La aplicación desactiva registr
 | `POST /api/devoluciones` | Admin/asistente | Devolución transaccional. |
 | `GET /admin/prestamos` | Admin | Listado y semáforo. |
 | `GET /admin/reportes` | Admin | RPT-01 a RPT-04. |
+| `GET /admin/usuarios` | Admin | Listado y estado de asistentes. |
+| `GET/POST /admin/usuarios/nuevo` | Admin | Creación de asistentes. |
+| `GET/POST /admin/usuarios/<id>/contrasena` | Admin | Restablecimiento de contraseña de asistente. |
+| `POST /admin/usuarios/<id>/estado` | Admin | Desactivación o reactivación lógica de asistente. |
 
 ## Roles, permisos y provisión de cuentas
 
-`admin` accede a gestión completa, QR, terminal, préstamos y reportes. `asistente` accede al terminal y a las APIs operativas; las rutas administrativas responden 403. El público solo accede a catálogo y login.
+`admin` accede a gestión completa, QR, terminal, préstamos, reportes y administración de asistentes. `asistente` accede al terminal, a las APIs operativas y al listado, alta y edición bibliográfica de libros. No puede gestionar materias, ejemplares, usuarios, reportes ni activar o desactivar libros. El público solo accede a catálogo y login.
 
-La versión desplegada mantiene cuentas en la tabla `usuarios`, pero no incluye una pantalla de autogestión de usuarios. Para la entrega institucional, un responsable técnico autorizado debe sustituir o desactivar las cuentas de prueba y crear o actualizar cuentas definitivas mediante una operación controlada en PostgreSQL:
+La versión 1.1 incluye el módulo `/admin/usuarios`, exclusivo de `admin`, para crear cuentas asistentes, cambiar sus contraseñas y desactivarlas o reactivarlas lógicamente. El rol se fija como `asistente` en el backend y las consultas nunca muestran `password_hash`. La interfaz no crea administradores.
 
-1. acordar nombre de usuario, nombre visible y rol;
-2. generar el hash con `werkzeug.security.generate_password_hash` fuera de la documentación;
-3. insertar o actualizar mediante consulta parametrizada dentro de una transacción;
-4. verificar inicio de sesión y permisos;
-5. entregar la contraseña solo por canal privado;
-6. desactivar las cuentas de prueba cuando ya no sean necesarias.
-
-Nunca inserte una contraseña en texto plano. Si no existe una persona técnica autorizada, complete esta tarea con el responsable original antes de la entrega formal.
+La recuperación del administrador se realiza mediante `scripts/restablecer_password_admin.py`. El script identifica una cuenta que ya tenga rol `admin`, solicita dos veces la nueva contraseña con `getpass`, exige al menos 12 caracteres y actualiza solo el hash mediante SQL parametrizado. No cambia username, rol ni estado y no reactiva cuentas. Después debe verificarse el login y el panel administrativo.
 
 ## Generación QR y PDF
 
@@ -227,7 +227,7 @@ La función de frontend que procesa el código consulta `/api/ejemplar/<codigo>`
 - RPT-03: vencidos y días de atraso.
 - RPT-04: historial por rango con estado y trazabilidad.
 
-Son consultas tabulares. No generan gráficos ni exportaciones adicionales en la versión 1.0.
+Son consultas tabulares. No generan gráficos ni exportaciones adicionales en la versión 1.1.
 
 ## Ejecución local
 
@@ -344,6 +344,6 @@ No almacene respaldos de producción dentro del repositorio Git.
 
 ## Límites y mejoras futuras
 
-La versión 1.0 no incluye multas, reservas, notificaciones, integración académica, modo offline, múltiples sedes, analítica avanzada ni aplicación móvil nativa. Estas funciones corresponden a una versión 1.1, 2.0 o posterior.
+La versión 1.1 no incluye multas, reservas, notificaciones, integración académica, modo offline, múltiples sedes, analítica avanzada, aplicación móvil nativa, recuperación por correo, roles adicionales ni creación web de administradores. Estas funciones requieren una versión posterior aprobada.
 
-También se recomienda evaluar en una versión aprobada una interfaz administrativa para gestionar cuentas internas y una solución definitiva para Auto-Deploy. Hasta entonces, la provisión de cuentas es una tarea técnica controlada.
+La infraestructura GitHub, Render y Neon permanece bajo mantenimiento técnico autorizado. El responsable institucional utiliza la aplicación mediante HTTPS y no necesita secretos de infraestructura para la operación cotidiana.

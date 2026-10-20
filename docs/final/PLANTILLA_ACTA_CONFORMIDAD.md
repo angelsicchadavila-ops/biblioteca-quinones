@@ -4,20 +4,22 @@
 
 - **Nombre del proyecto:** Sistema Web de Gestión Bibliotecaria con Control QR
 - **Institución:** Colegio Privado José Abelardo Quiñones
-- **Fecha:** [PENDIENTE DE COMPLETAR]
+- **Fecha:** Pendiente de confirmación
+- **Referencia tentativa:** Semana del 26 al 30 de octubre de 2026, sujeta a confirmación
 - **Lugar o modalidad:** [PENDIENTE DE COMPLETAR]
-- **Versión entregada:** 1.0
+- **Versión entregada:** v1.1
 
 ## Responsables
 
 - **Responsable del proyecto:** [PENDIENTE DE COMPLETAR POR EL ESTUDIANTE]
 - **Documento de identidad o código, si corresponde:** [PENDIENTE DE COMPLETAR]
-- **Responsable receptor:** [PENDIENTE DE COMPLETAR]
-- **Cargo del responsable receptor:** [PENDIENTE DE COMPLETAR]
+- **Responsable receptor:** Mg. Lenny Esther Urbina Diaz
+- **Cargo del responsable receptor:** Directora
+- **Responsable técnico institucional:** Lic. Milner Jesus Urbina Diaz
 
 ## Descripción breve de la entrega
 
-En la fecha indicada se presenta el Sistema Web de Gestión Bibliotecaria con Control QR, versión 1.0, junto con la documentación y materiales descritos en esta acta. El sistema contempla catálogo público, inventario de libros y ejemplares, identificación QR, préstamos, devoluciones, control de mora, límite de préstamos y reportes operativos.
+En la fecha indicada se presenta el Sistema Web de Gestión Bibliotecaria con Control QR, versión 1.1, junto con la documentación y materiales descritos en esta acta. El sistema contempla catálogo público con filtro por año, inventario de libros y ejemplares, identificación QR, préstamos, devoluciones, control de mora, límite de préstamos, reportes operativos y gestión de cuentas asistentes.
 
 La descripción específica de la sesión, demostración y alcance aceptado debe completarse aquí:
 
@@ -33,6 +35,8 @@ La descripción específica de la sesión, demostración y alcance aceptado debe
 - [ ] Manual técnico.
 - [ ] Memoria final del proyecto.
 - [ ] Guía de entrega institucional.
+- [ ] Adenda de la versión 1.1.
+- [ ] Checklist y guion de capacitación.
 - [ ] URL de producción.
 - [ ] Enlace o acceso al repositorio.
 - [ ] Credenciales institucionales entregadas por canal privado.
@@ -50,6 +54,7 @@ La descripción específica de la sesión, demostración y alcance aceptado debe
 - [ ] Consulta de reportes.
 - [ ] Cierre de sesión.
 - [ ] Explicación de soporte y custodia de credenciales.
+- [ ] Explicación de recuperación técnica del administrador.
 
 ## Observaciones
 
@@ -75,10 +80,10 @@ La firma confirma únicamente la recepción y conformidad indicada. No deben ano
 
 ### Responsable receptor
 
-- Nombre: [PENDIENTE DE COMPLETAR]
-- Cargo: [PENDIENTE DE COMPLETAR]
+- Nombre: Mg. Lenny Esther Urbina Diaz
+- Cargo: Directora
 - Firma y sello, si corresponde: ______________________________
-- Fecha: [PENDIENTE DE COMPLETAR]
+- Fecha: Pendiente de confirmación
 
 ### Testigo o supervisor, si corresponde
 

@@ -2,7 +2,7 @@
 
 ## Finalidad
 
-Esta guía organiza la entrega de la versión 1.0 al Colegio Privado José Abelardo Quiñones. La entrega se considera pendiente hasta que el estudiante proporcione los materiales, comunique las credenciales por un canal privado y, si corresponde, se firme la constancia.
+Esta guía organiza la entrega de la versión 1.1 al Colegio Privado José Abelardo Quiñones. La entrega se considera pendiente hasta que se proporcionen los materiales, se comuniquen las credenciales por un canal privado y, si corresponde, se firme la constancia.
 
 ## Componentes de la entrega
 
@@ -28,7 +28,7 @@ Esta guía organiza la entrega de la versión 1.0 al Colegio Privado José Abela
 | Rol | Uso recomendado |
 |---|---|
 | Administrador | Responsable de catálogo, inventario, QR, préstamos, reportes y configuración disponible. |
-| Asistente | Personal que registra préstamos y devoluciones desde el terminal. |
+| Asistente | Personal que registra préstamos y devoluciones y puede crear o editar datos bibliográficos de libros, sin administrar estados, materias, ejemplares, usuarios ni reportes. |
 | Público | Personas que consultan el catálogo sin cuenta. |
 
 La institución debe conservar al menos una cuenta administrativa definitiva. Las cuentas de prueba existentes deben cambiarse, sustituirse o desactivarse antes de la entrega formal.
@@ -46,7 +46,7 @@ Nunca coloque estos datos en el repositorio, manuales, capturas, correo público
 - `SECRET_KEY`;
 - tokens, Deploy Hook, claves de recuperación o respaldos con datos personales.
 
-Use una reunión presencial, un gestor de contraseñas con uso compartido seguro o el canal privado aprobado por la institución. Entregue la URL pública por separado de las credenciales.
+El canal previsto para esta entrega es correo electrónico privado. Como buena práctica, envíe el usuario y la contraseña temporal por mensajes separados cuando sea posible. Entregue la URL pública por separado y nunca copie credenciales en esta documentación.
 
 ## Cuenta que debe conservar la institución
 
@@ -61,7 +61,7 @@ Procedimiento recomendado:
 5. Entregar la contraseña por canal privado.
 6. Desactivar las cuentas de prueba cuando la cuenta definitiva esté comprobada.
 
-La aplicación actual no ofrece pantalla para administrar cuentas; este paso debe coordinarse con el responsable técnico antes de la entrega.
+La versión 1.1 permite al administrador crear, cambiar la contraseña, desactivar y reactivar cuentas asistentes desde **Administración → Usuarios**. La creación o recuperación de administradores continúa siendo mantenimiento técnico controlado.
 
 ## Recomendaciones sobre contraseñas
 
@@ -108,9 +108,9 @@ En el plan gratuito de Render, el servicio puede suspenderse por inactividad. La
 
 Datos de contacto:
 
-- Responsable técnico: **[PENDIENTE DE COMPLETAR POR EL ESTUDIANTE]**
-- Canal de soporte: **[PENDIENTE DE COMPLETAR]**
-- Responsable institucional: **[PENDIENTE DE COMPLETAR]**
+- Responsable técnico institucional: **Lic. Milner Jesus Urbina Diaz**
+- Canal de soporte: **Pendiente de definición institucional**
+- Responsable institucional receptor: **Mg. Lenny Esther Urbina Diaz — Directora**
 
 ## Materiales que deben entregarse
 
@@ -120,6 +120,10 @@ Datos de contacto:
 - `docs/final/GUIA_ENTREGA_INSTITUCIONAL.md`
 - `docs/final/CHECKLIST_CIERRE.md`
 - `docs/final/PLANTILLA_ACTA_CONFORMIDAD.md`
+- `docs/v1_1/ADENDA_V1_1_CAMBIOS_SOLICITADOS.md`
+- `docs/v1_1/PROCEDIMIENTO_RECUPERACION_ADMIN.md`
+- `docs/entrega/CHECKLIST_ENTREGA_INSTITUCIONAL.md`
+- `docs/entrega/GUION_CAPACITACION.md`
 - URL pública de producción.
 - Enlace al repositorio.
 - Credenciales institucionales, por canal privado.
@@ -129,20 +133,11 @@ Si la institución exige PDF, exporte los Markdown finales a PDF sin alterar su 
 
 ## Custodia de servicios y credenciales
 
-La institución debe designar quién conservará:
+La cuenta administrativa del sistema queda bajo custodia institucional. GitHub, Render, Neon, respaldos y secretos de infraestructura permanecen bajo mantenimiento técnico autorizado; no se transfieren propiedad, cuentas, proyectos, facturación ni permisos como parte de esta entrega operativa.
 
-- cuenta administrativa del sistema;
-- acceso a GitHub;
-- acceso a Render;
-- acceso a Neon;
-- respaldos;
-- registro de cambios y solicitudes de mantenimiento.
-
-Complete antes de entregar:
-
-- Custodio institucional: **[PENDIENTE DE COMPLETAR]**
-- Cargo: **[PENDIENTE DE COMPLETAR]**
-- Canal privado acordado: **[PENDIENTE DE COMPLETAR]**
+- Responsable de referencia: **Lic. Milner Jesus Urbina Diaz**
+- Canal privado previsto para credenciales del sistema: **correo electrónico privado**
+- Canal formal de soporte: **Pendiente de definición institucional**
 
 ## Información que no debe publicarse
 
@@ -163,25 +158,25 @@ La explicación al responsable institucional debe cubrir:
 1. URL y catálogo público.
 2. Inicio y cierre de sesión.
 3. Diferencia entre admin y asistente.
-4. Alta de materia, libro y ejemplar.
-5. Impresión y reimpresión QR.
-6. Préstamo y devolución por QR o código manual.
-7. Límite de dos y bloqueo por mora.
-8. Semáforo y reportes.
-9. Procedimiento ante error y cold start.
-10. Custodia de credenciales y solicitud de soporte.
+4. Creación y desactivación de asistentes por el administrador.
+5. Alta de materia, libro con año y ejemplar.
+6. Impresión y reimpresión QR.
+7. Préstamo y devolución por QR o código manual.
+8. Límite de dos, bloqueo por mora, semáforo y reportes.
+9. Recuperación técnica de la cuenta administradora.
+10. Procedimiento ante error, cold start, custodia de credenciales y soporte.
 
 No use datos reales de alumnos durante la demostración salvo autorización institucional.
 
 ## Checklist de entrega presencial o remota
 
 - [ ] Responsable del proyecto identificado.
-- [ ] Responsable receptor y cargo identificados.
-- [ ] Fecha y modalidad de entrega acordadas.
-- [ ] URL pública abierta desde PC.
+- [x] Responsable receptor y cargo identificados.
+- [ ] Fecha exacta y modalidad de entrega confirmadas.
+- [x] URL pública abierta desde PC.
 - [ ] URL pública abierta desde móvil.
-- [ ] Cuenta administrativa institucional comprobada.
-- [ ] Cuentas de prueba cambiadas, sustituidas o desactivadas.
+- [x] Cuenta administrativa institucional comprobada.
+- [x] Cuentas de prueba cambiadas, sustituidas o desactivadas.
 - [ ] Credenciales entregadas por canal privado.
 - [ ] Manual de usuario entregado.
 - [ ] Manual técnico entregado.
@@ -192,4 +187,4 @@ No use datos reales de alumnos durante la demostración salvo autorización inst
 
 ## Estado actual de la entrega
 
-La versión 1.0 está preparada técnicamente para la transferencia documental. A la fecha de este documento no se declara realizada la entrega formal, no se declara creada la cuenta institucional definitiva y no se declara firmada el acta.
+La versión 1.1 está operativa y sus cuentas institucionales fueron preparadas. La entrega formal, la capacitación, el envío privado de credenciales y la firma del acta continúan pendientes. La fecha tentativa es la semana del 26 al 30 de octubre de 2026 y está sujeta a confirmación.
